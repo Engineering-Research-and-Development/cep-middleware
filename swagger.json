@@ -35,7 +35,7 @@
     },
     "/engines/{engineId}": {
       "get": {
-        "summary": "Returns info of the engine",
+        "summary": "Returns info about the engine",
         "parameters": [
           {
             "name": "engineId",
@@ -73,6 +73,34 @@
             "description": "CEP engine doesn't exist"
           }
         }
+      },
+      "post": {
+        "summary": "Create a single rule within the engine",
+        "parameters": [
+          {
+            "name": "engineId",
+            "required": true,
+            "in": "path",
+            "type": "string"
+          },
+          {
+            "name": "rule",
+            "required": true,
+            "in": "body",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Rule successfully created"
+          },
+          "400": {
+            "description": "Rule doesn't exist or the engine doesn't exist"
+          },
+          "405": {
+            "description": "A rule with the given Id already exists for the given engine, thus the creation failed"
+          }
+        }
       }
     },
     "/engines/{engineId}/rules/{ruleId}": {
@@ -98,40 +126,6 @@
           },
           "404": {
             "description": "Requested rule does't exist or the engine doesn't exist"
-          }
-        }
-      },
-      "post": {
-        "summary": "Create a single rule within the engine",
-        "parameters": [
-          {
-            "name": "engineId",
-            "required": true,
-            "in": "path",
-            "type": "string"
-          },
-          {
-            "name": "ruleId",
-            "required": true,
-            "in": "path",
-            "type": "string"
-          },
-          {
-            "name": "rule",
-            "required": true,
-            "in": "body",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Rule successfully created"
-          },
-          "400": {
-            "description": "Rule doesn't exist or the engine doesn't exist"
-          },
-          "405": {
-            "description": "A rule with the given Id already exists for the given engine, thus the creation failed"
           }
         }
       },
