@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "CEP-middlware",
+    "title": "cep-middlware",
     "version": "0.0",
     "contact": {
       "email": "drobniac@gmail.com"
@@ -35,7 +35,7 @@
     },
     "/engines/{engineId}": {
       "get": {
-        "summary": "Returns concrete engine info or available actions and such",
+        "summary": "Returns info of the engine",
         "parameters": [
           {
             "name": "engineId",
@@ -68,6 +68,9 @@
         "responses": {
           "200": {
             "description": "Successful operation"
+          },
+          "404": {
+            "description": "CEP engine doesn't exist"
           }
         }
       }
@@ -94,7 +97,7 @@
             "description": "Successful operation"
           },
           "404": {
-            "description": "Requested rule does not exist within the given engine"
+            "description": "Requested rule does't exist or the engine doesn't exist"
           }
         }
       },
@@ -124,8 +127,146 @@
           "201": {
             "description": "Rule successfully created"
           },
+          "400": {
+            "description": "Rule doesn't exist or the engine doesn't exist"
+          },
           "405": {
             "description": "A rule with the given Id already exists for the given engine, thus the creation failed"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Removes a single rule from the engine",
+        "parameters": [
+          {
+            "name": "engineId",
+            "required": true,
+            "in": "path",
+            "type": "string"
+          },
+          {
+            "name": "ruleId",
+            "required": true,
+            "in": "path",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "404": {
+            "description": "Requested rule does't exist within the given engine or the engine doesn't exist"
+          }
+        }
+      },
+      "put": {
+        "summary": "Modify a single rule within the engine",
+        "parameters": [
+          {
+            "name": "engineId",
+            "required": true,
+            "in": "path",
+            "type": "string"
+          },
+          {
+            "name": "ruleId",
+            "required": true,
+            "in": "path",
+            "type": "string"
+          },
+          {
+            "name": "rule",
+            "required": true,
+            "in": "body",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Rule successfully modified"
+          },
+          "404": {
+            "description": "Requested rule does't exist within the given engine or the engine doesn't exist"
+          }
+        }
+      }
+    },
+    "/engines/{engineId}/rules/{ruleId}/enabled": {
+      "get": {
+        "summary": "Returns if the rule is enabled within the engine",
+        "parameters": [
+          {
+            "name": "engineId",
+            "required": true,
+            "in": "path",
+            "type": "string"
+          },
+          {
+            "name": "ruleId",
+            "required": true,
+            "in": "path",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns if the rule is enabled or not"
+          },
+          "404": {
+            "description": "Rule doesn't exist or the engine doesn't exist"
+          }
+        }
+      },
+      "put": {
+        "summary": "Enable or Disable a rule within an engine",
+        "parameters": [
+          {
+            "name": "engineId",
+            "required": true,
+            "in": "path",
+            "type": "string"
+          },
+          {
+            "name": "ruleId",
+            "required": true,
+            "in": "path",
+            "type": "string"
+          },
+          {
+            "name": "enableSwitch",
+            "required": true,
+            "in": "body",
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The rule has been successfully enabled/disabled"
+          },
+          "404": {
+            "description": "Rule doesn't exist or the engine doesn't exist"
+          }
+        }
+      }
+    },
+    "/engines/{engineId}/events": {
+      "post": {
+        "summary": "Send an event to a CEP engine",
+        "parameters": [
+          {
+            "name": "engineId",
+            "required": true,
+            "in": "path",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Event was successfully sent to an engine"
+          },
+          "404": {
+            "description": "Engine doesn't exist"
           }
         }
       }
