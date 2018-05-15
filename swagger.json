@@ -125,7 +125,7 @@
             "description": "Successful operation"
           },
           "404": {
-            "description": "Requested rule does't exist or the engine doesn't exist"
+            "description": "Requested rule doesn't exist or the engine doesn't exist"
           }
         }
       },
@@ -150,7 +150,7 @@
             "description": "Successful operation"
           },
           "404": {
-            "description": "Requested rule does't exist within the given engine or the engine doesn't exist"
+            "description": "Requested rule doesn't exist within the given engine or the engine doesn't exist"
           }
         }
       },
@@ -181,7 +181,7 @@
             "description": "Rule successfully modified"
           },
           "404": {
-            "description": "Requested rule does't exist within the given engine or the engine doesn't exist"
+            "description": "Requested rule doesn't exist within the given engine or the engine doesn't exist"
           }
         }
       }
