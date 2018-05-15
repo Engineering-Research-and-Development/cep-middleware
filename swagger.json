@@ -9,6 +9,20 @@
     "description": "This will be a Web API (maybe even REST) with the purpose of delegating requests to various supported CEP engines."
   },
   "basePath": "/v1",
+  "tags": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "engines"
+    },
+    {
+      "name": "engineRules"
+    },
+    {
+      "name": "engineEvents"
+    }
+  ],
   "schemes": [
     "http"
   ],
@@ -16,6 +30,9 @@
     "/": {
       "get": {
         "summary": "Provides possible operations within the API",
+        "tags": [
+          "base"
+        ],
         "responses": {
           "200": {
             "description": "Successful operation"
@@ -26,6 +43,9 @@
     "/engines": {
       "get": {
         "summary": "Returns all available CEP engines",
+        "tags": [
+          "engines"
+        ],
         "responses": {
           "200": {
             "description": "Successful operation"
@@ -36,6 +56,9 @@
     "/engines/{engineId}": {
       "get": {
         "summary": "Returns info about the engine",
+        "tags": [
+          "engines"
+        ],
         "parameters": [
           {
             "name": "engineId",
@@ -57,6 +80,9 @@
     "/engines/{engineId}/rules": {
       "get": {
         "summary": "Returns all rules within the engine",
+        "tags": [
+          "engineRules"
+        ],
         "parameters": [
           {
             "name": "engineId",
@@ -76,6 +102,9 @@
       },
       "post": {
         "summary": "Create a single rule within the engine",
+        "tags": [
+          "engineRules"
+        ],
         "parameters": [
           {
             "name": "engineId",
@@ -106,6 +135,9 @@
     "/engines/{engineId}/rules/{ruleId}": {
       "get": {
         "summary": "Returns a single rule within the engine",
+        "tags": [
+          "engineRules"
+        ],
         "parameters": [
           {
             "name": "engineId",
@@ -131,6 +163,9 @@
       },
       "delete": {
         "summary": "Removes a single rule from the engine",
+        "tags": [
+          "engineRules"
+        ],
         "parameters": [
           {
             "name": "engineId",
@@ -156,6 +191,9 @@
       },
       "put": {
         "summary": "Modify a single rule within the engine",
+        "tags": [
+          "engineRules"
+        ],
         "parameters": [
           {
             "name": "engineId",
@@ -189,6 +227,9 @@
     "/engines/{engineId}/rules/{ruleId}/enabled": {
       "get": {
         "summary": "Returns if the rule is enabled within the engine",
+        "tags": [
+          "engineRules"
+        ],
         "parameters": [
           {
             "name": "engineId",
@@ -214,6 +255,9 @@
       },
       "put": {
         "summary": "Enable or Disable a rule within an engine",
+        "tags": [
+          "engineRules"
+        ],
         "parameters": [
           {
             "name": "engineId",
@@ -247,6 +291,9 @@
     "/engines/{engineId}/events": {
       "post": {
         "summary": "Send an event to a CEP engine",
+        "tags": [
+          "engineEvents"
+        ],
         "parameters": [
           {
             "name": "engineId",
