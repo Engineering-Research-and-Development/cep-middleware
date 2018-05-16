@@ -30,6 +30,6 @@ public interface DefaultApi {
         @ApiResponse(code = 200, message = "Successful operation") })
     @RequestMapping(value = "/",
         method = RequestMethod.GET)
-    ResponseEntity<Void> rootGet();
+    ResponseEntity<?> rootGet();
 
 }
