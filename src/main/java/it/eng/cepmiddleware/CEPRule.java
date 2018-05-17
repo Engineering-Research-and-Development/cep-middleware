@@ -4,7 +4,7 @@ public class CEPRule {
 	
 	private String id;
 	private String statement;
-	private String action;
+	private Object action;
 	private Boolean active;
 	
 	public CEPRule(String id) {
@@ -21,7 +21,7 @@ public class CEPRule {
 		this.active = true;
 	}
 	
-	public CEPRule(String id, String statement, String action) {
+	public CEPRule(String id, String statement, Object action) {
 		this.id = id;
 		this.statement = statement;
 		this.action = action;
@@ -44,11 +44,11 @@ public class CEPRule {
 		this.statement = statement;
 	}
 
-	public String getAction() {
+	public Object getAction() {
 		return action;
 	}
 
-	public void setAction(String action) {
+	public void setAction(Object action) {
 		this.action = action;
 	}
 
