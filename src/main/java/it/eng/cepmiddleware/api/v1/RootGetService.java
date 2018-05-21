@@ -17,7 +17,7 @@ public class RootGetService implements Service {
 	}
 	
 	@Override
-	public  ResponseEntity<?> execute() {
+	public  ResponseEntity<?> execute(Object ...parameters) {
 		return responseEntity;
 	}
 
