@@ -4,5 +4,5 @@ import org.springframework.http.ResponseEntity;
 
 @FunctionalInterface
 public interface Service {
-	public ResponseEntity<?> execute();
+	public ResponseEntity<?> execute(Object ...parameters);
 }
