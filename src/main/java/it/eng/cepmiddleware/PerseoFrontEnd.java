@@ -7,7 +7,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
-public class PerseoFrontEnd {
+public class PerseoFrontEnd implements CEPEngine {
 	
 	private String hostUrl;
 
