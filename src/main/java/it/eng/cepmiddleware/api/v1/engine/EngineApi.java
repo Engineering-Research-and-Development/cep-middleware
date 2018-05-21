@@ -3,7 +3,7 @@
  * https://github.com/swagger-api/swagger-codegen
  * Do not edit the class manually.
  */
-package it.eng.cepmiddleware.api.v1;
+package it.eng.cepmiddleware.api.v1.engine;
 
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
