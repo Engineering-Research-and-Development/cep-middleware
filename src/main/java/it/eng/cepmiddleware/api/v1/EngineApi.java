@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Api(value = "engines", description = "the engines API")
-public interface EnginesApi {
+public interface EngineApi {
 
     @ApiOperation(value = "Returns info about the engine")
     @ApiResponses(value = {
