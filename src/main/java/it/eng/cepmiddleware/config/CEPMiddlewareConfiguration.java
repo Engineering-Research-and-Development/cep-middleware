@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.context.annotation.Configuration;
 import it.eng.cepmiddleware.CEPEngine;
+import it.eng.cepmiddleware.ErrorCEPEngine;
 import it.eng.cepmiddleware.PerseoCore;
 import it.eng.cepmiddleware.PerseoFrontEnd;
 
@@ -14,12 +15,16 @@ public class CEPMiddlewareConfiguration {
 	private Map<String, CEPEngine> cepEngines;
 	
 	public CEPMiddlewareConfiguration() {
-		cepEngines = new HashMap<String, CEPEngine>();
-		cepEngines.put("perseo-core", new PerseoCore("http://localhost:8080"));
-		cepEngines.put("perseo-fe", new PerseoFrontEnd("http://localhost:9090"));
+		this.cepEngines = new HashMap<String, CEPEngine>();
+		this.cepEngines.put("perseo-core", new PerseoCore("http://localhost:8080"));
+		this.cepEngines.put("perseo-fe", new PerseoFrontEnd("http://localhost:9090"));
 	}
 	
 	public CEPEngine getEngine(String id) {
-		return cepEngines.get(id);
+		return cepEngines.getOrDefault(id, new ErrorCEPEngine());
+	}
+	
+	public Object[] getEngines() {
+		return cepEngines.keySet().toArray();
 	}
 }
