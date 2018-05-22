@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import it.eng.cepmiddleware.CEPEngine;
+import it.eng.cepmiddleware.CEPPayloadMaker;
 import it.eng.cepmiddleware.Service;
 import it.eng.cepmiddleware.config.CEPMiddlewareConfiguration;
 
@@ -19,7 +20,7 @@ public class GetEngineService implements Service {
 	}
 
 	private ResponseEntity<?> getEngine(String engineId) {
-		return new ResponseEntity<CEPEngine>((new CEPMiddlewareConfiguration()).getEngine(engineId), HttpStatus.OK);
+		return new ResponseEntity<Object>((new CEPPayloadMaker()).visit((new CEPMiddlewareConfiguration()).getEngine(engineId)), HttpStatus.OK);
 	}
 
 }
