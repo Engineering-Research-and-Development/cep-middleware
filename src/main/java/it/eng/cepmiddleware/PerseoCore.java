@@ -14,6 +14,14 @@ public class PerseoCore implements CEPEngine {
 	public PerseoCore(String hostUrl) {
 		this.hostUrl = hostUrl;
 	}
+
+	public String getHostUrl() {
+		return hostUrl;
+	}
+
+	public void setHostUrl(String hostUrl) {
+		this.hostUrl = hostUrl;
+	}
 	
 	public ResponseEntity<?> createRule(CEPRule rule) {
 		try {
@@ -57,4 +65,9 @@ public class PerseoCore implements CEPEngine {
 			return new ResponseEntity<Void>(HttpStatus.BAD_GATEWAY);
 		}
 	}
+	@Override
+	public void accept(CEPEngineVisitor visitor) {
+		visitor.visit(this);
+	}
+	
 }

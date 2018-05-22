@@ -5,10 +5,13 @@ import org.springframework.http.ResponseEntity;
 
 public class ErrorCEPEngine implements CEPEngine {
 	
-	private ResponseEntity<String> errorResponse = new ResponseEntity<String>(
-		"This is an ErrorEngine",
-		HttpStatus.NOT_FOUND
-	);
+	private String errorMessage = "This is not the CEP Engine you are looking for...";
+	
+	private ResponseEntity<String> errorResponse = new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+	
+	public String getErrorMessage() {
+		return this.errorMessage;
+	}
 
 	@Override
 	public ResponseEntity<?> createRule(CEPRule rule) {
@@ -23,6 +26,11 @@ public class ErrorCEPEngine implements CEPEngine {
 	@Override
 	public ResponseEntity<?> getRules() {
 		return errorResponse;
+	}
+
+	@Override
+	public void accept(CEPEngineVisitor visitor) {
+		visitor.visit(this);
 	}
 
 }

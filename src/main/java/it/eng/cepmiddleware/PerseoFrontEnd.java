@@ -15,6 +15,14 @@ public class PerseoFrontEnd implements CEPEngine {
 		this.hostUrl = hostUrl;
 	}
 	
+	public String getHostUrl() {
+		return hostUrl;
+	}
+
+	public void setHostUrl(String hostUrl) {
+		this.hostUrl = hostUrl;
+	}
+
 	public ResponseEntity<?> createRule(CEPRule rule) {
 		try {
 			HttpResponse<Object> response = Unirest.post(hostUrl + "/rules")
@@ -59,5 +67,10 @@ public class PerseoFrontEnd implements CEPEngine {
 		} catch (UnirestException e) {
 			return new ResponseEntity<Void>(HttpStatus.BAD_GATEWAY);
 		}
+	}
+
+	@Override
+	public void accept(CEPEngineVisitor visitor) {
+		visitor.visit(this);
 	}
 }
