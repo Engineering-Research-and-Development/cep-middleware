@@ -15,8 +15,7 @@ public class EngineApiController implements EngineApi {
 	private Service getEngineService;
 	
 	public EngineApiController() {
-		this.getEnginesService = new GetEnginesService();
-		this.getEngineService = new GetEngineService();
+		this(new GetEnginesService(), new GetEngineService());
 	}
 	
 	public EngineApiController(
