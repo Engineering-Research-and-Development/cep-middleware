@@ -18,10 +18,11 @@ public class CEPMiddlewareConfiguration {
 		this.cepEngines = new HashMap<String, CEPEngine>();
 		this.cepEngines.put("perseo-core", new PerseoCore("http://localhost:8080"));
 		this.cepEngines.put("perseo-fe", new PerseoFrontEnd("http://localhost:9090"));
+		this.cepEngines.put("error", new ErrorCEPEngine());
 	}
 	
 	public CEPEngine getEngine(String id) {
-		return cepEngines.getOrDefault(id, new ErrorCEPEngine());
+		return cepEngines.getOrDefault(id, cepEngines.get("error"));
 	}
 	
 	public Object[] getEngines() {
