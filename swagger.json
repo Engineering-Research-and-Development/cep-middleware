@@ -116,7 +116,9 @@
             "name": "rule",
             "required": true,
             "in": "body",
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/Rule"
+            }
           }
         ],
         "responses": {
@@ -211,7 +213,9 @@
             "name": "rule",
             "required": true,
             "in": "body",
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/Rule"
+            }
           }
         ],
         "responses": {
@@ -275,7 +279,9 @@
             "name": "enableSwitch",
             "required": true,
             "in": "body",
-            "type": "boolean"
+            "schema": {
+              "$ref": "#/definitions/Rule"
+            }
           }
         ],
         "responses": {
@@ -309,6 +315,23 @@
           "404": {
             "description": "Engine doesn't exist"
           }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Rule" : {
+      "type": "object",
+      "properties": {
+        "ruleId": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "statement": {
+          "type": "string",
+          "example": "select * from ev=iotEvent"
         }
       }
     }
