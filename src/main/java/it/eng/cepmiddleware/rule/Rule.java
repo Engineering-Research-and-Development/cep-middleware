@@ -1,5 +1,6 @@
 package it.eng.cepmiddleware.rule;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,10 +12,12 @@ public class Rule {
 	@GeneratedValue
 	private Long id;
 	
+	@Column(nullable = false)
 	private String ruleId;
 	
 	private String description;
 	
+	@Column(nullable = false)
 	private String statement;
 	
 	public Rule() {}
