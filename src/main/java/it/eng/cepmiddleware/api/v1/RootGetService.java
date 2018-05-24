@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 
 import it.eng.cepmiddleware.Service;
 
+@org.springframework.stereotype.Service
 public class RootGetService implements Service {
 
 	ResponseEntity<RootGetResponseBody> responseEntity;

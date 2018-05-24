@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import it.eng.cepmiddleware.Service;
 import it.eng.cepmiddleware.config.CEPMiddlewareConfiguration;
 
+@org.springframework.stereotype.Service
 public class GetEnginesService implements Service {
 
 	private ResponseEntity<Object[]> response;

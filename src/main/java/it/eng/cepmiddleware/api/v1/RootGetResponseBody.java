@@ -1,5 +1,8 @@
 package it.eng.cepmiddleware.api.v1;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class RootGetResponseBody {
 	
 	private String allEngines = "/engines";
