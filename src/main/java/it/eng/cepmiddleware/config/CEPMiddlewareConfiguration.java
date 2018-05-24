@@ -4,10 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.context.annotation.Configuration;
-import it.eng.cepmiddleware.CEPEngine;
-import it.eng.cepmiddleware.ErrorCEPEngine;
-import it.eng.cepmiddleware.PerseoCore;
-import it.eng.cepmiddleware.PerseoFrontEnd;
+
+import it.eng.cepmiddleware.engine.CEPEngine;
+import it.eng.cepmiddleware.engine.ErrorCEPEngine;
+import it.eng.cepmiddleware.engine.PerseoCore;
+import it.eng.cepmiddleware.engine.PerseoFrontEnd;
 
 @Configuration
 public class CEPMiddlewareConfiguration {
@@ -26,6 +27,6 @@ public class CEPMiddlewareConfiguration {
 	}
 	
 	public Object[] getEngines() {
-		return cepEngines.keySet().toArray();
+		return cepEngines.values().toArray();
 	}
 }
