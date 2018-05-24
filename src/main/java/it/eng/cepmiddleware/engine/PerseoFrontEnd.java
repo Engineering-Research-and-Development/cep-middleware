@@ -1,4 +1,4 @@
-package it.eng.cepmiddleware;
+package it.eng.cepmiddleware.engine;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,14 +7,14 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
-public class PerseoCore implements CEPEngine {
+public class PerseoFrontEnd implements CEPEngine {
 	
 	private String hostUrl;
 
-	public PerseoCore(String hostUrl) {
+	public PerseoFrontEnd(String hostUrl) {
 		this.hostUrl = hostUrl;
 	}
-
+	
 	public String getHostUrl() {
 		return hostUrl;
 	}
@@ -22,26 +22,28 @@ public class PerseoCore implements CEPEngine {
 	public void setHostUrl(String hostUrl) {
 		this.hostUrl = hostUrl;
 	}
-	
+
 	public ResponseEntity<?> createRule(CEPRule rule) {
 		try {
-			HttpResponse<Object> response = Unirest.post(hostUrl + "/perseo-core/rules")
+			HttpResponse<Object> response = Unirest.post(hostUrl + "/rules")
 			  .header("accept", "application/json")
-			  .body(new PerseoCoreRule(rule))
+			  .header("content-type", "application/json")
+			  .body(new PerseoFERule(rule))
 			  .asObject(Object.class);
 			return new ResponseEntity<Object>(
 				response.getBody(),
 				HttpStatus.resolve(response.getStatus())
 			);
 		} catch (UnirestException e) {
-			return new ResponseEntity<Void>(HttpStatus.BAD_GATEWAY);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_GATEWAY);
 		}
 	}
 	
 	public ResponseEntity<?> getRule(String ruleId) {
 		try {
-			HttpResponse<Object> response = Unirest.get(hostUrl + "/perseo-core/rules/" + ruleId)
+			HttpResponse<Object> response = Unirest.get(hostUrl + "/rules/" + ruleId)
 			  .header("accept", "application/json")
+			  .header("content-type", "application/json")
 			  .asObject(Object.class);
 			return new ResponseEntity<Object>(
 				response.getBody(),
@@ -54,8 +56,9 @@ public class PerseoCore implements CEPEngine {
 	
 	public ResponseEntity<?> getRules() {
 		try {
-			HttpResponse<Object> response = Unirest.get(hostUrl + "/perseo-core/rules")
+			HttpResponse<Object> response = Unirest.get(hostUrl + "/rules")
 			  .header("accept", "application/json")
+			  .header("content-type", "application/json")
 			  .asObject(Object.class);
 			return new ResponseEntity<Object>(
 				response.getBody(),
@@ -65,9 +68,9 @@ public class PerseoCore implements CEPEngine {
 			return new ResponseEntity<Void>(HttpStatus.BAD_GATEWAY);
 		}
 	}
+
 	@Override
 	public void accept(CEPEngineVisitor visitor) {
 		visitor.visit(this);
 	}
-	
 }

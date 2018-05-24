@@ -1,4 +1,4 @@
-package it.eng.cepmiddleware.api.v1;
+package it.eng.cepmiddleware.api.v1.engine.rules;
 
 import javax.validation.Valid;
 
@@ -21,7 +21,7 @@ public interface EngineRulesApi {
 	        @ApiResponse(code = 404, message = "Rule doesn't exist or the engine doesn't exist")
         })
 	    @RequestMapping(value = "/engines/{engineId}/rules", method = RequestMethod.GET)
-	    ResponseEntity<Void> enginesEngineIdRulesGet(@ApiParam(value = "",required=true) @PathVariable("engineId") String engineId);
+	    ResponseEntity<?> getRules(@ApiParam(value = "",required=true) @PathVariable("engineId") String engineId);
 
 
 	    @ApiOperation(value = "Create a single rule within the engine")

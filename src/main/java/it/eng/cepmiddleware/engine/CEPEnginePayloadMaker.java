@@ -1,10 +1,10 @@
-package it.eng.cepmiddleware;
+package it.eng.cepmiddleware.engine;
 
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class CEPPayloadMaker implements CEPEngineVisitor {
+public class CEPEnginePayloadMaker implements CEPEngineVisitor {
 
 	@Override
 	public Object visit(CEPEngine engine) {

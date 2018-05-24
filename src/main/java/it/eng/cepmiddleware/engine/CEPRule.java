@@ -1,4 +1,4 @@
-package it.eng.cepmiddleware;
+package it.eng.cepmiddleware.engine;
 
 public class CEPRule {
 	
