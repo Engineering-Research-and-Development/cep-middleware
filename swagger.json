@@ -6,7 +6,7 @@
     "contact": {
       "email": "drobniac@gmail.com"
     },
-    "description": "This will be a Web API (maybe even REST) with the purpose of delegating requests to various supported CEP engines."
+    "description": "This Web API has the purpose of delegating requests to various supported CEP engines while also defining a unique interface for CEP Engine consumption"
   },
   "basePath": "/v1",
   "tags": [
