@@ -19,6 +19,9 @@ public class Rule {
 	
 	@Column(nullable = false)
 	private String statement;
+
+	@Column(nullable = false)
+	private String owner;
 	
 	public Rule() {}
 	
@@ -61,6 +64,5 @@ public class Rule {
 	public void setOwner(String owner) {
 		this.owner = owner;
 	}
-
-	private String owner;
+	
 }
