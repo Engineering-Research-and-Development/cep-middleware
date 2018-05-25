@@ -1,5 +1,9 @@
 #TODO
 
+## Submit to the @Autowire
+JpaRepository autowiring is far easier than implementing it by hand or doing the xml approach.
+Go back and autowire everything :(
+
 ## Object reuse optimizations
 it.eng.cepmiddleware.api.v1.engine.GetEnginesService
 it.eng.cepmiddleware.api.v1.engine.GetEngineService
