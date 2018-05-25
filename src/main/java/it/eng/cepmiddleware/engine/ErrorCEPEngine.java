@@ -3,6 +3,8 @@ package it.eng.cepmiddleware.engine;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import it.eng.cepmiddleware.rule.Rule;
+
 public class ErrorCEPEngine implements CEPEngine {
 	
 	private String errorMessage = "This is not the CEP Engine you are looking for...";
@@ -14,7 +16,7 @@ public class ErrorCEPEngine implements CEPEngine {
 	}
 
 	@Override
-	public ResponseEntity<?> createRule(CEPRule rule) {
+	public ResponseEntity<?> createRule(Rule rule) {
 		return errorResponse;
 	}
 

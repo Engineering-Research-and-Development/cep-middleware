@@ -7,6 +7,8 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
+import it.eng.cepmiddleware.rule.Rule;
+
 public class PerseoFrontEnd implements CEPEngine {
 	
 	private String hostUrl;
@@ -23,12 +25,12 @@ public class PerseoFrontEnd implements CEPEngine {
 		this.hostUrl = hostUrl;
 	}
 
-	public ResponseEntity<?> createRule(CEPRule rule) {
+	public ResponseEntity<?> createRule(Rule rule) {
 		try {
 			HttpResponse<Object> response = Unirest.post(hostUrl + "/rules")
 			  .header("accept", "application/json")
 			  .header("content-type", "application/json")
-			  .body(new PerseoFERule(rule))
+			  .body(rule)
 			  .asObject(Object.class);
 			return new ResponseEntity<Object>(
 				response.getBody(),
