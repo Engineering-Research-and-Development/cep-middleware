@@ -31,7 +31,7 @@ public interface EngineRulesApi {
 	        @ApiResponse(code = 405, message = "A rule with the given Id already exists for the given engine, thus the creation failed")
         })
 	    @RequestMapping(value = "/engines/{engineId}/rules", method = RequestMethod.POST)
-	    ResponseEntity<Void> enginesEngineIdRulesPost(@ApiParam(value = "",required=true) @PathVariable("engineId") String engineId,@ApiParam(value = "" ,required=true )  @Valid @RequestBody String rule);
+	    ResponseEntity<Void> createRule(@ApiParam(value = "",required=true) @PathVariable("engineId") String engineId,@ApiParam(value = "" ,required=true )  @Valid @RequestBody String rule);
 
 
 	    @ApiOperation(value = "Removes a single rule from the engine")
@@ -40,7 +40,7 @@ public interface EngineRulesApi {
 	        @ApiResponse(code = 404, message = "Requested rule doesn't exist within the given engine or the engine doesn't exist")
         })
 	    @RequestMapping(value = "/engines/{engineId}/rules/{ruleId}", method = RequestMethod.DELETE)
-	    ResponseEntity<Void> enginesEngineIdRulesRuleIdDelete(@ApiParam(value = "",required=true) @PathVariable("engineId") String engineId,@ApiParam(value = "",required=true) @PathVariable("ruleId") String ruleId);
+	    ResponseEntity<Void> deleteRule(@ApiParam(value = "",required=true) @PathVariable("engineId") String engineId,@ApiParam(value = "",required=true) @PathVariable("ruleId") String ruleId);
 
 
 	    @ApiOperation(value = "Returns if the rule is enabled within the engine")
@@ -49,7 +49,7 @@ public interface EngineRulesApi {
 	        @ApiResponse(code = 404, message = "Rule doesn't exist or the engine doesn't exist")
         })
 	    @RequestMapping(value = "/engines/{engineId}/rules/{ruleId}/enabled", method = RequestMethod.GET)
-	    ResponseEntity<Void> enginesEngineIdRulesRuleIdEnabledGet(@ApiParam(value = "",required=true) @PathVariable("engineId") String engineId,@ApiParam(value = "",required=true) @PathVariable("ruleId") String ruleId);
+	    ResponseEntity<Void> ruleIsEnabled(@ApiParam(value = "",required=true) @PathVariable("engineId") String engineId,@ApiParam(value = "",required=true) @PathVariable("ruleId") String ruleId);
 
 
 	    @ApiOperation(value = "Enable or Disable a rule within an engine")
@@ -58,7 +58,7 @@ public interface EngineRulesApi {
 	        @ApiResponse(code = 404, message = "Rule doesn't exist or the engine doesn't exist")
         })
 	    @RequestMapping(value = "/engines/{engineId}/rules/{ruleId}/enabled", method = RequestMethod.PUT)
-	    ResponseEntity<Void> enginesEngineIdRulesRuleIdEnabledPut(@ApiParam(value = "",required=true) @PathVariable("engineId") String engineId,@ApiParam(value = "",required=true) @PathVariable("ruleId") String ruleId,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Boolean enableSwitch);
+	    ResponseEntity<Void> switchRule(@ApiParam(value = "",required=true) @PathVariable("engineId") String engineId,@ApiParam(value = "",required=true) @PathVariable("ruleId") String ruleId,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Boolean enableSwitch);
 
 
 	    @ApiOperation(value = "Returns a single rule within the engine")
@@ -67,7 +67,7 @@ public interface EngineRulesApi {
 	        @ApiResponse(code = 404, message = "Requested rule doesn't exist or the engine doesn't exist")
         })
 	    @RequestMapping(value = "/engines/{engineId}/rules/{ruleId}", method = RequestMethod.GET)
-	    ResponseEntity<Void> enginesEngineIdRulesRuleIdGet(@ApiParam(value = "",required=true) @PathVariable("engineId") String engineId,@ApiParam(value = "",required=true) @PathVariable("ruleId") String ruleId);
+	    ResponseEntity<Void> getRule(@ApiParam(value = "",required=true) @PathVariable("engineId") String engineId,@ApiParam(value = "",required=true) @PathVariable("ruleId") String ruleId);
 
 
 	    @ApiOperation(value = "Modify a single rule within the engine")
@@ -76,6 +76,6 @@ public interface EngineRulesApi {
 	        @ApiResponse(code = 404, message = "Requested rule doesn't exist within the given engine or the engine doesn't exist")
         })
 	    @RequestMapping(value = "/engines/{engineId}/rules/{ruleId}", method = RequestMethod.PUT)
-	    ResponseEntity<Void> enginesEngineIdRulesRuleIdPut(@ApiParam(value = "",required=true) @PathVariable("engineId") String engineId,@ApiParam(value = "",required=true) @PathVariable("ruleId") String ruleId,@ApiParam(value = "" ,required=true )  @Valid @RequestBody String rule);
+	    ResponseEntity<Void> updateRule(@ApiParam(value = "",required=true) @PathVariable("engineId") String engineId,@ApiParam(value = "",required=true) @PathVariable("ruleId") String ruleId,@ApiParam(value = "" ,required=true )  @Valid @RequestBody String rule);
 
 }
