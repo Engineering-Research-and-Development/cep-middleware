@@ -18,7 +18,7 @@ import it.eng.cepmiddleware.rule.Rule;
 public class EngineRulesController implements EngineRulesApi {
 
 	@Override
-	public ResponseEntity<Void> getRule(String engineId, String ruleId) {
+	public ResponseEntity<?> getRule(String engineId, String ruleId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -30,32 +30,31 @@ public class EngineRulesController implements EngineRulesApi {
 	}
 
 	@Override
-	public ResponseEntity<Void> createRule(String engineId, @Valid String rule) {
+	public ResponseEntity<?> createRule(String engineId, @Valid String rule) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ResponseEntity<Void> deleteRule(String engineId, String ruleId) {
+	public ResponseEntity<?> deleteRule(String engineId, String ruleId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ResponseEntity<Void> updateRule(String engineId, String ruleId, @Valid String rule) {
+	public ResponseEntity<?> updateRule(String engineId, String ruleId, @Valid String rule) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ResponseEntity<Void> ruleIsEnabled(String engineId, String ruleId) {
+	public ResponseEntity<?> ruleIsEnabled(String engineId, String ruleId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ResponseEntity<Void> toggleRule(String engineId, String ruleId,
-			@Valid Boolean enableSwitch) {
+	public ResponseEntity<?> toggleRule(String engineId, String ruleId, @Valid Boolean enableSwitch) {
 		// TODO Auto-generated method stub
 		return null;
 	}
