@@ -1,26 +1,27 @@
 package it.eng.cepmiddleware.api.v1.engine.rules;
 
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-
-import it.eng.cepmiddleware.engine.CEPEngine;
-import it.eng.cepmiddleware.engine.CEPEngineFactory;
-import it.eng.cepmiddleware.rule.PerseoFERule;
-import it.eng.cepmiddleware.rule.PerseoFERuleRepository;
-import it.eng.cepmiddleware.rule.Rule;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class EngineRulesController implements EngineRulesApi {
 
+	@Autowired GetRuleService getRuleService;
+	@Autowired CreateRuleService createRuleService;
+	
 	@Override
-	public ResponseEntity<?> getRule(String engineId, String ruleId) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<?> getRule(
+		@PathVariable("engineId") String engineId,
+		@PathVariable("ruleId") String ruleId
+	) {
+		return getRuleService.execute(engineId, ruleId);
 	}
 	
 	@Override
@@ -30,9 +31,11 @@ public class EngineRulesController implements EngineRulesApi {
 	}
 
 	@Override
-	public ResponseEntity<?> createRule(String engineId, @Valid String rule) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<?> createRule(
+		@PathVariable("engineId") String engineId,
+		@Valid @RequestBody Map<String, Object> rule
+	) {
+		return createRuleService.execute(engineId, rule);
 	}
 
 	@Override
