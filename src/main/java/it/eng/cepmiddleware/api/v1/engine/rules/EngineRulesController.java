@@ -16,50 +16,46 @@ import it.eng.cepmiddleware.rule.Rule;
 
 @Controller
 public class EngineRulesController implements EngineRulesApi {
-	
-	@Autowired
-	CEPEngineFactory engineFactory;
-	
-	@Autowired
-	PerseoFERuleRepository repo;
 
+	@Override
+	public ResponseEntity<Void> getRule(String engineId, String ruleId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	@Override
 	public ResponseEntity<?> getRules(@PathVariable("engineId") String engineId) {
-		return null;
-	}
-
-	@Override
-	public ResponseEntity<Void> enginesEngineIdRulesPost(String engineId, @Valid String rule) {
-		return null;
-	}
-
-	@Override
-	public ResponseEntity<Void> enginesEngineIdRulesRuleIdDelete(String engineId, String ruleId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ResponseEntity<Void> enginesEngineIdRulesRuleIdEnabledGet(String engineId, String ruleId) {
+	public ResponseEntity<Void> createRule(String engineId, @Valid String rule) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ResponseEntity<Void> enginesEngineIdRulesRuleIdEnabledPut(String engineId, String ruleId,
+	public ResponseEntity<Void> deleteRule(String engineId, String ruleId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResponseEntity<Void> updateRule(String engineId, String ruleId, @Valid String rule) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResponseEntity<Void> ruleIsEnabled(String engineId, String ruleId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResponseEntity<Void> toggleRule(String engineId, String ruleId,
 			@Valid Boolean enableSwitch) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ResponseEntity<Void> enginesEngineIdRulesRuleIdGet(String engineId, String ruleId) {
-		System.out.println(engineId);
-		return null;
-	}
-
-	@Override
-	public ResponseEntity<Void> enginesEngineIdRulesRuleIdPut(String engineId, String ruleId, @Valid String rule) {
 		// TODO Auto-generated method stub
 		return null;
 	}
