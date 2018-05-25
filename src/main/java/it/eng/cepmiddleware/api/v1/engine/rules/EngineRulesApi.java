@@ -1,5 +1,7 @@
 package it.eng.cepmiddleware.api.v1.engine.rules;
 
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
@@ -31,7 +33,7 @@ public interface EngineRulesApi {
 	        @ApiResponse(code = 405, message = "A rule with the given Id already exists for the given engine, thus the creation failed")
         })
 	    @RequestMapping(value = "/engines/{engineId}/rules", method = RequestMethod.POST)
-	    ResponseEntity<?> createRule(@ApiParam(value = "",required=true) @PathVariable("engineId") String engineId,@ApiParam(value = "" ,required=true )  @Valid @RequestBody String rule);
+	    ResponseEntity<?> createRule(@ApiParam(value = "",required=true) @PathVariable("engineId") String engineId, @ApiParam(value = "" ,required=true )  @Valid @RequestBody Map<String, Object> rule);
 
 
 	    @ApiOperation(value = "Removes a single rule from the engine")
