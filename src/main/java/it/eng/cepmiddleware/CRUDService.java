@@ -9,6 +9,6 @@ public interface CRUDService<T, ID> {
 	public Optional<T> read(ID entityId);
 	public Collection<T> read();
 	public T update(T entity);
-	public void delete(ID entityId);
+	public void delete(ID entityId) throws Exception;
 
 }
