@@ -7,6 +7,7 @@ Go back and autowire everything :(
 ## Object reuse optimizations
 it.eng.cepmiddleware.api.v1.engine.GetEnginesService
 it.eng.cepmiddleware.api.v1.engine.GetEngineService
+/CEP-middleware/src/main/java/it/eng/cepmiddleware/rule/Rule.java << Hashids
 
 ## Reconsider design choice
 /CEP-middleware/src/main/java/it/eng/cepmiddleware/Service.java {
