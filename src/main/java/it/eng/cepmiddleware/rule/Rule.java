@@ -5,31 +5,45 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import it.eng.cepmiddleware.HashidsComponent;
+
 @Entity(name = "Rule")
 public class Rule {
 	
-	@Id
-	@GeneratedValue
+	private HashidsComponent hashids;
+
 	private Long id;
 	
-	@Column(nullable = false, unique=true)
 	private String ruleId;
-	
+
 	private String description;
 	
-	@Column(nullable = false)
 	private String statement;
 
-	@Column(nullable = false)
 	private String owner;
 	
-	public Rule() {}
-
-	public String getRuleId() {
-		return ruleId;
+	public Rule() {
+		this.hashids = new HashidsComponent();
 	}
 
-	public void setRuleId(String ruleId) {
+	@Id
+	@GeneratedValue
+	protected Long getId() {
+		return id;
+	}
+
+	protected void setId(Long id) {
+		this.id = id;
+		this.setRuleId(hashids.convert(id));
+	}
+
+	public String getRuleId() {
+		return this.ruleId;
+	}
+	
+	private void setRuleId(String ruleId) {
 		this.ruleId = ruleId;
 	}
 
@@ -41,6 +55,7 @@ public class Rule {
 		this.description = description;
 	}
 
+	@Column(nullable = false)
 	public String getStatement() {
 		return statement;
 	}
@@ -49,12 +64,19 @@ public class Rule {
 		this.statement = statement;
 	}
 
+	@Column(nullable = false)
 	public String getOwner() {
 		return owner;
 	}
 
 	public void setOwner(String owner) {
 		this.owner = owner;
+	}
+
+	@Override
+	public String toString() {
+		return "Rule [Id=" + id + ", description=" + description + ", statement=" + statement + ", owner="
+				+ owner + "]";
 	}
 	
 }
