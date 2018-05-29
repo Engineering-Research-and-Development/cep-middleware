@@ -93,4 +93,10 @@ public class PerseoFrontEnd implements CEPEngine {
 		return null;
 	}
 
+	@Override
+	public ResponseEntity<?> updateRule(Rule rule) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
