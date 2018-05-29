@@ -82,7 +82,6 @@ public class PerseoCore implements CEPEngine {
 	@Override
 	public ResponseEntity<?> deleteRule(String ruleId) {
 		try {
-			System.out.println(hostUrl + "/perseo-core/rules" + ruleId);
 			HttpResponse<Object> response = Unirest.delete(hostUrl + "/perseo-core/rules/" + ruleId)
 			  .header("accept", "application/json")
 			  .asObject(Object.class);
