@@ -34,7 +34,7 @@ public class CreateRuleService implements Service {
 		} catch (Exception e) {
 			return new ResponseEntity<String>("Couldn't save the rule :(", HttpStatus.BAD_REQUEST);
 		}
-		return ResponseEntity.accepted().build();
+		return ResponseEntity.ok().build();
 	}
 
 }
