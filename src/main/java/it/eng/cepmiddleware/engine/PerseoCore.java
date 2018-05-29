@@ -80,6 +80,21 @@ public class PerseoCore implements CEPEngine {
 	}
 
 	@Override
+	public ResponseEntity<?> updateRule(Rule rule) {
+		String ruleId = rule.getRuleId();
+		try {
+			if (getRule(ruleId).getStatusCode().is2xxSuccessful()) {
+				if (deleteRule(ruleId).getStatusCode().is2xxSuccessful()) {
+					return createRule(rule);
+				}
+			};
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
+		return ResponseEntity.badRequest().build();
+	}
+
+	@Override
 	public ResponseEntity<?> deleteRule(String ruleId) {
 		try {
 			HttpResponse<Object> response = Unirest.delete(hostUrl + "/perseo-core/rules/" + ruleId)
