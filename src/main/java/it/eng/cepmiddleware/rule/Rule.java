@@ -11,12 +11,14 @@ import it.eng.cepmiddleware.HashidsComponent;
 
 @Entity(name = "Rule")
 public class Rule {
-	
+
+	static final String defaultRuleId = "initial";
+
 	private HashidsComponent hashids;
 
 	private Long id;
 	
-	private String ruleId;
+	private String ruleId = Rule.defaultRuleId;
 
 	private String description;
 	
