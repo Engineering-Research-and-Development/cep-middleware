@@ -1,16 +1,40 @@
 package it.eng.cepmiddleware.api.v1.engine.rules;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import it.eng.cepmiddleware.Service;
+import it.eng.cepmiddleware.engine.CEPEngineFactory;
+import it.eng.cepmiddleware.engine.ErrorCEPEngine;
+import it.eng.cepmiddleware.rule.RuleCRUDService;
 
 @org.springframework.stereotype.Service
 public class GetRulesService implements Service {
 
+	@Autowired RuleCRUDService ruleCRUDService;
+	@Autowired CEPEngineFactory engineFactory;
+	ResponseEntity<String> paramError = new ResponseEntity<String>(
+		"Correct parameters not provided",
+		HttpStatus.BAD_REQUEST
+	);
+
 	@Override
 	public ResponseEntity<?> execute(Object... parameters) {
-		// TODO Auto-generated method stub
-		return null;
+		if (parameters[0] instanceof String) {
+			String engineId = (String) parameters[0];
+			return getRulesService(engineId);
+		}
+		return paramError;
+	}
+
+	private ResponseEntity<?> getRulesService(String engineId) {
+		if (!(engineFactory.getCEPEngine(engineId) instanceof ErrorCEPEngine)) {
+			return new ResponseEntity<>(
+				ruleCRUDService.read().stream().filter((rule) -> rule.getOwner().equals(engineId)),
+				HttpStatus.OK
+			);
+		} else return new ResponseEntity<>("CEP engine doesn't exist", HttpStatus.NOT_FOUND);
 	}
 
 }
