@@ -1,8 +1,11 @@
 package it.eng.cepmiddleware.engine;
 
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import it.eng.cepmiddleware.Converter;
 import it.eng.cepmiddleware.rule.Rule;
 
 public class ErrorCEPEngine implements CEPEngine {
@@ -10,7 +13,12 @@ public class ErrorCEPEngine implements CEPEngine {
 	private String errorMessage = "This is not the CEP Engine you are looking for...";
 	
 	private ResponseEntity<String> errorResponse = new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
-	
+
+	@Override
+	public String getName() {
+		return "error";
+	}
+
 	public String getErrorMessage() {
 		return this.errorMessage;
 	}
@@ -31,8 +39,13 @@ public class ErrorCEPEngine implements CEPEngine {
 	}
 
 	@Override
-	public void accept(CEPEngineVisitor visitor) {
-		visitor.visit(this);
+	public ResponseEntity<?> deleteRule(String ruleId) {
+		return errorResponse;
+	}
+
+	@Override
+	public Converter<? extends Rule, Map<String, Object>> getConverter() {
+		return null;
 	}
 
 }
