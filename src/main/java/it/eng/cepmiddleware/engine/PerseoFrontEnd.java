@@ -1,5 +1,7 @@
 package it.eng.cepmiddleware.engine;
 
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -7,14 +9,22 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
+import it.eng.cepmiddleware.Converter;
 import it.eng.cepmiddleware.rule.Rule;
 
 public class PerseoFrontEnd implements CEPEngine {
 	
 	private String hostUrl;
+	private String name;
 
-	public PerseoFrontEnd(String hostUrl) {
+	public PerseoFrontEnd(String name, String hostUrl) {
 		this.hostUrl = hostUrl;
+		this.name = name;
+	}
+
+	@Override
+	public String getName() {
+		return this.name;
 	}
 	
 	public String getHostUrl() {
@@ -72,7 +82,15 @@ public class PerseoFrontEnd implements CEPEngine {
 	}
 
 	@Override
-	public void accept(CEPEngineVisitor visitor) {
-		visitor.visit(this);
+	public Converter<? extends Rule, Map<String, Object>> getConverter() {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	@Override
+	public ResponseEntity<?> deleteRule(String ruleId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
