@@ -6,7 +6,7 @@ import it.eng.cepmiddleware.Converter;
 import it.eng.cepmiddleware.rule.Rule;
 
 public class PerseoCoreConverter implements Converter<Rule, Map<String, Object>> {
-	
+
 	private String ownerEngineName;
 
 	PerseoCoreConverter(String ownerEngineName) {
