@@ -34,6 +34,7 @@ public class UpdateRuleService implements Service {
 
 	private ResponseEntity<?> updateRule(String engineId, String ruleId, Map<String, Object> ruleMap) {
 		Rule rule = engineFactory.getCEPEngine(engineId).getRuleConverter().convert(ruleMap);
+		rule.setRuleId(ruleId);
 		try {
 			ruleCRUDService.update(rule);
 		} catch (Exception e) {
