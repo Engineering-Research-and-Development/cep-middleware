@@ -18,6 +18,8 @@ public class EngineRulesController implements EngineRulesApi {
 	@Autowired GetRulesService getRulesService;
 	@Autowired DeleteRuleService deleteRuleService;
 	@Autowired UpdateRuleService updateRuleService;
+	@Autowired RuleIsEnabledService ruleIsEnabledService;
+	@Autowired ToggleRuleService toggleRuleService;
 	
 	@Override
 	public ResponseEntity<?> getRule(
@@ -59,14 +61,12 @@ public class EngineRulesController implements EngineRulesApi {
 
 	@Override
 	public ResponseEntity<?> ruleIsEnabled(String engineId, String ruleId) {
-		// TODO Auto-generated method stub
-		return null;
+		return ruleIsEnabledService.execute(engineId, ruleId);
 	}
 
 	@Override
 	public ResponseEntity<?> toggleRule(String engineId, String ruleId, @Valid Boolean enableSwitch) {
-		// TODO Auto-generated method stub
-		return null;
+		return toggleRuleService.execute(engineId, ruleId, enableSwitch);
 	}
 
 }
