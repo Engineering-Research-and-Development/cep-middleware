@@ -15,6 +15,9 @@ public class EngineRulesController implements EngineRulesApi {
 
 	@Autowired GetRuleService getRuleService;
 	@Autowired CreateRuleService createRuleService;
+	@Autowired GetRulesService getRulesService;
+	@Autowired DeleteRuleService deleteRuleService;
+	@Autowired UpdateRuleService updateRuleService;
 	
 	@Override
 	public ResponseEntity<?> getRule(
@@ -26,8 +29,7 @@ public class EngineRulesController implements EngineRulesApi {
 	
 	@Override
 	public ResponseEntity<?> getRules(@PathVariable("engineId") String engineId) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRulesService.execute(engineId);
 	}
 
 	@Override
@@ -39,15 +41,20 @@ public class EngineRulesController implements EngineRulesApi {
 	}
 
 	@Override
-	public ResponseEntity<?> deleteRule(String engineId, String ruleId) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<?> deleteRule(
+		@PathVariable("engineId") String engineId,
+		@PathVariable("ruleId") String ruleId
+	) {
+		return deleteRuleService.execute(engineId, ruleId);
 	}
 
 	@Override
-	public ResponseEntity<?> updateRule(String engineId, String ruleId, @Valid String rule) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<?> updateRule(
+		@PathVariable("engineId") String engineId,
+		@PathVariable("ruleId") String ruleId,
+		@Valid @RequestBody Map<String, Object> rule
+	) {
+		return updateRuleService.execute(engineId, ruleId, rule);
 	}
 
 	@Override
