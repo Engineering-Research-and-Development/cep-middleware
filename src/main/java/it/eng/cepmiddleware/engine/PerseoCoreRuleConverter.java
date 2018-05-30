@@ -5,11 +5,11 @@ import java.util.Map;
 import it.eng.cepmiddleware.Converter;
 import it.eng.cepmiddleware.rule.Rule;
 
-public class PerseoCoreConverter implements Converter<Rule, Map<String, Object>> {
+public class PerseoCoreRuleConverter implements Converter<Rule, Map<String, Object>> {
 
 	private String ownerEngineName;
 
-	PerseoCoreConverter(String ownerEngineName) {
+	PerseoCoreRuleConverter(String ownerEngineName) {
 		this.ownerEngineName = ownerEngineName;
 	}
 
