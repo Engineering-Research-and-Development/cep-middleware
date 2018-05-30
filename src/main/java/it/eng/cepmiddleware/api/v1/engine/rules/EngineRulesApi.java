@@ -77,7 +77,7 @@ public interface EngineRulesApi {
 	        @ApiResponse(code = 200, message = "Rule successfully modified"),
 	        @ApiResponse(code = 404, message = "Requested rule doesn't exist within the given engine or the engine doesn't exist")
         })
-	    @RequestMapping(value = "/engines/{engineId}/rules", method = RequestMethod.PUT)
+	    @RequestMapping(value = "/engines/{engineId}/rules/{ruleId}", method = RequestMethod.PUT)
 	    ResponseEntity<?> updateRule(
     		@ApiParam(value = "",required=true) @PathVariable("engineId") String engineId,
     		@ApiParam(value = "",required=true) @PathVariable("ruleId") String ruleId,
