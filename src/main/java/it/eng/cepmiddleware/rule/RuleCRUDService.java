@@ -3,7 +3,9 @@ package it.eng.cepmiddleware.rule;
 import java.util.Collection;
 import java.util.Optional;
 
+import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import it.eng.cepmiddleware.CRUDService;
@@ -18,17 +20,14 @@ public class RuleCRUDService implements CRUDService<Rule, String> {
 
 	@Override
 	public void create(Rule rule) throws Exception {
-		if (rule.getRuleId().equals(Rule.defaultRuleId)) {
-			CEPEngine engine = engineFactory.getCEPEngine(rule.getOwner());
-			if (engine.createRule(rule).getStatusCode().is2xxSuccessful()) {
-				repository.save(rule);
-				engine.deleteRule(Rule.defaultRuleId);
-				engine.createRule(rule);
-			} else {
-				throw new Exception(String.format("The %s engine couldn't save your rule", rule.getOwner()));
-			}
+		rule.setRuleId(Rule.defaultRuleId);
+		CEPEngine engine = engineFactory.getCEPEngine(rule.getOwner());
+		if (engine.createRule(rule).getStatusCode().is2xxSuccessful()) {
+			repository.save(rule);
+			engine.deleteRule(Rule.defaultRuleId);
+			engine.createRule(rule);
 		} else {
-			throw new Exception("Didn't expect non-default ruleId");
+			throw new Exception(String.format("The %s engine couldn't save your rule", rule.getOwner()));
 		}
 	}
 
@@ -39,19 +38,28 @@ public class RuleCRUDService implements CRUDService<Rule, String> {
 
 	@Override
 	public Collection<Rule> read() {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findAll();
 	}
 
 	@Override
-	public Rule update(Rule entity) {
-		// TODO Auto-generated method stub
-		return null;
+	public void update(Rule rule) {
+		CEPEngine engine = engineFactory.getCEPEngine(rule.getOwner());
+		if (engine.updateRule(rule).getStatusCode().is2xxSuccessful()) {
+			repository.save(rule);
+		}
 	}
 
 	@Override
-	public void delete(String entityId) {
-		// TODO Auto-generated method stub
+	public void delete(String ruleId) throws Exception {
+		Rule rule = repository.getRuleById(ruleId);
+		ResponseEntity<?> deleteResponse = engineFactory.
+			getCEPEngine(rule.getOwner())
+			.deleteRule(ruleId);
+		if (deleteResponse.getStatusCode().is2xxSuccessful()) {
+			repository.delete(rule);
+		} else {
+			throw new Exception("Rule couldn't be deleted");
+		}
 	}
 
 }
