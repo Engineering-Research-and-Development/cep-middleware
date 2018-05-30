@@ -28,7 +28,7 @@ public class CreateRuleService implements Service {
 	}
 
 	private ResponseEntity<?> createRule(String engineId, Map<String, Object> ruleMap) {
-		Rule rule = engineFactory.getCEPEngine(engineId).getConverter().convert(ruleMap);
+		Rule rule = engineFactory.getCEPEngine(engineId).getRuleConverter().convert(ruleMap);
 		try {
 			ruleCRUDService.create(rule);
 		} catch (Exception e) {
