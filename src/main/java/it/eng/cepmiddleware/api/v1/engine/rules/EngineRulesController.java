@@ -60,12 +60,19 @@ public class EngineRulesController implements EngineRulesApi {
 	}
 
 	@Override
-	public ResponseEntity<?> ruleIsEnabled(String engineId, String ruleId) {
+	public ResponseEntity<?> ruleIsEnabled(
+		@PathVariable("engineId") String engineId,
+		@PathVariable("ruleId") String ruleId
+	) {
 		return ruleIsEnabledService.execute(engineId, ruleId);
 	}
 
 	@Override
-	public ResponseEntity<?> toggleRule(String engineId, String ruleId, @Valid Boolean enableSwitch) {
+	public ResponseEntity<?> toggleRule(
+		@PathVariable("engineId") String engineId,
+		@PathVariable("ruleId") String ruleId,
+		@Valid @RequestBody Boolean enableSwitch
+	) {
 		return toggleRuleService.execute(engineId, ruleId, enableSwitch);
 	}
 
