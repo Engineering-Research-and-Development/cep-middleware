@@ -4,7 +4,7 @@ import org.hashids.Hashids;
 import org.springframework.stereotype.Component;
 
 @Component
-public class HashidsComponent implements Converter<String, Integer> {
+public class HashidsComponent implements Bijection<String, Long> {
 
 	private Hashids hashids;
 
@@ -17,12 +17,13 @@ public class HashidsComponent implements Converter<String, Integer> {
 	}
 
 	@Override
-	public String convert(Integer source) {
+	public String execute(Long source) throws Exception {
 		return hashids.encode(source);
 	}
 
-	public String convert(Long source) {
-		return hashids.encode(source);
+	@Override
+	public Long invert(String target) throws Exception {
+		return hashids.decode(target)[0];
 	}
 
 }
