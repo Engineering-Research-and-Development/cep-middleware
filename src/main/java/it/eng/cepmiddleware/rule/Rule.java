@@ -38,15 +38,24 @@ public class Rule {
 
 	protected void setId(Long id) {
 		this.id = id;
-		this.setRuleId(hashids.convert(id));
+		try {
+			this.ruleId = hashids.execute(id);
+		} catch (Exception e) {
+			System.out.println("hashids.execute got rekt");
+		}
 	}
 
 	public String getRuleId() {
 		return this.ruleId;
 	}
 	
-	private void setRuleId(String ruleId) {
+	public void setRuleId(String ruleId) {
 		this.ruleId = ruleId;
+		try {
+			this.id = hashids.invert(ruleId);
+		} catch (Exception e) {
+			System.out.println("hashids.invert got rekt");
+		}
 	}
 
 	public String getDescription() {
@@ -77,8 +86,14 @@ public class Rule {
 
 	@Override
 	public String toString() {
-		return "Rule [Id=" + id + ", description=" + description + ", statement=" + statement + ", owner="
-				+ owner + "]";
+		return
+			"Rule [hashids=" + hashids +
+			", id=" + id +
+			", ruleId=" + ruleId +
+			", description=" + description +
+			", statement=" + statement +
+			", owner=" + owner + "]"
+		;
 	}
 	
 }
