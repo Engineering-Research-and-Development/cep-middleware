@@ -44,7 +44,7 @@ public class ErrorCEPEngine implements CEPEngine {
 	}
 
 	@Override
-	public Converter<? extends Rule, Map<String, Object>> getConverter() {
+	public Converter<? extends Rule, Map<String, Object>> getRuleConverter() {
 		return null;
 	}
 

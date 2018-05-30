@@ -15,6 +15,6 @@ public interface CEPEngine {
 	public ResponseEntity<?> updateRule(Rule rule);
 	public ResponseEntity<?> deleteRule(String ruleId);
 	public String getName();
-	public Converter<? extends Rule, Map<String, Object>> getConverter();
+	public Converter<? extends Rule, Map<String, Object>> getRuleConverter();
 
 }

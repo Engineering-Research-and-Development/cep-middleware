@@ -82,7 +82,7 @@ public class PerseoFrontEnd implements CEPEngine {
 	}
 
 	@Override
-	public Converter<? extends Rule, Map<String, Object>> getConverter() {
+	public Converter<? extends Rule, Map<String, Object>> getRuleConverter() {
 		// TODO Auto-generated method stub
 		return null;
 	}

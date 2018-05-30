@@ -110,8 +110,8 @@ public class PerseoCore implements CEPEngine {
 	}
 
 	@Override
-	public Converter<? extends Rule, Map<String, Object>> getConverter() {
-		return new PerseoCoreConverter(this.getName());
+	public Converter<? extends Rule, Map<String, Object>> getRuleConverter() {
+		return new PerseoCoreRuleConverter(this.getName());
 	}
 	
 }
