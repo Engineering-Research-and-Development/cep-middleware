@@ -14,6 +14,8 @@ it.eng.cepmiddleware.api.v1.engine.GetEngineService
 	Is it a good idea to use Object varargs in an interface?
 }
 /CEP-middleware/src/main/java/it/eng/cepmiddleware/CEPEngine.java {
+	Reconsider the visitor approach. Generally the same implementation goes for each sub-type.
+	static method and abstract class approach don't look good.
 	Conclusion: Visitor ditched :)
 }
 
@@ -23,4 +25,7 @@ it.eng.cepmiddleware.rule {
 }
 it.eng.cepmiddleware.engine.PerseoCore {
 	updateRule will definitelly be a problem, must fix
+}
+it.eng.cepmiddleware.api.v1.engine.rules.ToggleRuleService {
+	There's definitelly gonna be an issue here. Check it out in the future.
 }
