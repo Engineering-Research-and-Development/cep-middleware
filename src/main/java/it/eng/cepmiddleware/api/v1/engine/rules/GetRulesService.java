@@ -31,7 +31,7 @@ public class GetRulesService implements Service {
 	private ResponseEntity<?> getRulesService(String engineId) {
 		if (!(engineFactory.getCEPEngine(engineId) instanceof ErrorCEPEngine)) {
 			return new ResponseEntity<>(
-				ruleCRUDService.read().stream().filter((rule) -> rule.getOwner().equals(engineId)),
+				ruleCRUDService.read().stream().filter((rule) -> rule.getOwner().equals(engineId)).toArray(),
 				HttpStatus.OK
 			);
 		} else return new ResponseEntity<>("CEP engine doesn't exist", HttpStatus.NOT_FOUND);
