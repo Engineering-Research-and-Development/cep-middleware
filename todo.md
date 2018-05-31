@@ -29,3 +29,6 @@ it.eng.cepmiddleware.engine.PerseoCore {
 it.eng.cepmiddleware.api.v1.engine.rules.ToggleRuleService {
 	There's definitely gonna be an issue here. Check it out in the future.
 }
+com.fasterxml.jackson.core {
+	Things that work with json dont work with xml requests
+}
