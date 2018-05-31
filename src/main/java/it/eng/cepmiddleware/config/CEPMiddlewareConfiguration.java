@@ -1,5 +1,6 @@
 package it.eng.cepmiddleware.config;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +27,7 @@ public class CEPMiddlewareConfiguration {
 		return cepEngines.getOrDefault(id, cepEngines.get("error"));
 	}
 	
-	public Object[] getEngines() {
-		return cepEngines.values().toArray();
+	public Collection<CEPEngine> getEngines() {
+		return cepEngines.values();
 	}
 }
