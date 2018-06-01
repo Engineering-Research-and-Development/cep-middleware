@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,7 +25,8 @@ public class CEPMiddlewareConfiguration {
 	@Value("${path.perseo-fe}")
 	String perseoFEPath;
 	
-	public CEPMiddlewareConfiguration() {
+	@PostConstruct
+	private void init() {
 		this.cepEngines = new HashMap<String, CEPEngine>();
 		this.cepEngines.put("perseo-core", new PerseoCore("perseo-core", perseoCorePath));
 		this.cepEngines.put("perseo-fe", new PerseoFrontEnd("perseo-fe", perseoFEPath));

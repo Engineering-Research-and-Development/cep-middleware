@@ -1,5 +1,6 @@
 package it.eng.cepmiddleware.engine;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import it.eng.cepmiddleware.config.CEPMiddlewareConfiguration;
@@ -7,11 +8,7 @@ import it.eng.cepmiddleware.config.CEPMiddlewareConfiguration;
 @Component
 public class CachedEngineFactory implements CEPEngineFactory {
 
-	private CEPMiddlewareConfiguration config;
-	
-	CachedEngineFactory() {
-		config = new CEPMiddlewareConfiguration();
-	}
+	@Autowired private CEPMiddlewareConfiguration config;
 	
 	@Override
 	public CEPEngine getCEPEngine(String engineId) {
