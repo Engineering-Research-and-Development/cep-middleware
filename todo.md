@@ -32,3 +32,6 @@ it.eng.cepmiddleware.api.v1.engine.rules.ToggleRuleService {
 com.fasterxml.jackson.core {
 	Things that work with json dont work with xml requests
 }
+PUT rule/{ruleId} {
+	After doing an unsuccesful PUT ona rule, no other rule will be detected. This has to do something with the intermediate state.
+}
