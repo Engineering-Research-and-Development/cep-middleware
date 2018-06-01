@@ -1,0 +1,52 @@
+mongo:
+  image: mongo:3.4
+  command: --nojournal
+  ports:
+   - "27017:27017"
+orion:
+  image: fiware/orion
+  links:
+   - mongo
+  ports:
+   - "1026:1026"
+  command: -dbhost mongo
+perseo-core:
+   image: telefonicaiot/perseo-core
+   ports: 
+     - "8080:8080"
+   links:
+     - mongo
+     - orion
+   command: -perseo_fe_url perseo-fe:9090
+perseo-fe:
+   image: telefonicaiot/perseo-fe
+   ports: 
+     - "9090:9090"
+   links:
+     - mongo
+     - orion
+     - perseo-core
+   environment:
+     - PERSEO_MONGO_ENDPOINT=mongo
+     - PERSEO_CORE_URL=http://perseo-core:8080
+     - PERSEO_LOG_LEVEL=debug
+     - PERSEO_ORION_URL=http://orion:1026/v1/updateContext
+PostgreSQL:
+  restart: always
+  image: sameersbn/postgresql:9.6-2
+  ports:
+    - "5432:5432"
+  environment:
+    - DEBUG=false
+    - DB_USER=root
+    - DB_PASS=root
+    - DB_NAME=postgres
+CEP-middleware:
+   image: drobniac/cep-middleware
+   ports:
+     - "8091:8090"
+   links:
+     - PostgreSQL
+     - perseo-fe
+     - perseo-core
+   command: --path.perseo-fe="http://perseo-fe:9090" --path.perseo-core="http://perseo-core:8080" --spring.datasource.url="jdbc:postgresql://PostgreSQL:5432/postgres"
