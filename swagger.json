@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "cep-middlware",
+    "title": "cep-middleware",
     "version": "0.0",
     "contact": {
       "email": "drobniac@gmail.com"
