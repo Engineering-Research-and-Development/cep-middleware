@@ -100,8 +100,17 @@ public class PerseoFrontEnd implements CEPEngine {
 
 	@Override
 	public ResponseEntity<?> updateRule(Rule rule) {
-		// TODO Auto-generated method stub
-		return null;
+		String ruleId = rule.getRuleId();
+		try {
+			if (getRule(ruleId).getStatusCode().is2xxSuccessful()) {
+				if (deleteRule(ruleId).getStatusCode().is2xxSuccessful()) {
+					return createRule(rule);
+				}
+			};
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
+		return ResponseEntity.badRequest().build();
 	}
 
 	@Override
