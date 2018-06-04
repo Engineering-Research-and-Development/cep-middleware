@@ -36,11 +36,12 @@ public class PerseoFrontEnd implements CEPEngine {
 	}
 
 	public ResponseEntity<?> createRule(Rule rule) {
+		PerseoFERuleAdapter adaptedRule = new PerseoFERuleAdapter(rule);
 		try {
 			HttpResponse<Object> response = Unirest.post(hostUrl + "/rules")
 			  .header("accept", "application/json")
 			  .header("content-type", "application/json")
-			  .body(rule)
+			  .body(adaptedRule)
 			  .asObject(Object.class);
 			return new ResponseEntity<Object>(
 				response.getBody(),
@@ -82,21 +83,30 @@ public class PerseoFrontEnd implements CEPEngine {
 	}
 
 	@Override
-	public Converter<? extends Rule, Map<String, Object>> getRuleConverter() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public ResponseEntity<?> deleteRule(String ruleId) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			HttpResponse<Object> response = Unirest.delete(hostUrl + "/rules/" + ruleId)
+			  .header("accept", "application/json")
+			  .header("content-type", "application/json")
+			  .asObject(Object.class);
+			return new ResponseEntity<Object>(
+				response.getBody(),
+				HttpStatus.resolve(response.getStatus())
+			);
+		} catch (UnirestException e) {
+			return new ResponseEntity<Void>(HttpStatus.BAD_GATEWAY);
+		}
 	}
 
 	@Override
 	public ResponseEntity<?> updateRule(Rule rule) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Converter<? extends Rule, Map<String, Object>> getRuleConverter() {
+		return new PerseoFERuleConverter(this.getName());
 	}
 
 }
