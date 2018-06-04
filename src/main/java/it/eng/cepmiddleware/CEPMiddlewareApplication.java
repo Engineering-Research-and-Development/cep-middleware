@@ -10,7 +10,7 @@ import com.mashape.unirest.http.Unirest;
 public class CEPMiddlewareApplication {
 
 	public static void main(String[] args) {
-		Unirest.setObjectMapper(new UnirestObjectMapper());
+		Unirest.setObjectMapper(ObjectMapperProvider.getObjectMapper());
 		SpringApplication.run(CEPMiddlewareApplication.class, args);
 	}
 
