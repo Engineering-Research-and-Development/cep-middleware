@@ -42,7 +42,7 @@ public class RuleCRUDService implements CRUDService<Rule, String> {
 	}
 
 	@Override
-	public void update(Rule rule) {
+	public void update(Rule rule) throws Exception {
 		CEPEngine engine = engineFactory.getCEPEngine(rule.getOwner());
 		if (engine.updateRule(rule).getStatusCode().is2xxSuccessful()) {
 			repository.save(rule);
