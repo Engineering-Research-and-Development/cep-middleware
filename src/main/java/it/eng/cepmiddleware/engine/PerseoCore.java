@@ -1,24 +1,27 @@
 package it.eng.cepmiddleware.engine;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
-
 import it.eng.cepmiddleware.Converter;
+import it.eng.cepmiddleware.engine.perseo_core.PerseoCoreNativeRule;
+import it.eng.cepmiddleware.engine.perseo_core.PerseoCoreRuleCRUDService;
 import it.eng.cepmiddleware.rule.Rule;
+
+import java.util.stream.Collectors;
 
 public class PerseoCore implements CEPEngine {
 	
 	private String hostUrl;
 	private String name;
+	private PerseoCoreRuleCRUDService perseoCoreCRUD;
 
 	public PerseoCore(String name, String hostUrl) {
 		this.hostUrl = hostUrl;
+		this.perseoCoreCRUD = new PerseoCoreRuleCRUDService(this.hostUrl);
 		this.name = name;
 	}
 
@@ -30,82 +33,58 @@ public class PerseoCore implements CEPEngine {
 	public String getHostUrl() {
 		return hostUrl;
 	}
-
-	public void setHostUrl(String hostUrl) {
-		this.hostUrl = hostUrl;
-	}
 	
 	public ResponseEntity<?> createRule(Rule rule) {
-		PerseoCoreRuleAdapter adaptedRule = new PerseoCoreRuleAdapter(rule);
+		UniformToNativePerseoCoreRuleAdapter adaptedRule = new UniformToNativePerseoCoreRuleAdapter(rule);
 		try {
-			HttpResponse<Object> response = Unirest.post(hostUrl + "/perseo-core/rules")
-			  .header("accept", "application/json")
-			  .body(adaptedRule)
-			  .asObject(Object.class);
-			return new ResponseEntity<Object>(
-				response.getBody(),
-				HttpStatus.resolve(response.getStatus())
-			);
-		} catch (UnirestException e) {
-			return new ResponseEntity<Void>(HttpStatus.BAD_GATEWAY);
+			perseoCoreCRUD.create(adaptedRule);
+			return ResponseEntity.ok().build();
+		} catch (Exception e) {
+			return new ResponseEntity<Void>(HttpStatus.METHOD_NOT_ALLOWED);
 		}
 	}
 	
 	public ResponseEntity<?> getRule(String ruleId) {
-		try {
-			HttpResponse<Object> response = Unirest.get(hostUrl + "/perseo-core/rules/" + ruleId)
-			  .header("accept", "application/json")
-			  .asObject(Object.class);
-			return new ResponseEntity<Object>(
-				response.getBody(),
-				HttpStatus.resolve(response.getStatus())
-			);
-		} catch (UnirestException e) {
-			return new ResponseEntity<Void>(HttpStatus.BAD_GATEWAY);
-		}
+		return perseoCoreCRUD.read(ruleId)
+			.<Rule>map((nativeRule) -> {
+				return new NativeToUniformPerseoCoreRuleAdapter(nativeRule);
+			})
+			.<ResponseEntity<Rule>>map((rule) -> {
+				return new ResponseEntity<Rule>(rule, HttpStatus.OK);
+			})
+			.orElseGet(() -> ResponseEntity.badRequest().build());
 	}
 	
 	public ResponseEntity<?> getRules() {
-		try {
-			HttpResponse<Object> response = Unirest.get(hostUrl + "/perseo-core/rules")
-			  .header("accept", "application/json")
-			  .asObject(Object.class);
-			return new ResponseEntity<Object>(
-				response.getBody(),
-				HttpStatus.resolve(response.getStatus())
-			);
-		} catch (UnirestException e) {
-			return new ResponseEntity<Void>(HttpStatus.BAD_GATEWAY);
+		List result = perseoCoreCRUD.read().stream()
+			.<Rule>map((nativeRule) -> {
+				return new NativeToUniformPerseoCoreRuleAdapter(nativeRule);
+			})
+			.collect(Collectors.toList());
+		if (result.isEmpty()) {
+			return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 		}
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@Override
 	public ResponseEntity<?> updateRule(Rule rule) {
-		String ruleId = rule.getRuleId();
+		PerseoCoreNativeRule adaptedRule = new UniformToNativePerseoCoreRuleAdapter(rule);
 		try {
-			if (getRule(ruleId).getStatusCode().is2xxSuccessful()) {
-				if (deleteRule(ruleId).getStatusCode().is2xxSuccessful()) {
-					return createRule(rule);
-				}
-			};
+			perseoCoreCRUD.update(adaptedRule);
+			return ResponseEntity.ok().build();
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().build();
+			return new ResponseEntity<Void>(HttpStatus.METHOD_NOT_ALLOWED);
 		}
-		return ResponseEntity.badRequest().build();
 	}
 
 	@Override
 	public ResponseEntity<?> deleteRule(String ruleId) {
 		try {
-			HttpResponse<Object> response = Unirest.delete(hostUrl + "/perseo-core/rules/" + ruleId)
-			  .header("accept", "application/json")
-			  .asObject(Object.class);
-			return new ResponseEntity<Object>(
-				response.getBody(),
-				HttpStatus.resolve(response.getStatus())
-			);
-		} catch (UnirestException e) {
-			return new ResponseEntity<Void>(HttpStatus.BAD_GATEWAY);
+			perseoCoreCRUD.delete(ruleId);
+			return ResponseEntity.ok().build();
+		} catch (Exception e) {
+			return new ResponseEntity<Void>(HttpStatus.METHOD_NOT_ALLOWED);
 		}
 	}
 
