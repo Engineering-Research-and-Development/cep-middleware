@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import it.eng.cepmiddleware.Service;
-import it.eng.cepmiddleware.api.v1.engine.adapter.Engine;
 import it.eng.cepmiddleware.engine.CEPEngineFactory;
 
 @org.springframework.stereotype.Service
@@ -23,7 +22,7 @@ public class GetEngineService implements Service {
 	}
 
 	private ResponseEntity<?> getEngine(String engineId) {
-		return new ResponseEntity<>(new Engine(engineFactory.getCEPEngine(engineId)), HttpStatus.OK);
+		return new ResponseEntity<>(new EngineAdapter(engineFactory.getCEPEngine(engineId)), HttpStatus.OK);
 	}
 
 }

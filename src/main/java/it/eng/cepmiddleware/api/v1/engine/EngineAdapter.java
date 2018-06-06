@@ -1,12 +1,12 @@
-package it.eng.cepmiddleware.api.v1.engine.adapter;
+package it.eng.cepmiddleware.api.v1.engine;
 
 import it.eng.cepmiddleware.engine.CEPEngine;
 
-public class Engine {
+public class EngineAdapter {
 
 	private CEPEngine engine;
 
-	public Engine(CEPEngine engine) {
+	public EngineAdapter(CEPEngine engine) {
 		this.engine = engine;
 	}
 
