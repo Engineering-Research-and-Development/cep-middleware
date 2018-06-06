@@ -22,10 +22,15 @@ public class PerseoCoreRuleCRUDService implements CRUDService<PerseoCoreNativeRu
 
 	@Override
 	public void create(PerseoCoreNativeRule rule) throws Exception {
-		HttpResponse<PerseoCoreNativeRule> response = Unirest.post(hostUrl + "/perseo-core/rules")
-			.header("accept", "application/json")
-			.body(rule)
-			.asObject(PerseoCoreNativeRule.class);
+		HttpResponse<PerseoCoreNativeRule> response;
+		try {
+			response = Unirest.post(hostUrl + "/perseo-core/rules")
+				.header("accept", "application/json")
+				.body(rule)
+				.asObject(PerseoCoreNativeRule.class);
+		} catch (Exception e) {
+			throw new Exception("Creation failed.");
+		}
 		if (response.getStatus()/100 != 2) {
 			throw new Exception("Creation failed.");
 		}
@@ -59,14 +64,16 @@ public class PerseoCoreRuleCRUDService implements CRUDService<PerseoCoreNativeRu
 
 	@Override
 	public void update(PerseoCoreNativeRule newRule) throws Exception {
+		PerseoCoreNativeRule oldRule;
 		try {
-			read(newRule.getName()).get();
+			oldRule = read(newRule.getName()).get();
 		} catch (NoSuchElementException e) {
 			throw new Exception("Rule doesn't exist");
 		}
 		try {
 			create(newRule);
 		} catch (Exception e) {
+			create(oldRule);
 			throw new Exception("Rule couldn't be updated");
 		}
 	}

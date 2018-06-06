@@ -46,6 +46,8 @@ public class RuleCRUDService implements CRUDService<Rule, String> {
 		CEPEngine engine = engineFactory.getCEPEngine(rule.getOwner());
 		if (engine.updateRule(rule).getStatusCode().is2xxSuccessful()) {
 			repository.save(rule);
+		} else {
+			throw new Exception("Rule couldn't be updated");
 		}
 	}
 
