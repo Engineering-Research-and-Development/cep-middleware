@@ -42,4 +42,9 @@ public class PerseoFERuleAdapter {
 				.readValue(action, Map.class);
 	}
 
+	@Override
+	public String toString() {
+		return "PerseoFERuleAdapter [name=" + name + ", text=" + text + ", action=" + action + "]";
+	}
+
 }

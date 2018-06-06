@@ -10,6 +10,7 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import it.eng.cepmiddleware.Converter;
+import it.eng.cepmiddleware.rule.PerseoFERule;
 import it.eng.cepmiddleware.rule.Rule;
 
 public class PerseoFrontEnd implements CEPEngine {
@@ -47,19 +48,20 @@ public class PerseoFrontEnd implements CEPEngine {
 				response.getBody(),
 				HttpStatus.resolve(response.getStatus())
 			);
-		} catch (UnirestException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_GATEWAY);
 		}
 	}
 	
 	public ResponseEntity<?> getRule(String ruleId) {
 		try {
-			HttpResponse<Object> response = Unirest.get(hostUrl + "/rules/" + ruleId)
+			HttpResponse<PerseoFEResponse> response = Unirest.get(hostUrl + "/rules/" + ruleId)
 			  .header("accept", "application/json")
 			  .header("content-type", "application/json")
-			  .asObject(Object.class);
-			return new ResponseEntity<Object>(
-				response.getBody(),
+			  .asObject(PerseoFEResponse.class);
+			return new ResponseEntity<PerseoFERule>(
+				new NativeToUniformPerseoFrontEndRule(response.getBody().getData()),
 				HttpStatus.resolve(response.getStatus())
 			);
 		} catch (UnirestException e) {
@@ -89,8 +91,7 @@ public class PerseoFrontEnd implements CEPEngine {
 			  .header("accept", "application/json")
 			  .header("content-type", "application/json")
 			  .asObject(Object.class);
-			return new ResponseEntity<Object>(
-				response.getBody(),
+			return new ResponseEntity<Void>(
 				HttpStatus.resolve(response.getStatus())
 			);
 		} catch (UnirestException e) {
@@ -101,14 +102,18 @@ public class PerseoFrontEnd implements CEPEngine {
 	@Override
 	public ResponseEntity<?> updateRule(Rule rule) {
 		String ruleId = rule.getRuleId();
-		try {
-			if (getRule(ruleId).getStatusCode().is2xxSuccessful()) {
-				if (deleteRule(ruleId).getStatusCode().is2xxSuccessful()) {
-					return createRule(rule);
+		Object mistery = getRule(ruleId).getBody();
+		if (mistery instanceof PerseoFERule) {
+			PerseoFERule oldRule = (PerseoFERule)mistery;
+			if (deleteRule(ruleId).getStatusCode().is2xxSuccessful()) {
+				if (createRule(rule).getStatusCode().is2xxSuccessful()) {
+					return ResponseEntity.ok().build();
+				} else {
+					createRule(oldRule);
+					return new ResponseEntity<Void>(HttpStatus.METHOD_NOT_ALLOWED);
 				}
-			};
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().build();
+			}
+			
 		}
 		return ResponseEntity.badRequest().build();
 	}
