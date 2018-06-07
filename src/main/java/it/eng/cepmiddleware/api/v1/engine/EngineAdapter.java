@@ -10,7 +10,7 @@ public class EngineAdapter {
 		this.engine = engine;
 	}
 
-	public String getName() {
+	public String getEngineId() {
 		return engine.getName();
 	}
 
