@@ -13,14 +13,14 @@ Go back and autowire everything :(
 - [ ] it.eng.cepmiddleware
 ```
 {
-	"Problem": "Is it a good idea to use Object varargs in an interface?"
+	"problem": "Is it a good idea to use Object varargs in an interface?"
 }
 ```
 - [x] it.eng.cepmiddleware.engine.CEPEngine
 ```
 {
-	"Problem": "Reconsider the visitor approach. Generally the same implementation goes for each sub-type. static method and abstract class approach don't look good.",
-	"Conclusion": "Visitor ditched :)"
+	"problem": "Reconsider the visitor approach. Generally the same implementation goes for each sub-type. static method and abstract class approach don't look good.",
+	"conclusion": "Visitor ditched :)"
 }
 ```
 
@@ -28,40 +28,40 @@ Go back and autowire everything :(
 - [ ] it.eng.cepmiddleware.rule
 ```
 {
-	"Problem": "I am quite sure partial deletions (deleted in db but not engine) will pose a problem in the future..."
+	"problem": "I am quite sure partial deletions (deleted in db but not engine) will pose a problem in the future..."
 }
 ```
 - [ ] it.eng.cepmiddleware.engine.PerseoCore
 ```
 {
-	"Problem": "updateRule will definitely be a problem, must fix"
+	"problem": "updateRule will definitely be a problem, must fix"
 }
 ```
 - [ ] it.eng.cepmiddleware.api.v1.engine.rules.ToggleRuleService
 ```
 {
-	"Problem": "There's definitely gonna be an issue here. Check it out in the future."
+	"problem": "There's definitely gonna be an issue here. Check it out in the future."
 }
 ```
 - [ ] com.fasterxml.jackson.core
 ```
 {
-	"Problem": "Things that work with json dont work with xml requests"
+	"problem": "Things that work with json dont work with xml requests"
 }
 ```
 - [x] PUT rule/{ruleId}
 ```
 {
-	"Problem": "After doing an unsuccesful PUT on a rule, no other rule will be detected. This has to do something with the intermediate state.",
-	"Conclusion": "This was an issue with perseo-core and perseo-fe update implementations. Once those were dealt with, the bug disappeared."
+	"problem": "After doing an unsuccesful PUT on a rule, no other rule will be detected. This has to do something with the intermediate state.",
+	"conclusion": "This was an issue with perseo-core and perseo-fe update implementations. Once those were dealt with, the bug disappeared."
 }
 ```
 - [x] it.eng.cepmiddleware.api.v1.engine.EngineAdapter
 ```
 {
-	"Problem": "engineId is rendered as engineName",
-	"Conclusion": "Fixed",
-	"FoundBy": {
+	"problem": "engineId is rendered as engineName",
+	"conclusion": "Fixed",
+	"foundBy": {
 		"name": "Valsidalv",
 		"link": "https://github.com/Valsidalv"
 	}
