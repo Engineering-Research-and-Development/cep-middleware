@@ -53,6 +53,6 @@ Go back and autowire everything :(
 ```
 {
 	"Problem": "After doing an unsuccesful PUT on a rule, no other rule will be detected. This has to do something with the intermediate state.",
-	"Conclusion": "This was an issue with "
+	"Conclusion": "This was an issue with perseo-core and perseo-fe update implementations. Once those were dealt with, the bug disappeared."
 }
 ```
