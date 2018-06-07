@@ -56,3 +56,14 @@ Go back and autowire everything :(
 	"Conclusion": "This was an issue with perseo-core and perseo-fe update implementations. Once those were dealt with, the bug disappeared."
 }
 ```
+- [x] it.eng.cepmiddleware.api.v1.engine.EngineAdapter
+```
+{
+	"Problem": "engineId is rendered as engineName",
+	"Conclusion": "Fixed",
+	"FoundBy": {
+		"name": "Valsidalv",
+		"link": "https://github.com/Valsidalv"
+	}
+}
+```
