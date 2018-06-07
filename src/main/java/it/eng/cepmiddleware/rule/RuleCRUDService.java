@@ -54,14 +54,10 @@ public class RuleCRUDService implements CRUDService<Rule, String> {
 	@Override
 	public void delete(String ruleId) throws Exception {
 		Rule rule = repository.getRuleById(ruleId);
-		ResponseEntity<?> deleteResponse = engineFactory
+		repository.delete(rule);
+		engineFactory
 			.getCEPEngine(rule.getOwner())
 			.deleteRule(ruleId);
-		if (deleteResponse.getStatusCode().is2xxSuccessful()) {
-			repository.delete(rule);
-		} else {
-			throw new Exception("Rule couldn't be deleted");
-		}
 	}
 
 }
