@@ -119,6 +119,22 @@ public class PerseoFrontEnd implements CEPEngine {
 	}
 
 	@Override
+	public ResponseEntity<?> postEvent(Object event) {
+		try {
+			HttpResponse response = Unirest.post(hostUrl + "/notices")
+				.header("content-type", "application/json")
+				.body(event)
+				.asObject(Object.class);
+			return new ResponseEntity<>(
+				response.getBody(),
+				HttpStatus.valueOf(response.getStatus())
+			);
+		} catch (UnirestException e) {
+			return ResponseEntity.badRequest().build();
+		}
+	}
+
+	@Override
 	public Converter<? extends Rule, Map<String, Object>> getRuleConverter() {
 		return new PerseoFERuleConverter(this.getName());
 	}

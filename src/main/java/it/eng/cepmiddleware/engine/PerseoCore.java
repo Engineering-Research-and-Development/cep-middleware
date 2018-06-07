@@ -6,6 +6,10 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+
 import it.eng.cepmiddleware.Converter;
 import it.eng.cepmiddleware.engine.perseo_core.PerseoCoreNativeRule;
 import it.eng.cepmiddleware.engine.perseo_core.PerseoCoreRuleCRUDService;
@@ -85,6 +89,21 @@ public class PerseoCore implements CEPEngine {
 			return ResponseEntity.ok().build();
 		} catch (Exception e) {
 			return new ResponseEntity<Void>(HttpStatus.METHOD_NOT_ALLOWED);
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> postEvent(Object event) {
+		try {
+			HttpResponse response = Unirest.post(hostUrl + "/perseo-core/events")
+				.header("content-type", "application/json")
+				.body(event)
+				.asJson();
+			return new ResponseEntity<>(
+				HttpStatus.valueOf(response.getStatus())
+			);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
 		}
 	}
 

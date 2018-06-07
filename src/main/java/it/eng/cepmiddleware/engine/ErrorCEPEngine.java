@@ -44,6 +44,11 @@ public class ErrorCEPEngine implements CEPEngine {
 	}
 
 	@Override
+	public ResponseEntity<?> postEvent(Object event) {
+		return errorResponse;
+	}
+
+	@Override
 	public Converter<? extends Rule, Map<String, Object>> getRuleConverter() {
 		return null;
 	}
