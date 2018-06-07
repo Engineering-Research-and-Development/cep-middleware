@@ -8,7 +8,7 @@ import it.eng.cepmiddleware.engine.CEPEngineFactory;
 
 @org.springframework.stereotype.Service
 public class PostEventService implements Service {
-	
+
 	@Autowired CEPEngineFactory engineFactory;
 
 	@Override

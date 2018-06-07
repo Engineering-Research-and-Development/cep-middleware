@@ -16,7 +16,7 @@ import io.swagger.annotations.ApiResponse;
 public interface EngineEventsApi {
 
 	@ApiOperation(value = "Send an event to a CEP engine")
-	@ApiResponses(value = { 
+	@ApiResponses(value = {
 	    @ApiResponse(code = 200, message = "Event was successfully sent to an engine"),
 	    @ApiResponse(code = 404, message = "Engine doesn't exist")
     })
