@@ -62,9 +62,9 @@ CEP-middleware:
     --spring.jpa.hibernate.ddl-auto="create"
     --spring.datasource.username="root"
     --spring.datasource.password="root"
-    --engines[0].engineId = perseo-core
-    --engines[0].engineType = PerseoCore
-    --engines[0].hostUrl = http://localhost:8080
-    --engines[1].engineId = perseo-front-end
-    --engines[1].engineType = PerseoFrontEnd
-    --engines[1].hostUrl = http://localhost:9090
+    --engines[0].engineId="perseo-core"
+    --engines[0].engineType="PerseoCore"
+    --engines[0].hostUrl="http://localhost:8080"
+    --engines[1].engineId="perseo-front-end"
+    --engines[1].engineType="PerseoFrontEnd"
+    --engines[1].hostUrl="http://localhost:9090"
