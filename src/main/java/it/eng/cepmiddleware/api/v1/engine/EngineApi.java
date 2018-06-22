@@ -18,7 +18,7 @@ public interface EngineApi {
 	    @ApiResponse(code = 404, message = "Requested CEP engine does not exist")
 	})
 	@RequestMapping(value = "/engines/{engineId}", method = RequestMethod.GET)
-	ResponseEntity<?> getEngine(@ApiParam(value = "",required=true) @PathVariable("engineId") String engineId);
+	ResponseEntity<?> getEngine(@PathVariable("engineId") String engineId);
 
 	@ApiOperation(value = "Returns all available CEP engines")
 	@ApiResponses(value = {
@@ -44,7 +44,7 @@ public interface EngineApi {
 		@Valid @RequestBody Object engineInfo
 	);
 
-	@ApiOperation(value = "Returns info about the engine")
+	@ApiOperation(value = "Update properties of a specified engine")
 	@ApiResponses(value = {
 	    @ApiResponse(code = 200, message = "Successful operation"),
 	    @ApiResponse(code = 404, message = "Requested CEP engine does not exist")
