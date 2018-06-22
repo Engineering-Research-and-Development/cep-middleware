@@ -1,12 +1,8 @@
 package it.eng.cepmiddleware.config;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -15,30 +11,19 @@ import org.springframework.web.filter.CorsFilter;
 
 import it.eng.cepmiddleware.engine.CEPEngine;
 import it.eng.cepmiddleware.engine.ErrorCEPEngine;
-import it.eng.cepmiddleware.engine.PerseoCore;
-import it.eng.cepmiddleware.engine.PerseoFrontEnd;
 
 @Configuration
 public class CEPMiddlewareConfiguration {
 
-	@Value("${path.perseo-core}") String perseoCorePath;
-	@Value("${path.perseo-fe}") String perseoFEPath;
-	private Map<String, CEPEngine> cepEngines;
-	private CEPEngine error = new ErrorCEPEngine();
-
-	@PostConstruct
-	private void init() {
-		this.cepEngines = new HashMap<String, CEPEngine>();
-		this.cepEngines.put("perseo-core", new PerseoCore("perseo-core", perseoCorePath));
-		this.cepEngines.put("perseo-fe", new PerseoFrontEnd("perseo-fe", perseoFEPath));
-	}
+	@Autowired CEPEngineConfiguration engineConfig;
+	private CEPEngine errorEngine = new ErrorCEPEngine();
 
 	public CEPEngine getEngine(String id) {
-		return cepEngines.getOrDefault(id, error);
+		return engineConfig.getCepEngines().getOrDefault(id, errorEngine);
 	}
 
 	public Collection<CEPEngine> getEngines() {
-		return cepEngines.values();
+		return engineConfig.getCepEngines().values();
 	}
 
 	@Bean
