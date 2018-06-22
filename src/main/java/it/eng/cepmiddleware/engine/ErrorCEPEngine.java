@@ -9,10 +9,13 @@ import it.eng.cepmiddleware.Converter;
 import it.eng.cepmiddleware.rule.Rule;
 
 public class ErrorCEPEngine implements CEPEngine {
-	
+
 	private String errorMessage = "This is not the CEP Engine you are looking for...";
-	
+
 	private ResponseEntity<String> errorResponse = new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+
+	public ErrorCEPEngine() {}
+	public ErrorCEPEngine(String name, String hostUrl) {}
 
 	@Override
 	public String getName() {
@@ -44,18 +47,17 @@ public class ErrorCEPEngine implements CEPEngine {
 	}
 
 	@Override
+	public ResponseEntity<?> updateRule(Rule rule) {
+		return errorResponse;
+	}
+
+	@Override
 	public ResponseEntity<?> postEvent(Object event) {
 		return errorResponse;
 	}
 
 	@Override
 	public Converter<? extends Rule, Map<String, Object>> getRuleConverter() {
-		return null;
-	}
-
-	@Override
-	public ResponseEntity<?> updateRule(Rule rule) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
