@@ -1,4 +1,4 @@
-package it.eng.cepmiddleware.engine;
+package it.eng.cepmiddleware.engine.perseo_core;
 
 import java.util.Map;
 

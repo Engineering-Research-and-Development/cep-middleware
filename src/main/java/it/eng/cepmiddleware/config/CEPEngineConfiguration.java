@@ -8,8 +8,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 import it.eng.cepmiddleware.engine.CEPEngine;
-import it.eng.cepmiddleware.engine.PerseoCore;
-import it.eng.cepmiddleware.engine.PerseoFrontEnd;
+import it.eng.cepmiddleware.engine.perseo_core.PerseoCore;
+import it.eng.cepmiddleware.engine.perseo_front_end.PerseoFrontEnd;
 import it.eng.cepmiddleware.engine.ErrorCEPEngine;
 
 @Configuration

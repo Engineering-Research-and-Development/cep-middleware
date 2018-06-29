@@ -1,4 +1,4 @@
-package it.eng.cepmiddleware.engine;
+package it.eng.cepmiddleware.engine.perseo_core;
 
 import java.util.List;
 import java.util.Map;
@@ -8,14 +8,13 @@ import org.springframework.http.ResponseEntity;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
 
 import it.eng.cepmiddleware.Converter;
-import it.eng.cepmiddleware.engine.perseo_core.PerseoCoreNativeRule;
-import it.eng.cepmiddleware.engine.perseo_core.PerseoCoreRuleCRUDService;
 import it.eng.cepmiddleware.rule.Rule;
 
 import java.util.stream.Collectors;
+
+import it.eng.cepmiddleware.engine.CEPEngine;
 
 public class PerseoCore implements CEPEngine {
 	

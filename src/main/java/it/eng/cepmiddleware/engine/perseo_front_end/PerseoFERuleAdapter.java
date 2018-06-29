@@ -1,4 +1,4 @@
-package it.eng.cepmiddleware.engine;
+package it.eng.cepmiddleware.engine.perseo_front_end;
 
 import java.util.Map;
 
@@ -13,7 +13,11 @@ public class PerseoFERuleAdapter {
 	private String action;
 
 	public PerseoFERuleAdapter(Rule rule) {
-		this.name = rule.getRuleId();
+		try {
+			this.name = ((PerseoFERule) rule).getName();
+		} catch (Exception e) {
+			this.name = rule.getRuleId();
+		}
 		this.text = rule.getStatement();
 		try {
 			this.action = ((PerseoFERule) rule).getAction();
@@ -23,7 +27,7 @@ public class PerseoFERuleAdapter {
 	}
 
 	public PerseoFERuleAdapter(PerseoFERule rule) {
-		this.name = rule.getRuleId();
+		this.name = rule.getName();
 		this.text = rule.getStatement();
 		this.action = rule.getAction();
 	}

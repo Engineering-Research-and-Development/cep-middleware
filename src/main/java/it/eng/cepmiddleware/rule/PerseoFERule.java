@@ -12,7 +12,8 @@ import it.eng.cepmiddleware.ObjectMapperProvider;
 public class PerseoFERule extends Rule {
 	
 	private String action;
-	
+	private String name;
+
 	public PerseoFERule() {}
 
 	public String getAction() {
@@ -27,6 +28,18 @@ public class PerseoFERule extends Rule {
 	
 	public void setAction(String action) {
 		this.action = action;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		if(name != null) {
+			this.name = name;
+		} else {
+			this.name = this.getRuleId();
+		}
 	}
 
 }

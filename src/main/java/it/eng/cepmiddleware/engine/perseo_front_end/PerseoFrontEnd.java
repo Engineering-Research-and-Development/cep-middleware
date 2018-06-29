@@ -1,4 +1,4 @@
-package it.eng.cepmiddleware.engine;
+package it.eng.cepmiddleware.engine.perseo_front_end;
 
 import java.util.Map;
 
@@ -10,6 +10,7 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import it.eng.cepmiddleware.Converter;
+import it.eng.cepmiddleware.engine.CEPEngine;
 import it.eng.cepmiddleware.rule.PerseoFERule;
 import it.eng.cepmiddleware.rule.Rule;
 

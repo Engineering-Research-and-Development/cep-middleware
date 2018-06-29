@@ -1,4 +1,4 @@
-package it.eng.cepmiddleware.engine;
+package it.eng.cepmiddleware.engine.perseo_core;
 
 import it.eng.cepmiddleware.rule.Rule;
 import it.eng.cepmiddleware.engine.perseo_core.PerseoCoreNativeRule;

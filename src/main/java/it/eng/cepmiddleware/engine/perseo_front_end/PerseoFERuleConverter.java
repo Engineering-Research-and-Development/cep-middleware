@@ -1,4 +1,4 @@
-package it.eng.cepmiddleware.engine;
+package it.eng.cepmiddleware.engine.perseo_front_end;
 
 import java.util.Map;
 
@@ -20,6 +20,7 @@ public class PerseoFERuleConverter implements Converter<PerseoFERule, Map<String
 		rule.setDescription((String)source.get("description"));
 		rule.setStatement((String)source.get("statement"));
 		rule.setAction((Map)source.get("action"));
+		rule.setName((String)source.get("name"));
 		return rule;
 	}
 
