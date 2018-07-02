@@ -12,7 +12,6 @@ import it.eng.cepmiddleware.rule.RuleCRUDService;
 public class ToggleRuleService implements Service {
 	
 	@Autowired RuleIsEnabledService ruleIsEnabledService;
-	@Autowired RuleCRUDService ruleCRUDService;
 	@Autowired CEPEngineFactory engineFactory;
 	
 	ResponseEntity<String> paramError = new ResponseEntity<String>(
@@ -39,9 +38,13 @@ public class ToggleRuleService implements Service {
 		ResponseEntity<?> ruleEnabledResponse = ruleIsEnabledService.execute(engineId, ruleId);
 		if (ruleEnabledResponse.getStatusCode().is2xxSuccessful()) {
 			if (enableSwitch) {
-				ruleCRUDService.read(ruleId).<ResponseEntity<?>>map(rule -> {
-					return engineFactory.getCEPEngine(engineId).createRule(rule);
-				}).orElse(new ResponseEntity<>("Couldn't switch the rule on :'(", HttpStatus.BAD_REQUEST));
+				try {
+					engineFactory.getCEPEngine(engineId).getMiddlewareCRUD().read(ruleId).<ResponseEntity<?>>map(rule -> {
+						return engineFactory.getCEPEngine(engineId).createRule(rule.getClass().cast(rule));
+					}).orElse(new ResponseEntity<>("Couldn't switch the rule on :'(", HttpStatus.BAD_REQUEST));
+				} catch (Exception e) {
+					return new ResponseEntity<>("Couldn't switch the rule on :'(", HttpStatus.BAD_REQUEST);
+				}
 			} else {
 				return engineFactory.getCEPEngine(engineId).deleteRule(ruleId).getStatusCode().is2xxSuccessful()?
 						new ResponseEntity<>("Rule disabled", HttpStatus.OK):

@@ -31,11 +31,15 @@ public class PerseoFERule extends Rule {
 	}
 	
 	public String getName() {
-		return name;
+		if (name != null) {
+			return this.name;
+		} else {
+			return this.getRuleId();
+		}
 	}
 
 	public void setName(String name) {
-		if(name != null) {
+		if (name != null) {
 			this.name = name;
 		} else {
 			this.name = this.getRuleId();

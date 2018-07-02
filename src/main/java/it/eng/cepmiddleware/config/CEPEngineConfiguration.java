@@ -4,8 +4,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 import it.eng.cepmiddleware.engine.CEPEngine;
 import it.eng.cepmiddleware.engine.perseo_core.PerseoCore;
@@ -24,6 +27,21 @@ public class CEPEngineConfiguration {
 		supportedEngines.put("PerseoCore", PerseoCore.class);
 		supportedEngines.put("PerseoFrontEnd", PerseoFrontEnd.class);
 	}
+	
+	@Bean()
+	@Scope(value=ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	CEPEngine getEngine(EngineBuildToken buildToken) throws Exception {
+		return ((CEPEngine)supportedEngines.getOrDefault(
+			buildToken.getEngineType(),
+			errorEngine
+		).getConstructor(
+			String.class,
+			String.class
+		).newInstance(
+			buildToken.getEngineId(),
+			buildToken.getHostUrl()
+		));
+	}
 
 	public void setEngines(EngineBuildToken[] buildTokens) {
 		cepEngines = new HashMap<>();
@@ -31,16 +49,7 @@ public class CEPEngineConfiguration {
 			try {
 				cepEngines.put(
 					buildTokens[i].getEngineId(),
-					((CEPEngine)supportedEngines.getOrDefault(
-						buildTokens[i].getEngineType(),
-						errorEngine
-					).getConstructor(
-						String.class,
-						String.class
-					).newInstance(
-						buildTokens[i].getEngineId(),
-						buildTokens[i].getHostUrl()
-					))
+					getEngine(buildTokens[i])
 				);
 			} catch (Exception e) {
 				System.out.println("Couldn't create an engine using engines[" + i + "]");

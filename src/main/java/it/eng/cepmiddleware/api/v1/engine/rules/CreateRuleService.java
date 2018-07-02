@@ -14,7 +14,6 @@ import it.eng.cepmiddleware.rule.RuleCRUDService;
 @org.springframework.stereotype.Service
 public class CreateRuleService implements Service {
 
-	@Autowired RuleCRUDService ruleCRUDService;
 	@Autowired CEPEngineFactory engineFactory;
 
 	@Override
@@ -30,7 +29,10 @@ public class CreateRuleService implements Service {
 	private ResponseEntity<?> createRule(String engineId, Map<String, Object> ruleMap) {
 		Rule rule = engineFactory.getCEPEngine(engineId).getRuleConverter().convert(ruleMap);
 		try {
-			ruleCRUDService.create(rule);
+			engineFactory
+				.getCEPEngine(engineId)
+				.getMiddlewareCRUD()
+				.create(rule.getClass().cast(rule));
 		} catch (Exception e) {
 			return new ResponseEntity<String>("Couldn't save the rule :(", HttpStatus.BAD_REQUEST);
 		}

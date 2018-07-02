@@ -3,12 +3,14 @@ package it.eng.cepmiddleware.engine.perseo_core;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 
+import it.eng.cepmiddleware.CRUDService;
 import it.eng.cepmiddleware.Converter;
 import it.eng.cepmiddleware.rule.Rule;
 
@@ -18,6 +20,7 @@ import it.eng.cepmiddleware.engine.CEPEngine;
 
 public class PerseoCore implements CEPEngine {
 	
+	@Autowired MiddlewarePerseoCoreRuleCRUDService middlewareCRUDService;
 	private String hostUrl;
 	private String name;
 	private PerseoCoreRuleCRUDService perseoCoreCRUD;
@@ -109,6 +112,11 @@ public class PerseoCore implements CEPEngine {
 	@Override
 	public Converter<? extends Rule, Map<String, Object>> getRuleConverter() {
 		return new PerseoCoreRuleConverter(this.getName());
+	}
+
+	@Override
+	public CRUDService getMiddlewareCRUD() throws Exception {
+		return middlewareCRUDService;
 	}
 	
 }

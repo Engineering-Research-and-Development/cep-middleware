@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import it.eng.cepmiddleware.CRUDService;
 import it.eng.cepmiddleware.Converter;
 import it.eng.cepmiddleware.rule.Rule;
 
@@ -59,6 +60,10 @@ public class ErrorCEPEngine implements CEPEngine {
 	@Override
 	public Converter<? extends Rule, Map<String, Object>> getRuleConverter() {
 		return null;
+	}
+	@Override
+	public CRUDService getMiddlewareCRUD() throws Exception {
+		throw new Exception(errorMessage);
 	}
 
 }

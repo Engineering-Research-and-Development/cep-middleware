@@ -2,6 +2,7 @@ package it.eng.cepmiddleware.engine.perseo_front_end;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -9,6 +10,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
+import it.eng.cepmiddleware.CRUDService;
 import it.eng.cepmiddleware.Converter;
 import it.eng.cepmiddleware.engine.CEPEngine;
 import it.eng.cepmiddleware.rule.PerseoFERule;
@@ -16,6 +18,7 @@ import it.eng.cepmiddleware.rule.Rule;
 
 public class PerseoFrontEnd implements CEPEngine {
 	
+	@Autowired MiddlewarePerseoFERuleCRUDService middlewareCRUDService;
 	private String hostUrl;
 	private String name;
 
@@ -102,7 +105,7 @@ public class PerseoFrontEnd implements CEPEngine {
 
 	@Override
 	public ResponseEntity<?> updateRule(Rule rule) {
-		String ruleId = rule.getRuleId();
+		String ruleId = ((PerseoFERule)rule).getName();
 		Object mistery = getRule(ruleId).getBody();
 		if (mistery instanceof PerseoFERule) {
 			PerseoFERule oldRule = (PerseoFERule)mistery;
@@ -138,6 +141,11 @@ public class PerseoFrontEnd implements CEPEngine {
 	@Override
 	public Converter<? extends Rule, Map<String, Object>> getRuleConverter() {
 		return new PerseoFERuleConverter(this.getName());
+	}
+
+	@Override
+	public CRUDService getMiddlewareCRUD() throws Exception {
+		return middlewareCRUDService;
 	}
 
 }

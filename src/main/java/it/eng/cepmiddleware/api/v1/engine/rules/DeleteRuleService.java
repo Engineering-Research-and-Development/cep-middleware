@@ -5,12 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import it.eng.cepmiddleware.Service;
+import it.eng.cepmiddleware.engine.CEPEngineFactory;
 import it.eng.cepmiddleware.rule.RuleCRUDService;
 
 @org.springframework.stereotype.Service
 public class DeleteRuleService implements Service {
-
-	@Autowired RuleCRUDService crudService;
+	
+	@Autowired CEPEngineFactory engineFactory;
 
 	ResponseEntity<String> paramError = new ResponseEntity<String>(
 		"Correct parameters not provided",
@@ -29,7 +30,7 @@ public class DeleteRuleService implements Service {
 
 	private ResponseEntity<?> deleteRuleService(String engineId, String ruleId) {
 		try {
-			crudService.delete(ruleId);
+			engineFactory.getCEPEngine(engineId).getMiddlewareCRUD().delete(ruleId);
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}

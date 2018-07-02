@@ -12,7 +12,7 @@ import it.eng.cepmiddleware.HashidsComponent;
 @Entity(name = "Rule")
 public class Rule {
 
-	static final String defaultRuleId = "initial";
+	public static final String defaultRuleId = "initial";
 
 	private HashidsComponent hashids;
 

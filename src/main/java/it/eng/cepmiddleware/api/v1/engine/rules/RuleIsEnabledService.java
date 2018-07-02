@@ -11,7 +11,6 @@ import it.eng.cepmiddleware.rule.RuleCRUDService;
 @org.springframework.stereotype.Service
 public class RuleIsEnabledService implements Service {
 
-	@Autowired RuleCRUDService crudService;
 	@Autowired GetRuleService getRuleService;
 	@Autowired CEPEngineFactory engineFactory;
 

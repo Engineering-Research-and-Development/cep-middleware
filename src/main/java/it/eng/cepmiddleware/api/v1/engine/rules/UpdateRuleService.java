@@ -13,8 +13,7 @@ import it.eng.cepmiddleware.rule.RuleCRUDService;
 
 @org.springframework.stereotype.Service
 public class UpdateRuleService implements Service {
-
-	@Autowired RuleCRUDService ruleCRUDService;
+	
 	@Autowired CEPEngineFactory engineFactory;
 	
 	@Override
@@ -36,8 +35,9 @@ public class UpdateRuleService implements Service {
 		Rule rule = engineFactory.getCEPEngine(engineId).getRuleConverter().convert(ruleMap);
 		rule.setRuleId(ruleId);
 		try {
-			ruleCRUDService.update(rule);
+			engineFactory.getCEPEngine(engineId).getMiddlewareCRUD().update(rule.getClass().cast(rule));
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<String>("Couldn't update the rule :(", HttpStatus.BAD_REQUEST);
 		}
 		return ResponseEntity.ok().build();

@@ -14,7 +14,6 @@ import it.eng.cepmiddleware.rule.RuleCRUDService;
 public class GetRuleService implements Service {
 	
 	@Autowired CEPEngineFactory engineFactory;
-	@Autowired RuleCRUDService crudService;
 	ResponseEntity<String> paramError = new ResponseEntity<String>(
 		"Correct parameters not provided",
 		HttpStatus.BAD_REQUEST
@@ -34,13 +33,17 @@ public class GetRuleService implements Service {
 		if (engineFactory.getCEPEngine(engineId) instanceof ErrorCEPEngine) {
 			return new ResponseEntity<>("CEP engine doesn't exist", HttpStatus.NOT_FOUND);
 		}
-		return crudService.read(ruleId).<ResponseEntity<?>>map(
-			rule -> {
-				if (engineId.equals(rule.getOwner())) {
-					return new ResponseEntity<Rule>(rule, HttpStatus.OK);
-				} else return new ResponseEntity<String>("Rule doesn't exist in the given CEP Engine", HttpStatus.NOT_FOUND);
-			}
-		).orElse(new ResponseEntity<String>("Rule doesn't exist", HttpStatus.NOT_FOUND));
+		try {
+			return engineFactory.getCEPEngine(engineId).getMiddlewareCRUD().read(ruleId).<ResponseEntity<?>>map(
+				rule -> {
+					if (engineId.equals(rule.getOwner())) {
+						return new ResponseEntity<Rule>(rule, HttpStatus.OK);
+					} else return new ResponseEntity<String>("Rule doesn't exist in the given CEP Engine", HttpStatus.NOT_FOUND);
+				}
+			).orElse(new ResponseEntity<String>("Rule doesn't exist", HttpStatus.NOT_FOUND));
+		} catch (Exception e) {
+			return new ResponseEntity<String>("Couldn't get the rule", HttpStatus.NOT_FOUND);
+		}
 	}
 
 }

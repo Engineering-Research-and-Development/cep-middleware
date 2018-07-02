@@ -12,8 +12,8 @@ import it.eng.cepmiddleware.rule.RuleCRUDService;
 @org.springframework.stereotype.Service
 public class GetRulesService implements Service {
 
-	@Autowired RuleCRUDService ruleCRUDService;
 	@Autowired CEPEngineFactory engineFactory;
+
 	ResponseEntity<String> paramError = new ResponseEntity<String>(
 		"Correct parameters not provided",
 		HttpStatus.BAD_REQUEST
@@ -30,10 +30,22 @@ public class GetRulesService implements Service {
 
 	private ResponseEntity<?> getRulesService(String engineId) {
 		if (!(engineFactory.getCEPEngine(engineId) instanceof ErrorCEPEngine)) {
-			return new ResponseEntity<>(
-				ruleCRUDService.read().stream().filter((rule) -> rule.getOwner().equals(engineId)).toArray(),
-				HttpStatus.OK
-			);
+			try {
+				return new ResponseEntity<>(
+					engineFactory
+						.getCEPEngine(engineId)
+						.getMiddlewareCRUD()
+						.read()
+						.stream()
+						.filter(
+							(rule) -> rule.getOwner().equals(engineId)
+						).toArray()
+					,
+					HttpStatus.OK
+				);
+			} catch (Exception e) {
+				return ResponseEntity.badRequest().build();
+			}
 		} else return new ResponseEntity<>("CEP engine doesn't exist", HttpStatus.NOT_FOUND);
 	}
 
