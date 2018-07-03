@@ -81,6 +81,8 @@ services:
     command: --spring.cloud.config.server.git.uri=https://github.com/spring-cloud-samples/config-repo
 
   CEP-middleware:
+    build:
+      context: https://github.com/is3labengrd/cep-middleware.git#develop
     image: drobniac/cep-middleware
     ports:
       - "8091:8090"
