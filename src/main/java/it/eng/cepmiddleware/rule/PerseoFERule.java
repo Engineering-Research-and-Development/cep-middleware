@@ -39,11 +39,7 @@ public class PerseoFERule extends Rule {
 	}
 
 	public void setName(String name) {
-		if (name != null) {
-			this.name = name;
-		} else {
-			this.name = this.getRuleId();
-		}
+		this.name = name;
 	}
 
 }
