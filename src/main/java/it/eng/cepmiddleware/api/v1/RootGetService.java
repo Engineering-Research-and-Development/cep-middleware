@@ -13,7 +13,7 @@ public class RootGetService implements Service {
 	RootGetService() {
 		this.responseEntity = new ResponseEntity<RootGetResponseBody>(
 			new RootGetResponseBody(),
-			HttpStatus.ACCEPTED
+			HttpStatus.OK
 		);
 	}
 	
