@@ -1,7 +1,5 @@
 package it.eng.cepmiddleware.api.v1.engine;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +15,13 @@ public class GetEnginesService implements Service {
 	@Override
 	public ResponseEntity<?> execute(Object ...parameters) {
 		return new ResponseEntity<>(
-			config.getEngines().stream().<EngineAdapter>map(engine -> new EngineAdapter(engine)).toArray(),
+			config
+				.getEngines()
+				.stream()
+				.<EngineAdapter>map(
+					engine -> new EngineAdapter(engine)
+				).toArray()
+			,
 			HttpStatus.OK
 		);
 	}
