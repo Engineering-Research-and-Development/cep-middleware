@@ -2,6 +2,8 @@ package it.eng.cepmiddleware.api.v1.engine;
 
 import io.swagger.annotations.*;
 
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
@@ -41,7 +43,7 @@ public interface EngineApi {
 	})
 	@RequestMapping(value = "/engines", method = RequestMethod.POST)
 	ResponseEntity<?> addEngine(
-		@Valid @RequestBody Object engineInfo
+		@Valid @RequestBody Map<String, String> engineInfo
 	);
 
 	@ApiOperation(value = "Update properties of a specified engine")
@@ -49,9 +51,8 @@ public interface EngineApi {
 	    @ApiResponse(code = 200, message = "Successful operation"),
 	    @ApiResponse(code = 404, message = "Requested CEP engine does not exist")
 	})
-	@RequestMapping(value = "/engines/{engineId}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/engines", method = RequestMethod.PUT)
 	ResponseEntity<?> updateEngine(
-		@PathVariable("engineId") String engineId,
-		@Valid @RequestBody Object engineInfo
+		@Valid @RequestBody Map<String, String> engineInfo
 	);
 }
