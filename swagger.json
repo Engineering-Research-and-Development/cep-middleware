@@ -2,13 +2,12 @@
   "swagger": "2.0",
   "info": {
     "title": "cep-middleware",
-    "version": "0.0",
+    "version": "1.0",
     "contact": {
       "email": "drobniac@gmail.com"
     },
     "description": "This Web API has the purpose of delegating requests to various supported CEP engines while also defining a unique interface for CEP Engine consumption"
   },
-  "basePath": "/v1",
   "tags": [
     {
       "name": "base"
@@ -51,11 +50,78 @@
             "description": "Successful operation"
           }
         }
+      },
+      "post": {
+        "summary": "Add a CEP engine",
+        "tags": [
+          "engines"
+        ],
+        "parameters": [
+          {
+            "name": "engine",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CEPEngine"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update properties of a specified engine",
+        "tags": [
+          "engines"
+        ],
+        "parameters": [
+          {
+            "name": "engine",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CEPEngine"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "404": {
+            "description": "Requested CEP engine does not exist"
+          }
+        }
       }
     },
     "/engines/{engineId}": {
       "get": {
         "summary": "Returns info about the engine",
+        "tags": [
+          "engines"
+        ],
+        "parameters": [
+          {
+            "name": "engineId",
+            "required": true,
+            "in": "path",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "404": {
+            "description": "Requested CEP engine does not exist"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove a CEP engine",
         "tags": [
           "engines"
         ],
@@ -324,14 +390,33 @@
       "type": "object",
       "properties": {
         "ruleId": {
-          "type": "string"
+          "type": "string",
+          "example": "Kx5i9aC2"
         },
         "description": {
-          "type": "string"
+          "type": "string",
+          "example": "This rule states that an event of type X triggers Y"
         },
         "statement": {
           "type": "string",
           "example": "select * from ev=iotEvent"
+        }
+      }
+    },
+    "CEPEngine": {
+      "type": "object",
+      "properties": {
+        "engineId": {
+          "type": "string",
+          "example": "perseo-core-test"
+        },
+        "engineType": {
+          "type": "string",
+          "example": "PerseoCore"
+        },
+        "hostUrl": {
+          "type": "string",
+          "example": "http://www.wryyyyy.com"
         }
       }
     }
