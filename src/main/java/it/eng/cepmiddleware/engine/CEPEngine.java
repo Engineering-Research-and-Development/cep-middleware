@@ -11,6 +11,7 @@ import it.eng.cepmiddleware.rule.Rule;
 public interface CEPEngine {
 
 	public String getName();
+	public String getURL();
 	public ResponseEntity<?> createRule(Rule rule);
 	public ResponseEntity<?> getRule(String ruleId);
 	public ResponseEntity<?> getRules();

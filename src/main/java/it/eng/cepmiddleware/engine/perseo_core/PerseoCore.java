@@ -35,6 +35,11 @@ public class PerseoCore implements CEPEngine {
 	public String getName() {
 		return this.name;
 	}
+	
+	@Override
+	public String getURL() {
+		return this.getHostUrl();
+	}
 
 	public String getHostUrl() {
 		return hostUrl;

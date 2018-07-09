@@ -23,6 +23,11 @@ public class ErrorCEPEngine implements CEPEngine {
 		return "error";
 	}
 
+	@Override
+	public String getURL() {
+		return "invalid";
+	}
+
 	public String getErrorMessage() {
 		return this.errorMessage;
 	}

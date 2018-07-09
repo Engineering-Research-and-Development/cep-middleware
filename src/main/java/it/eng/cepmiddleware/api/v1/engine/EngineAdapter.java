@@ -18,4 +18,8 @@ public class EngineAdapter {
 		return engine.getClass().getSimpleName();
 	}
 
+	public String getEngineURL() {
+		return engine.getURL();
+	}
+
 }
