@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
 import it.eng.cepmiddleware.engine.CEPEngine;
-import it.eng.cepmiddleware.engine.perseo_core.PerseoCore;
 import it.eng.cepmiddleware.engine.perseo_front_end.PerseoFrontEnd;
 import it.eng.cepmiddleware.engine.ErrorCEPEngine;
 
@@ -23,7 +22,6 @@ public class CEPEngineConfiguration {
 	private Class errorEngine = ErrorCEPEngine.class;
 
 	CEPEngineConfiguration() {
-		supportedEngines.put("PerseoCore", PerseoCore.class);
 		supportedEngines.put("PerseoFrontEnd", PerseoFrontEnd.class);
 	}
 	
