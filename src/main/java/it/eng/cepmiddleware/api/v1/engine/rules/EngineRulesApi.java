@@ -75,29 +75,4 @@ public interface EngineRulesApi {
     		@ApiParam(value = "" ,required=true )  @Valid @RequestBody Map<String, Object> rule
 		);
 
-
-	    @ApiOperation(value = "Returns if the rule is enabled within the engine")
-	    @ApiResponses(value = {
-	        @ApiResponse(code = 200, message = "Returns if the rule is enabled or not"),
-	        @ApiResponse(code = 404, message = "Rule doesn't exist or the engine doesn't exist")
-        })
-	    @RequestMapping(value = "/engines/{engineId}/rules/{ruleId}/enabled", method = RequestMethod.GET)
-	    ResponseEntity<?> ruleIsEnabled(
-    		@ApiParam(value = "",required=true) @PathVariable("engineId") String engineId,
-    		@ApiParam(value = "",required=true) @PathVariable("ruleId") String ruleId
-		);
-
-
-	    @ApiOperation(value = "Enable or Disable a rule within an engine")
-	    @ApiResponses(value = {
-	        @ApiResponse(code = 200, message = "The rule has been successfully enabled/disabled"),
-	        @ApiResponse(code = 404, message = "Rule doesn't exist or the engine doesn't exist")
-        })
-	    @RequestMapping(value = "/engines/{engineId}/rules/{ruleId}/enabled", method = RequestMethod.PUT)
-	    ResponseEntity<?> toggleRule(
-    		@ApiParam(value = "",required=true) @PathVariable("engineId") String engineId,
-    		@ApiParam(value = "",required=true) @PathVariable("ruleId") String ruleId,
-    		@ApiParam(value = "" ,required=true )  @Valid @RequestBody Boolean enableSwitch
-		);
-
 }

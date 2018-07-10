@@ -18,8 +18,6 @@ public class EngineRulesController implements EngineRulesApi {
 	@Autowired GetRulesService getRulesService;
 	@Autowired DeleteRuleService deleteRuleService;
 	@Autowired UpdateRuleService updateRuleService;
-	@Autowired RuleIsEnabledService ruleIsEnabledService;
-	@Autowired ToggleRuleService toggleRuleService;
 	
 	@Override
 	public ResponseEntity<?> getRule(
@@ -57,23 +55,6 @@ public class EngineRulesController implements EngineRulesApi {
 		@Valid @RequestBody Map<String, Object> rule
 	) {
 		return updateRuleService.execute(engineId, ruleId, rule);
-	}
-
-	@Override
-	public ResponseEntity<?> ruleIsEnabled(
-		@PathVariable("engineId") String engineId,
-		@PathVariable("ruleId") String ruleId
-	) {
-		return ruleIsEnabledService.execute(engineId, ruleId);
-	}
-
-	@Override
-	public ResponseEntity<?> toggleRule(
-		@PathVariable("engineId") String engineId,
-		@PathVariable("ruleId") String ruleId,
-		@Valid @RequestBody Boolean enableSwitch
-	) {
-		return toggleRuleService.execute(engineId, ruleId, enableSwitch);
 	}
 
 }
