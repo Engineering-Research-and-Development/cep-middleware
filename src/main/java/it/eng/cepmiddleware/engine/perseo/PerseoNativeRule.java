@@ -1,11 +1,11 @@
-package it.eng.cepmiddleware.engine.perseo_front_end;
+package it.eng.cepmiddleware.engine.perseo;
 
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties({"_id"})
-public class PerseoFrontEndNativeRule {
+public class PerseoNativeRule {
 
 	private String name;
 	private String text;

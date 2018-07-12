@@ -1,6 +1,7 @@
 package it.eng.cepmiddleware.api.v1.engine;
 
 import io.swagger.annotations.*;
+import it.eng.cepmiddleware.config.EngineInfoToken;
 
 import java.util.Map;
 
@@ -43,7 +44,7 @@ public interface EngineApi {
 	})
 	@RequestMapping(value = "/engines", method = RequestMethod.POST)
 	ResponseEntity<?> addEngine(
-		@Valid @RequestBody Map<String, String> engineInfo
+		@Valid @RequestBody EngineInfoToken engineInfo
 	);
 
 	@ApiOperation(value = "Update properties of a specified engine")
@@ -51,8 +52,9 @@ public interface EngineApi {
 	    @ApiResponse(code = 200, message = "Successful operation"),
 	    @ApiResponse(code = 404, message = "Requested CEP engine does not exist")
 	})
-	@RequestMapping(value = "/engines", method = RequestMethod.PUT)
+	@RequestMapping(value = "/engines/{engineId}", method = RequestMethod.PUT)
 	ResponseEntity<?> updateEngine(
-		@Valid @RequestBody Map<String, String> engineInfo
+		@PathVariable("engineId") String engineId,
+		@Valid @RequestBody EngineInfoToken engineInfo
 	);
 }

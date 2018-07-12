@@ -1,10 +1,12 @@
 package it.eng.cepmiddleware.config;
 
-class EngineBuildToken {
+public class EngineInfoToken {
 
 	private String engineId;
 	private String engineType;
 	private String hostUrl;
+
+	public EngineInfoToken() {}
 
 	public String getEngineId() {
 		return engineId;

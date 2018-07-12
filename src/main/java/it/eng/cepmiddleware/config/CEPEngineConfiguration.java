@@ -1,7 +1,9 @@
 package it.eng.cepmiddleware.config;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -10,27 +12,25 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
 import it.eng.cepmiddleware.engine.CEPEngine;
-import it.eng.cepmiddleware.engine.perseo_front_end.PerseoFrontEnd;
 import it.eng.cepmiddleware.engine.ErrorCEPEngine;
+import it.eng.cepmiddleware.engine.perseo.Perseo;
 
 @Configuration
 @ConfigurationProperties()
 public class CEPEngineConfiguration {
 
-	private Map<String, CEPEngine> cepEngines;
+	private Map<EngineInfoToken, CEPEngine> cepEngines = new HashMap<>();
 	private Map<String, Class> supportedEngines = new HashMap<>();
-	private Class errorEngine = ErrorCEPEngine.class;
 
 	CEPEngineConfiguration() {
-		supportedEngines.put("PerseoFrontEnd", PerseoFrontEnd.class);
+		supportedEngines.put("Perseo", Perseo.class);
 	}
 	
 	@Bean()
 	@Scope(value=ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-	CEPEngine getEngine(EngineBuildToken buildToken) throws Exception {
-		return ((CEPEngine)supportedEngines.getOrDefault(
-			buildToken.getEngineType(),
-			errorEngine
+	CEPEngine engine(EngineInfoToken buildToken) throws Exception {
+		return ((CEPEngine)supportedEngines.get(
+			buildToken.getEngineType()
 		).getConstructor(
 			String.class,
 			String.class
@@ -40,13 +40,13 @@ public class CEPEngineConfiguration {
 		));
 	}
 
-	public void setEngines(EngineBuildToken[] buildTokens) {
-		cepEngines = new HashMap<>();
-		for (int i = 0; i < buildTokens.length ; i++) {
+	public void setEngines(EngineInfoToken[] tokens) {
+		for (int i = 0 ; i < tokens.length ; i++) {
 			try {
+				CEPEngine engine = engine(tokens[i]);
 				cepEngines.put(
-					buildTokens[i].getEngineId(),
-					getEngine(buildTokens[i])
+					tokens[i],
+					engine
 				);
 			} catch (Exception e) {
 				System.out.println("Couldn't create an engine using engines[" + i + "]");
@@ -54,8 +54,28 @@ public class CEPEngineConfiguration {
 		}
 	}
 
-	public Map<String, CEPEngine> getCepEngines() {
+	public Collection<EngineInfoToken> getEnginesInfo() {
+		return cepEngines.keySet();
+	}
+
+	public Optional<EngineInfoToken> getEngineInfo(String engineId) {
+		return cepEngines.keySet().stream().filter((elem) -> {
+			return elem.getEngineId().equals(engineId);
+		}).findFirst();
+	}
+
+	public Map<EngineInfoToken, CEPEngine> getCepEngines() {
 		return this.cepEngines;
+	}
+	
+	public Optional<CEPEngine> getCepEngine(String engineId) {
+		return Optional.ofNullable(this.cepEngines.get(
+			getEngineInfo(engineId).orElse(null)
+		));
+	}
+	
+	public CEPEngine putCepEngine(EngineInfoToken token) throws Exception {
+		return cepEngines.put(token, engine(token));
 	}
 
 }

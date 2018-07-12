@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 
 import it.eng.cepmiddleware.Service;
 import it.eng.cepmiddleware.config.CEPEngineConfiguration;
+import it.eng.cepmiddleware.config.EngineInfoToken;
 import it.eng.cepmiddleware.engine.CEPEngine;
 
 @org.springframework.stereotype.Service
@@ -18,20 +19,19 @@ public class UpdateEngineService implements Service {
 
 	@Override
 	public ResponseEntity<?> execute(Object... parameters) {
-		if (parameters[0] instanceof Map) {
-			Map<String, String> engineInfo = (Map<String, String>)parameters[0];
-			return updateEngine(engineInfo);
+		if (
+			parameters[0] instanceof String &&
+			parameters[1] instanceof EngineInfoToken
+		) {
+			String engineId = (String) parameters[0];
+			EngineInfoToken engineInfo = (EngineInfoToken) parameters[1];
+			return updateEngine(engineId, engineInfo);
 		}
 		return Service.paramError;
 	}
 
-	private ResponseEntity<?> updateEngine(Map<String, String> engineInfo) {
-		CEPEngine engine = converter.convert(engineInfo);
-		if (engineConfig.getCepEngines().get(engine.getName()) == null) {
-			return ResponseEntity.notFound().build();
-		}
-		engineConfig.getCepEngines().put(engine.getName(), engine);
-		return ResponseEntity.ok().build();
+	private ResponseEntity<?> updateEngine(String engineId, EngineInfoToken engineInfo) {
+		return new ResponseEntity("Not implemented yet", HttpStatus.NOT_IMPLEMENTED);
 	}
 
 }

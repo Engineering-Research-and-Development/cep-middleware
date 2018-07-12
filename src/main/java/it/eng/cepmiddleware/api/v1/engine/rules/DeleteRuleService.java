@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 
 import it.eng.cepmiddleware.Service;
 import it.eng.cepmiddleware.engine.CEPEngineFactory;
-import it.eng.cepmiddleware.rule.RuleCRUDService;
 
 @org.springframework.stereotype.Service
 public class DeleteRuleService implements Service {
@@ -29,12 +28,7 @@ public class DeleteRuleService implements Service {
 	}
 
 	private ResponseEntity<?> deleteRuleService(String engineId, String ruleId) {
-		try {
-			engineFactory.getCEPEngine(engineId).getMiddlewareCRUD().delete(ruleId);
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().build();
-		}
-		return ResponseEntity.ok().build();
+		return engineFactory.getCEPEngine(engineId).deleteRule(ruleId);
 	}
 
 }

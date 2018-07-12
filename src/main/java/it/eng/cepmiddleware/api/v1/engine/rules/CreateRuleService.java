@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import it.eng.cepmiddleware.Service;
 import it.eng.cepmiddleware.engine.CEPEngineFactory;
 import it.eng.cepmiddleware.rule.Rule;
-import it.eng.cepmiddleware.rule.RuleCRUDService;
 
 @org.springframework.stereotype.Service
 public class CreateRuleService implements Service {
@@ -27,16 +26,7 @@ public class CreateRuleService implements Service {
 	}
 
 	private ResponseEntity<?> createRule(String engineId, Map<String, Object> ruleMap) {
-		Rule rule = engineFactory.getCEPEngine(engineId).getRuleConverter().convert(ruleMap);
-		try {
-			engineFactory
-				.getCEPEngine(engineId)
-				.getMiddlewareCRUD()
-				.create(rule.getClass().cast(rule));
-		} catch (Exception e) {
-			return new ResponseEntity<String>("Couldn't save the rule :(", HttpStatus.BAD_REQUEST);
-		}
-		return ResponseEntity.ok().build();
+		return engineFactory.getCEPEngine(engineId).createRule(ruleMap);
 	}
 
 }

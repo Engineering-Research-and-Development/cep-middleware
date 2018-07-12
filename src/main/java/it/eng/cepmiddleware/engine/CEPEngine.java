@@ -10,15 +10,10 @@ import it.eng.cepmiddleware.rule.Rule;
 
 public interface CEPEngine {
 
-	public String getName();
-	public String getURL();
-	public ResponseEntity<?> createRule(Rule rule);
+	public ResponseEntity<?> createRule(Map<String, Object> rule);
 	public ResponseEntity<?> getRule(String ruleId);
 	public ResponseEntity<?> getRules();
-	public ResponseEntity<?> updateRule(Rule rule);
+	public ResponseEntity<?> updateRule(String ruleId, Map<String, Object> ruleMap);
 	public ResponseEntity<?> deleteRule(String ruleId);
-	public ResponseEntity<?> postEvent(Object event);
-	public Converter<? extends Rule, Map<String, Object>> getRuleConverter();
-	public CRUDService<Rule, String> getMiddlewareCRUD() throws Exception;
 
 }

@@ -5,12 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import it.eng.cepmiddleware.Service;
-import it.eng.cepmiddleware.engine.CEPEngineFactory;
+import it.eng.cepmiddleware.config.CEPEngineConfiguration;
 
 @org.springframework.stereotype.Service
 public class GetEngineService implements Service {
 
-	@Autowired CEPEngineFactory engineFactory;
+	@Autowired CEPEngineConfiguration engineConfig;
 
 	@Override
 	public ResponseEntity<?> execute(Object... parameters) {
@@ -22,7 +22,10 @@ public class GetEngineService implements Service {
 	}
 
 	private ResponseEntity<?> getEngine(String engineId) {
-		return new ResponseEntity<>(new EngineAdapter(engineFactory.getCEPEngine(engineId)), HttpStatus.OK);
+		return new ResponseEntity<>(
+			engineConfig.getEngineInfo(engineId),
+			HttpStatus.OK
+		);
 	}
 
 }

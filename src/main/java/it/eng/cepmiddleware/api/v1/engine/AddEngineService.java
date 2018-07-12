@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import it.eng.cepmiddleware.Service;
 import it.eng.cepmiddleware.config.CEPEngineConfiguration;
 import it.eng.cepmiddleware.engine.CEPEngine;
+import it.eng.cepmiddleware.config.EngineInfoToken;
 
 @org.springframework.stereotype.Service
 public class AddEngineService implements Service {
@@ -18,20 +19,19 @@ public class AddEngineService implements Service {
 
 	@Override
 	public ResponseEntity<?> execute(Object... parameters) {
-		if (parameters[0] instanceof Map) {
-			Map<String, String> engineInfo = (Map<String, String>)parameters[0];
+		if (parameters[0] instanceof EngineInfoToken) {
+			EngineInfoToken engineInfo = (EngineInfoToken) parameters[0];
 			return addEngine(engineInfo);
 		}
 		return Service.paramError;
 	}
 
-	private ResponseEntity<?> addEngine(Map<String, String> engineInfo) {
-		CEPEngine engine = converter.convert(engineInfo);
-		if (engineConfig.getCepEngines().get(engine.getName()) == null) {
-			engineConfig.getCepEngines().put(engine.getName(), engine);
-			return ResponseEntity.ok().build();
+	private ResponseEntity<?> addEngine(EngineInfoToken engineInfo) {
+		try {
+			return new ResponseEntity<>(engineConfig.putCepEngine(engineInfo), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 	}
 
 }

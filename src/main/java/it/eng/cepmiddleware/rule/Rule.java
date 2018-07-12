@@ -12,19 +12,12 @@ import it.eng.cepmiddleware.HashidsComponent;
 @Entity(name = "Rule")
 public class Rule {
 
-	public static final String defaultRuleId = "initial";
-
 	private HashidsComponent hashids;
 
 	private Long id;
-	
-	private String ruleId = Rule.defaultRuleId;
-
-	private String description;
-	
-	private String statement;
-
+	private String ruleId;
 	private String owner;
+	private boolean active;
 	
 	public Rule() {
 		this.hashids = new HashidsComponent();
@@ -58,23 +51,6 @@ public class Rule {
 		}
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	@Column(nullable = false)
-	public String getStatement() {
-		return statement;
-	}
-
-	public void setStatement(String statement) {
-		this.statement = statement;
-	}
-
 	@Column(nullable = false)
 	public String getOwner() {
 		return owner;
@@ -84,14 +60,20 @@ public class Rule {
 		this.owner = owner;
 	}
 
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	@Override
 	public String toString() {
 		return
 			"Rule [hashids=" + hashids +
 			", id=" + id +
 			", ruleId=" + ruleId +
-			", description=" + description +
-			", statement=" + statement +
 			", owner=" + owner + "]"
 		;
 	}

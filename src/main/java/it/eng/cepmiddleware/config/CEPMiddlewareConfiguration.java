@@ -16,11 +16,6 @@ import it.eng.cepmiddleware.engine.ErrorCEPEngine;
 public class CEPMiddlewareConfiguration {
 
 	@Autowired CEPEngineConfiguration engineConfig;
-	private CEPEngine errorEngine = new ErrorCEPEngine();
-
-	public CEPEngine getEngine(String id) {
-		return engineConfig.getCepEngines().getOrDefault(id, errorEngine);
-	}
 
 	public Collection<CEPEngine> getEngines() {
 		return engineConfig.getCepEngines().values();

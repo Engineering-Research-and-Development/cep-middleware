@@ -28,12 +28,7 @@ public class DeleteEngineService implements Service {
 	}
 
 	private ResponseEntity<?> deleteEngine(String engineId) {
-		CEPEngine engine = engineConfig.getCepEngines().get(engineId);
-		if (engine != null) {
-			engineConfig.getCepEngines().remove(engineId);
-			return ResponseEntity.ok().build();
-		}
-		return ResponseEntity.notFound().build();
+		return new ResponseEntity("Not implemented yet", HttpStatus.NOT_IMPLEMENTED);
 	}
 
 }

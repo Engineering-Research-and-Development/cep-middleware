@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import it.eng.cepmiddleware.config.EngineInfoToken;
+
 @Controller
 public class EngineApiController implements EngineApi {
 
@@ -33,16 +35,17 @@ public class EngineApiController implements EngineApi {
 
 	@Override
 	public ResponseEntity<?> addEngine(
-		@Valid @RequestBody Map<String, String> engineInfo
+		@Valid @RequestBody EngineInfoToken engineInfo
 	) {
 		return addEngineService.execute(engineInfo);
 	}
 
 	@Override
 	public ResponseEntity<?> updateEngine(
-		@Valid @RequestBody Map<String, String> engineInfo
+		@PathVariable("engineId") String engineId,
+		@Valid @RequestBody EngineInfoToken engineInfo
 	) {
-		return updateEngineService.execute(engineInfo);
+		return updateEngineService.execute(engineId, engineInfo);
 	}
 
 }
