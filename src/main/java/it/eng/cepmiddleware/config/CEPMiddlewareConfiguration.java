@@ -18,7 +18,7 @@ public class CEPMiddlewareConfiguration {
 	@Autowired CEPEngineConfiguration engineConfig;
 
 	public Collection<CEPEngine> getEngines() {
-		return engineConfig.getCepEngines().values();
+		return engineConfig.getCepEngines();
 	}
 
 	@Bean
