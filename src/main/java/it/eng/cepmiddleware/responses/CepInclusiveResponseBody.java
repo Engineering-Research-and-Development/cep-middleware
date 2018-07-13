@@ -6,6 +6,7 @@ public class CepInclusiveResponseBody extends PlainResponseBody {
 
 	public CepInclusiveResponseBody(String message, String cepMessage) {
 		super(message);
+		this.cepMessage = cepMessage;
 	}
 
 	public String getCepMessage() {
