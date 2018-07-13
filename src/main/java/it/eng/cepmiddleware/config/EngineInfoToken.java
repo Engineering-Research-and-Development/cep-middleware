@@ -7,6 +7,12 @@ public class EngineInfoToken {
 	private String hostUrl;
 
 	public EngineInfoToken() {}
+	
+	public EngineInfoToken(ImmutableEngineInfoToken token) {
+		this.engineId = token.getEngineId();
+		this.engineType = token.getEngineType();
+		this.hostUrl = token.getHostUrl();
+	}
 
 	public String getEngineId() {
 		return engineId;
@@ -30,6 +36,10 @@ public class EngineInfoToken {
 
 	public void setHostUrl(String hostUrl) {
 		this.hostUrl = hostUrl;
+	}
+
+	public ImmutableEngineInfoToken getImmutable() {
+		return new ImmutableEngineInfoToken(this);
 	}
 
 }
