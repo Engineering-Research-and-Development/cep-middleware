@@ -10,6 +10,7 @@ import it.eng.cepmiddleware.Service;
 import it.eng.cepmiddleware.config.CEPEngineConfiguration;
 import it.eng.cepmiddleware.config.EngineInfoToken;
 import it.eng.cepmiddleware.engine.CEPEngine;
+import it.eng.cepmiddleware.responses.PlainResponseBody;
 
 @org.springframework.stereotype.Service
 public class UpdateEngineService implements Service {
@@ -31,7 +32,31 @@ public class UpdateEngineService implements Service {
 	}
 
 	private ResponseEntity<?> updateEngine(String engineId, EngineInfoToken engineInfo) {
-		return new ResponseEntity("Not implemented yet", HttpStatus.NOT_IMPLEMENTED);
+		engineInfo.setEngineId(engineId);
+		try {
+			if (!engineConfig.getCepEngine(engineId).isPresent()) {
+				return new ResponseEntity<>(
+					new PlainResponseBody(String.format(
+						"%s engine does not exists.",
+						engineInfo.getEngineId()
+					)),
+					HttpStatus.NOT_FOUND
+				);
+			}
+			engineConfig.putCepEngine(engineInfo.getImmutable());
+			return new ResponseEntity<>(
+				new PlainResponseBody(String.format(
+					"%s engine updated",
+					engineInfo.getEngineId()
+				)),
+				HttpStatus.OK
+			);
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+				new PlainResponseBody(e.getMessage()),
+				HttpStatus.BAD_REQUEST
+			);
+		}
 	}
 
 }

@@ -1,15 +1,13 @@
 package it.eng.cepmiddleware.api.v1.engine;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import it.eng.cepmiddleware.Service;
 import it.eng.cepmiddleware.config.CEPEngineConfiguration;
-import it.eng.cepmiddleware.engine.CEPEngine;
 import it.eng.cepmiddleware.config.EngineInfoToken;
+import it.eng.cepmiddleware.responses.PlainResponseBody;
 
 @org.springframework.stereotype.Service
 public class AddEngineService implements Service {
@@ -28,9 +26,28 @@ public class AddEngineService implements Service {
 
 	private ResponseEntity<?> addEngine(EngineInfoToken engineInfo) {
 		try {
-			return new ResponseEntity<>(engineConfig.putCepEngine(engineInfo), HttpStatus.OK);
+			if (engineConfig.getCepEngine(engineInfo.getEngineId()).isPresent()) {
+				return new ResponseEntity<>(
+					new PlainResponseBody(String.format(
+						"%s engine already exists.",
+						engineInfo.getEngineId()
+					)),
+					HttpStatus.CONFLICT
+				);
+			}
+			engineConfig.putCepEngine(engineInfo.getImmutable());
+			return new ResponseEntity<>(
+				new PlainResponseBody(String.format(
+					"%s engine created",
+					engineInfo.getEngineId()
+				)),
+				HttpStatus.OK
+			);
 		} catch (Exception e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(
+				new PlainResponseBody(e.getMessage()),
+				HttpStatus.BAD_REQUEST
+			);
 		}
 	}
 

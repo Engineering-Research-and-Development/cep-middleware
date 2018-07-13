@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import it.eng.cepmiddleware.Service;
 import it.eng.cepmiddleware.config.CEPEngineConfiguration;
 import it.eng.cepmiddleware.engine.CEPEngine;
+import it.eng.cepmiddleware.responses.PlainResponseBody;
 
 @org.springframework.stereotype.Service
 public class DeleteEngineService implements Service {
@@ -28,7 +29,17 @@ public class DeleteEngineService implements Service {
 	}
 
 	private ResponseEntity<?> deleteEngine(String engineId) {
-		return new ResponseEntity("Not implemented yet", HttpStatus.NOT_IMPLEMENTED);
+		CEPEngine deletedEngine = engineConfig.remove(engineId);
+		if (deletedEngine == null) {
+			return new ResponseEntity(
+				new PlainResponseBody(String.format("%s engine not found", engineId)),
+				HttpStatus.NOT_FOUND
+			);
+		}
+		return new ResponseEntity(
+			new PlainResponseBody(String.format("%s engine deleted", engineId)),
+			HttpStatus.OK
+		);
 	}
 
 }
