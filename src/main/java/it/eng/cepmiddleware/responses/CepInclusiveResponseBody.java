@@ -15,7 +15,7 @@ public class CepInclusiveResponseBody extends PlainResponseBody {
 
 	@Override
 	public String toString() {
-		return "CepInclusiveResponseBody [cepMessage=" + cepMessage + ", " + super.toString() + "]";
+		return cepMessage;
 	}
 
 }
