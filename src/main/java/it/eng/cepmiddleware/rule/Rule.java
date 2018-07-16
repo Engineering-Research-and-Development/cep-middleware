@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import it.eng.cepmiddleware.HashidsComponent;
 
@@ -16,7 +16,7 @@ public class Rule {
 
 	private Long id;
 	private String ruleId;
-	private String owner;
+	@JsonIgnore private String owner;
 	private boolean active;
 	
 	public Rule() {
