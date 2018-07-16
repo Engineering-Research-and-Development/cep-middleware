@@ -6,6 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+
+import com.fasterxml.jackson.annotation.JsonRawValue;
+
 import it.eng.cepmiddleware.ObjectMapperProvider;
 
 @Entity
@@ -14,7 +17,7 @@ public class PerseoRule extends Rule {
 
 	private String name;
 
-	private String action;
+	@JsonRawValue private String action;
 	private String description;
 	private String text;
 
