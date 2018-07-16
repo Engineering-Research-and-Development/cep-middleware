@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 import it.eng.cepmiddleware.Service;
 import it.eng.cepmiddleware.config.CEPEngineConfiguration;
+import it.eng.cepmiddleware.responses.PlainResponseBody;
 
 @org.springframework.stereotype.Service
 public class GetEngineService implements Service {
@@ -22,9 +23,19 @@ public class GetEngineService implements Service {
 	}
 
 	private ResponseEntity<?> getEngine(String engineId) {
-		return new ResponseEntity<>(
-			engineConfig.getEngineInfo(engineId),
-			HttpStatus.OK
+		return engineConfig.getEngineInfo(engineId).<ResponseEntity>map(
+			(engineInfo) -> new ResponseEntity<>(
+				engineInfo,
+				HttpStatus.OK
+			)
+		).orElse(
+			new ResponseEntity<>(
+				new PlainResponseBody(String.format(
+					"Engine %s hasn't been configured",
+					engineId
+				)),
+				HttpStatus.NOT_FOUND
+			)
 		);
 	}
 
