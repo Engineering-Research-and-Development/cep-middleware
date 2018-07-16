@@ -17,9 +17,6 @@
     },
     {
       "name": "engineRules"
-    },
-    {
-      "name": "engineEvents"
     }
   ],
   "schemes": [
@@ -71,30 +68,6 @@
             "description": "Successful operation"
           }
         }
-      },
-      "put": {
-        "summary": "Update properties of a specified engine",
-        "tags": [
-          "engines"
-        ],
-        "parameters": [
-          {
-            "name": "engine",
-            "required": true,
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/CEPEngine"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation"
-          },
-          "404": {
-            "description": "Requested CEP engine does not exist"
-          }
-        }
       }
     },
     "/engines/{engineId}": {
@@ -131,6 +104,36 @@
             "required": true,
             "in": "path",
             "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "404": {
+            "description": "Requested CEP engine does not exist"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update properties of a specified engine",
+        "tags": [
+          "engines"
+        ],
+        "parameters": [
+          {
+            "name": "engineId",
+            "required": true,
+            "in": "path",
+            "type": "string"
+          },
+          {
+            "name": "engine",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CEPEngine"
+            }
           }
         ],
         "responses": {
@@ -293,114 +296,12 @@
           }
         }
       }
-    },
-    "/engines/{engineId}/rules/{ruleId}/enabled": {
-      "get": {
-        "summary": "Returns if the rule is enabled within the engine",
-        "tags": [
-          "engineRules"
-        ],
-        "parameters": [
-          {
-            "name": "engineId",
-            "required": true,
-            "in": "path",
-            "type": "string"
-          },
-          {
-            "name": "ruleId",
-            "required": true,
-            "in": "path",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Returns if the rule is enabled or not"
-          },
-          "404": {
-            "description": "Rule doesn't exist or the engine doesn't exist"
-          }
-        }
-      },
-      "put": {
-        "summary": "Enable or Disable a rule within an engine",
-        "tags": [
-          "engineRules"
-        ],
-        "parameters": [
-          {
-            "name": "engineId",
-            "required": true,
-            "in": "path",
-            "type": "string"
-          },
-          {
-            "name": "ruleId",
-            "required": true,
-            "in": "path",
-            "type": "string"
-          },
-          {
-            "name": "enableSwitch",
-            "required": true,
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/Rule"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The rule has been successfully enabled/disabled"
-          },
-          "404": {
-            "description": "Rule doesn't exist or the engine doesn't exist"
-          }
-        }
-      }
-    },
-    "/engines/{engineId}/events": {
-      "post": {
-        "summary": "Send an event to a CEP engine",
-        "tags": [
-          "engineEvents"
-        ],
-        "parameters": [
-          {
-            "name": "engineId",
-            "required": true,
-            "in": "path",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Event was successfully sent to an engine"
-          },
-          "404": {
-            "description": "Engine doesn't exist"
-          }
-        }
-      }
     }
   },
   "definitions": {
     "Rule" : {
       "type": "object",
       "properties": {
-        "ruleId": {
-          "type": "string",
-          "example": "Kx5i9aC2"
-        },
-        "description": {
-          "type": "string",
-          "example": "This rule states that an event of type X triggers Y"
-        },
-        "statement": {
-          "type": "string",
-          "example": "select * from ev=iotEvent"
-        }
       }
     },
     "CEPEngine": {
@@ -408,11 +309,11 @@
       "properties": {
         "engineId": {
           "type": "string",
-          "example": "perseo-core-test"
+          "example": "perseo-test"
         },
         "engineType": {
           "type": "string",
-          "example": "PerseoCore"
+          "example": "Perseo"
         },
         "hostUrl": {
           "type": "string",
