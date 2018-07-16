@@ -16,10 +16,9 @@ import it.eng.cepmiddleware.ObjectMapperProvider;
 public class PerseoRule extends Rule {
 
 	private String name;
-
+	private String text;
 	@JsonRawValue private String action;
 	private String description;
-	private String text;
 
 	public PerseoRule() {}
 	
