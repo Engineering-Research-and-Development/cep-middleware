@@ -12,6 +12,10 @@ import it.eng.cepmiddleware.responses.PlainResponseBody;
 public class GetEngineService implements Service {
 
 	@Autowired CEPEngineConfiguration engineConfig;
+	private ResponseEntity engineNotFound = new ResponseEntity(
+		new PlainResponseBody("Engine doesn't exist"),
+		HttpStatus.NOT_FOUND
+	);
 
 	@Override
 	public ResponseEntity<?> execute(Object... parameters) {
@@ -23,20 +27,15 @@ public class GetEngineService implements Service {
 	}
 
 	private ResponseEntity<?> getEngine(String engineId) {
-		return engineConfig.getEngineInfo(engineId).<ResponseEntity>map(
-			(engineInfo) -> new ResponseEntity<>(
-				engineInfo,
-				HttpStatus.OK
+		return engineConfig.getEngineInfo(engineId)
+			.<ResponseEntity>map(
+				(engineInfo) -> new ResponseEntity<>(
+					engineInfo,
+					HttpStatus.OK
+				)
 			)
-		).orElse(
-			new ResponseEntity<>(
-				new PlainResponseBody(String.format(
-					"Engine %s hasn't been configured",
-					engineId
-				)),
-				HttpStatus.NOT_FOUND
-			)
-		);
+			.orElse(engineNotFound)
+		;
 	}
 
 }

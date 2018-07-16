@@ -5,11 +5,16 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import it.eng.cepmiddleware.responses.PlainResponseBody;
+
 public class ErrorCEPEngine implements CEPEngine {
 
-	private String errorMessage = "The engine you chose does not exist or was not correctly configured";
+	private String errorMessage = "Engine doesn't exist";
 
-	private ResponseEntity<String> errorResponse = new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+	private ResponseEntity errorResponse =  new ResponseEntity(
+		new PlainResponseBody(errorMessage),
+		HttpStatus.NOT_FOUND
+	);
 
 	public ErrorCEPEngine() {}
 	public ErrorCEPEngine(String name, String hostUrl) {}
