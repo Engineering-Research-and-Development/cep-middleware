@@ -20,14 +20,22 @@ public class DeleteEngineService implements Service {
 
 	@Override
 	public ResponseEntity<?> execute(Object... parameters) {
-		if (parameters[0] instanceof String) {
+		if (parameters[0] instanceof String && parameters[1] instanceof Boolean) {
 			String engineId = (String) parameters[0];
-			return deleteEngine(engineId);
+			Boolean cascade = (Boolean) parameters[1];
+			return deleteEngine(engineId, cascade);
 		}
 		return paramError;
 	}
 
-	private ResponseEntity<?> deleteEngine(String engineId) {
+	private ResponseEntity<?> deleteEngine(String engineId, Boolean cascade) {
+		if (false == cascade) {
+			return deleteEngineWithoutDeletingRules(engineId);
+		}
+		else return deleteEngineAndItsRules(engineId);
+	}
+
+	private ResponseEntity<?> deleteEngineWithoutDeletingRules(String engineId) {
 		try {
 			repository.deleteById(engineId);
 		} catch (Exception e) {
@@ -42,4 +50,10 @@ public class DeleteEngineService implements Service {
 		);
 	}
 
+	private ResponseEntity<?> deleteEngineAndItsRules(String engineId) {
+		return new ResponseEntity(
+			new PlainResponseBody(String.format("%s engine deleted", engineId)),
+			HttpStatus.OK
+		);
+	}
 }

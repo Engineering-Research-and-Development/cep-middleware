@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 public interface EngineApi {
 
@@ -36,7 +37,10 @@ public interface EngineApi {
 	    @ApiResponse(code = 404, message = "Requested CEP engine does not exist")
 	})
 	@RequestMapping(value = "/engines/{engineId}", method = RequestMethod.DELETE)
-	ResponseEntity<?> deleteEngine(@PathVariable("engineId") String engineId);
+	ResponseEntity<?> deleteEngine(
+		@PathVariable("engineId") String engineId,
+		@RequestParam(name="cascade", defaultValue="false") Boolean cascade
+	);
 
 	@ApiOperation(value = "Add a CEP engine")
 	@ApiResponses(value = {
