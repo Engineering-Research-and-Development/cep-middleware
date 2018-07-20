@@ -5,15 +5,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import it.eng.cepmiddleware.Service;
-import it.eng.cepmiddleware.config.CEPEngineConfiguration;
-import it.eng.cepmiddleware.config.EngineInfoToken;
+import it.eng.cepmiddleware.engine.EngineInfoToken;
+import it.eng.cepmiddleware.engine.EngineInfoTokenRepository;
 import it.eng.cepmiddleware.responses.PlainResponseBody;
 
 @org.springframework.stereotype.Service
 public class AddEngineService implements Service {
-	
+
 	@Autowired MapToEngineConverter converter;
-	@Autowired CEPEngineConfiguration engineConfig;
+	@Autowired private EngineInfoTokenRepository repository;
 
 	@Override
 	public ResponseEntity<?> execute(Object... parameters) {
@@ -26,7 +26,7 @@ public class AddEngineService implements Service {
 
 	private ResponseEntity<?> addEngine(EngineInfoToken engineInfo) {
 		try {
-			if (engineConfig.getCepEngine(engineInfo.getEngineId()).isPresent()) {
+			if (repository.findById(engineInfo.getEngineId()).isPresent()) {
 				return new ResponseEntity<>(
 					new PlainResponseBody(String.format(
 						"%s engine already exists.",
@@ -35,7 +35,7 @@ public class AddEngineService implements Service {
 					HttpStatus.CONFLICT
 				);
 			}
-			engineConfig.putCepEngine(engineInfo.getImmutable());
+			repository.save(engineInfo);
 			return new ResponseEntity<>(
 				new PlainResponseBody(String.format(
 					"%s engine created",

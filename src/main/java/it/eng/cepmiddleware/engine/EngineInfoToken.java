@@ -1,5 +1,12 @@
-package it.eng.cepmiddleware.config;
+package it.eng.cepmiddleware.engine;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import org.springframework.stereotype.Component;
+
+@Entity
+@Component
 public class EngineInfoToken {
 
 	private String engineId;
@@ -7,13 +14,8 @@ public class EngineInfoToken {
 	private String hostUrl;
 
 	public EngineInfoToken() {}
-	
-	public EngineInfoToken(ImmutableEngineInfoToken token) {
-		this.engineId = token.getEngineId();
-		this.engineType = token.getEngineType();
-		this.hostUrl = token.getHostUrl();
-	}
 
+	@Id
 	public String getEngineId() {
 		return engineId;
 	}
@@ -36,10 +38,6 @@ public class EngineInfoToken {
 
 	public void setHostUrl(String hostUrl) {
 		this.hostUrl = hostUrl;
-	}
-
-	public ImmutableEngineInfoToken getImmutable() {
-		return new ImmutableEngineInfoToken(this);
 	}
 
 }

@@ -113,15 +113,12 @@ public class PerseoWebService {
 	
 	public PerseoRuleValidity checkRuleValidity(PerseoRule rule) {
 		String ruleName = rule.getName();
-		String ruleTemporaryName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-		rule.setName(ruleTemporaryName);
 		ResponseEntity ruleCreation = this.createRule(rule);
 		if (ruleCreation.getStatusCode().is2xxSuccessful()) {
 			this.deleteRule(rule.getName());
 			rule.setName(ruleName);
 			return PerseoRuleValidity.valid();
 		}
-		rule.setName(ruleName);
 		return new PerseoRuleValidity(false, ruleCreation.getBody().toString());
 	}
 

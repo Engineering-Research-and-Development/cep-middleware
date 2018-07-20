@@ -1,25 +1,13 @@
 package it.eng.cepmiddleware.config;
 
-import java.util.Collection;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import it.eng.cepmiddleware.engine.CEPEngine;
-import it.eng.cepmiddleware.engine.ErrorCEPEngine;
-
 @Configuration
 public class CEPMiddlewareConfiguration {
-
-	@Autowired CEPEngineConfiguration engineConfig;
-
-	public Collection<CEPEngine> getEngines() {
-		return engineConfig.getCepEngines();
-	}
 
 	@Bean
 	public CorsFilter corsFilter() {

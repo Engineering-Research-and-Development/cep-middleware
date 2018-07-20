@@ -5,15 +5,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import it.eng.cepmiddleware.Service;
-import it.eng.cepmiddleware.config.CEPEngineConfiguration;
 import it.eng.cepmiddleware.engine.CEPEngine;
+import it.eng.cepmiddleware.engine.EngineInfoTokenRepository;
 import it.eng.cepmiddleware.responses.PlainResponseBody;
 
 @org.springframework.stereotype.Service
 public class DeleteEngineService implements Service {
-	
-	@Autowired CEPEngineConfiguration engineConfig;
 
+	@Autowired private EngineInfoTokenRepository repository;
 	ResponseEntity<String> paramError = new ResponseEntity<String>(
 		"Correct parameters not provided",
 		HttpStatus.BAD_REQUEST
@@ -29,8 +28,9 @@ public class DeleteEngineService implements Service {
 	}
 
 	private ResponseEntity<?> deleteEngine(String engineId) {
-		CEPEngine deletedEngine = engineConfig.remove(engineId);
-		if (deletedEngine == null) {
+		try {
+			repository.deleteById(engineId);
+		} catch (Exception e) {
 			return new ResponseEntity(
 				new PlainResponseBody(String.format("%s engine not found", engineId)),
 				HttpStatus.NOT_FOUND

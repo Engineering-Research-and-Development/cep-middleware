@@ -1,17 +1,19 @@
 package it.eng.cepmiddleware.api.v1.engine;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import it.eng.cepmiddleware.Service;
-import it.eng.cepmiddleware.config.CEPEngineConfiguration;
+import it.eng.cepmiddleware.engine.EngineInfoTokenRepository;
 import it.eng.cepmiddleware.responses.PlainResponseBody;
 
 @org.springframework.stereotype.Service
 public class GetEngineService implements Service {
 
-	@Autowired CEPEngineConfiguration engineConfig;
+	@Autowired private EngineInfoTokenRepository repository;
 	private ResponseEntity engineNotFound = new ResponseEntity(
 		new PlainResponseBody("Engine doesn't exist"),
 		HttpStatus.NOT_FOUND
@@ -27,7 +29,7 @@ public class GetEngineService implements Service {
 	}
 
 	private ResponseEntity<?> getEngine(String engineId) {
-		return engineConfig.getEngineInfo(engineId)
+		return repository.findById(engineId)
 			.<ResponseEntity>map(
 				(engineInfo) -> new ResponseEntity<>(
 					engineInfo,

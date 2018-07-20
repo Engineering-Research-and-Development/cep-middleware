@@ -5,17 +5,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import it.eng.cepmiddleware.Service;
-import it.eng.cepmiddleware.config.CEPEngineConfiguration;
+import it.eng.cepmiddleware.engine.EngineInfoTokenRepository;
 
 @org.springframework.stereotype.Service
 public class GetEnginesService implements Service {
 
-	@Autowired CEPEngineConfiguration engineConfig;
+	@Autowired private EngineInfoTokenRepository repository;
 
 	@Override
 	public ResponseEntity<?> execute(Object ...parameters) {
 		return new ResponseEntity<>(
-			engineConfig.getEnginesInfo(),
+			repository.findAll(),
 			HttpStatus.OK
 		);
 	}

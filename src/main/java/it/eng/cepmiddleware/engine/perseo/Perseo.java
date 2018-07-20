@@ -10,7 +10,6 @@ import it.eng.cepmiddleware.responses.CepInclusiveResponseBody;
 import it.eng.cepmiddleware.responses.PlainResponseBody;
 import it.eng.cepmiddleware.rule.PerseoRuleRepository;
 import it.eng.cepmiddleware.rule.PerseoRule;
-import it.eng.cepmiddleware.rule.Rule;
 
 public class Perseo implements CEPEngine {
 
@@ -86,6 +85,7 @@ public class Perseo implements CEPEngine {
 
 	@Override
 	public ResponseEntity<?> getRules() {
+		repository.count();
 		return new ResponseEntity<>(repository.getRulesByOwner(this.engineId), HttpStatus.OK);
 	}
 

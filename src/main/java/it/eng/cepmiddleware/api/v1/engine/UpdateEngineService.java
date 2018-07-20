@@ -7,16 +7,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import it.eng.cepmiddleware.Service;
-import it.eng.cepmiddleware.config.CEPEngineConfiguration;
-import it.eng.cepmiddleware.config.EngineInfoToken;
 import it.eng.cepmiddleware.engine.CEPEngine;
+import it.eng.cepmiddleware.engine.EngineInfoToken;
+import it.eng.cepmiddleware.engine.EngineInfoTokenRepository;
 import it.eng.cepmiddleware.responses.PlainResponseBody;
 
 @org.springframework.stereotype.Service
 public class UpdateEngineService implements Service {
-	
+
+	@Autowired private EngineInfoTokenRepository repository;
 	@Autowired MapToEngineConverter converter;
-	@Autowired CEPEngineConfiguration engineConfig;
 
 	@Override
 	public ResponseEntity<?> execute(Object... parameters) {
@@ -34,7 +34,7 @@ public class UpdateEngineService implements Service {
 	private ResponseEntity<?> updateEngine(String engineId, EngineInfoToken engineInfo) {
 		engineInfo.setEngineId(engineId);
 		try {
-			if (!engineConfig.getCepEngine(engineId).isPresent()) {
+			if (!repository.findById(engineInfo.getEngineId()).isPresent()) {
 				return new ResponseEntity<>(
 					new PlainResponseBody(String.format(
 						"%s engine does not exists.",
@@ -43,7 +43,7 @@ public class UpdateEngineService implements Service {
 					HttpStatus.NOT_FOUND
 				);
 			}
-			engineConfig.putCepEngine(engineInfo.getImmutable());
+			repository.save(engineInfo);
 			return new ResponseEntity<>(
 				new PlainResponseBody(String.format(
 					"%s engine updated",

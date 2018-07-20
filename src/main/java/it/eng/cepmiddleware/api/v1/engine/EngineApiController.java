@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import it.eng.cepmiddleware.config.EngineInfoToken;
+import it.eng.cepmiddleware.engine.EngineInfoToken;
 
 @Controller
 public class EngineApiController implements EngineApi {

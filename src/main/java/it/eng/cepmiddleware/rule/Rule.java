@@ -77,5 +77,5 @@ public class Rule {
 			", owner=" + owner + "]"
 		;
 	}
-	
+
 }

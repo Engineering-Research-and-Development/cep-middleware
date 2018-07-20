@@ -1,7 +1,7 @@
 package it.eng.cepmiddleware.api.v1.engine;
 
 import io.swagger.annotations.*;
-import it.eng.cepmiddleware.config.EngineInfoToken;
+import it.eng.cepmiddleware.engine.EngineInfoToken;
 
 import java.util.Map;
 
