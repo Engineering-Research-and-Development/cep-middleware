@@ -6,8 +6,6 @@ import org.springframework.http.ResponseEntity;
 
 import it.eng.cepmiddleware.Service;
 import it.eng.cepmiddleware.engine.CEPEngineFactory;
-import it.eng.cepmiddleware.engine.ErrorCEPEngine;
-import it.eng.cepmiddleware.rule.Rule;
 
 @org.springframework.stereotype.Service
 public class GetRuleService implements Service {

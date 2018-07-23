@@ -3,12 +3,10 @@ package it.eng.cepmiddleware.api.v1.engine.rules;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import it.eng.cepmiddleware.Service;
 import it.eng.cepmiddleware.engine.CEPEngineFactory;
-import it.eng.cepmiddleware.rule.Rule;
 
 @org.springframework.stereotype.Service
 public class UpdateRuleService implements Service {

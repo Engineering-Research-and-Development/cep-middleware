@@ -3,8 +3,6 @@ package it.eng.cepmiddleware.api.v1.engine;
 import io.swagger.annotations.*;
 import it.eng.cepmiddleware.engine.EngineInfoToken;
 
-import java.util.Map;
-
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;

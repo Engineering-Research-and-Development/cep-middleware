@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import it.eng.cepmiddleware.Service;
-import it.eng.cepmiddleware.engine.CEPEngine;
 import it.eng.cepmiddleware.engine.EngineInfoTokenRepository;
 import it.eng.cepmiddleware.responses.PlainResponseBody;
 
@@ -39,19 +38,19 @@ public class DeleteEngineService implements Service {
 		try {
 			repository.deleteById(engineId);
 		} catch (Exception e) {
-			return new ResponseEntity(
+			return new ResponseEntity<>(
 				new PlainResponseBody(String.format("%s engine not found", engineId)),
 				HttpStatus.NOT_FOUND
 			);
 		}
-		return new ResponseEntity(
+		return new ResponseEntity<>(
 			new PlainResponseBody(String.format("%s engine deleted", engineId)),
 			HttpStatus.OK
 		);
 	}
 
 	private ResponseEntity<?> deleteEngineAndItsRules(String engineId) {
-		return new ResponseEntity(
+		return new ResponseEntity<>(
 			new PlainResponseBody(String.format("%s engine deleted", engineId)),
 			HttpStatus.OK
 		);

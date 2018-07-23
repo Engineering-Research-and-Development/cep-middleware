@@ -4,7 +4,6 @@ import java.util.Map;
 
 import it.eng.cepmiddleware.ObjectMapperProvider;
 import it.eng.cepmiddleware.rule.PerseoRule;
-import it.eng.cepmiddleware.rule.Rule;
 
 public class PerseoRuleAdapter {
 

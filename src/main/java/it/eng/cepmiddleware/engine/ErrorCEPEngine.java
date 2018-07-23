@@ -11,7 +11,7 @@ public class ErrorCEPEngine implements CEPEngine {
 
 	private String errorMessage = "Engine doesn't exist";
 
-	private ResponseEntity errorResponse =  new ResponseEntity(
+	private ResponseEntity errorResponse =  new ResponseEntity<>(
 		new PlainResponseBody(errorMessage),
 		HttpStatus.NOT_FOUND
 	);
