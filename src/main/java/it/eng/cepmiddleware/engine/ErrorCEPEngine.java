@@ -53,4 +53,9 @@ public class ErrorCEPEngine implements CEPEngine {
 		return errorResponse;
 	}
 
+	@Override
+	public ResponseEntity<?> getSupportedEventTypes() {
+		return errorResponse;
+	}
+
 }

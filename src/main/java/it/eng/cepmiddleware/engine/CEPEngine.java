@@ -12,5 +12,6 @@ public interface CEPEngine {
 	public ResponseEntity<?> updateRule(String ruleId, Map<String, Object> ruleMap);
 	public ResponseEntity<?> deleteRule(String ruleId);
 	public ResponseEntity<?> deleteAllRules();
+	public ResponseEntity<?> getSupportedEventTypes();
 
 }

@@ -14,6 +14,7 @@ import it.eng.cepmiddleware.rule.PerseoRule;
 
 public class Perseo implements CEPEngine {
 
+	private static String[] supportedEventTypes= {"iotEvent"};
 	private String engineId;
 	private PerseoWebService service;
 	private PerseoRuleConverter ruleConverter;
@@ -165,6 +166,14 @@ public class Perseo implements CEPEngine {
 			(ruleId) -> this.deleteRule(ruleId)
 		);
 		return ResponseEntity.ok().build();
+	}
+
+	@Override
+	public ResponseEntity<?> getSupportedEventTypes() {
+		return new ResponseEntity(
+			Perseo.supportedEventTypes,
+			HttpStatus.OK
+		);
 	}
 
 }

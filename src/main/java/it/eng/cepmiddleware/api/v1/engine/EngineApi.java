@@ -59,4 +59,15 @@ public interface EngineApi {
 		@PathVariable("engineId") String engineId,
 		@Valid @RequestBody EngineInfoToken engineInfo
 	);
+
+	@ApiOperation(value = "Returns a collection of event types supported by the engine")
+	@ApiResponses(value = {
+	    @ApiResponse(code = 200, message = "Successful operation"),
+	    @ApiResponse(code = 404, message = "Requested CEP engine does not exist")
+	})
+	@RequestMapping(value = "/engines/{engineId}/event-types", method = RequestMethod.GET)
+	ResponseEntity<?> getEngineSupportedEventTypes(
+		@PathVariable("engineId") String engineId
+	);
+
 }
