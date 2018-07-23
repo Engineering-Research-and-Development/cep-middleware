@@ -1,5 +1,6 @@
 package it.eng.cepmiddleware.engine.perseo;
 
+import java.util.Collection;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,7 +142,11 @@ public class Perseo implements CEPEngine {
 		ResponseEntity newRuleCreation = this.createRule(newRule);
 		switch (newRuleCreation.getStatusCodeValue()) {
 			case 200: return ResponseEntity.<PlainResponseBody>ok(
-				new PlainResponseBody(newRule.isActive()? "Rule successfully updated and activated": "Rule successfully updated")
+				new PlainResponseBody(
+					newRule.isActive()?
+						"Rule successfully updated and activated":
+						"Rule successfully updated"
+				)
 			); 
 			case 201: return new ResponseEntity(new CepInclusiveResponseBody(
 				"Rule successfully updated but couldn't activate",
@@ -151,6 +156,15 @@ public class Perseo implements CEPEngine {
 				new PlainResponseBody(newRuleCreation.getBody().toString())
 			);
 		}
+	}
+
+	@Override
+	public ResponseEntity<?> deleteAllRules() {
+		Collection<String> ruleIds = repository.getAllRuleIdsOfOwner(this.engineId);
+		ruleIds.stream().forEach(
+			(ruleId) -> this.deleteRule(ruleId)
+		);
+		return ResponseEntity.ok().build();
 	}
 
 }
