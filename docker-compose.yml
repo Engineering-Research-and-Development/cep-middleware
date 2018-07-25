@@ -96,6 +96,30 @@ services:
         aliases:
           - CEP-middleware
 
+  mysql:
+    image: mysql/mysql-server:5.7.21
+    ports:
+      - "3306:3306"
+    networks:
+      fiwareNetwork:
+        aliases:
+          - mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=idm
+      - MYSQL_ROOT_HOST=%
+
+  fiware-idm:
+    image: fiware/idm
+    ports:
+      - "3000:3000"
+      - "443:443"
+    networks:
+      fiwareNetwork:
+        aliases:
+          - fiware-idm
+    environment:
+      - DATABASE_HOST=mysql
+
 networks:
 
   fiwareNetwork:
