@@ -1,6 +1,7 @@
 version: '3'
 
 services:
+
   mongo:
     image: mongo:3.2
     ports:
@@ -74,12 +75,6 @@ services:
         aliases:
           - PostgreSQL
 
-  SpringCloudConfig:
-    image: hyness/spring-cloud-config-server
-    ports:
-      - "8888:8888"
-    command: --spring.cloud.config.server.git.uri=https://github.com/spring-cloud-samples/config-repo
-
   CEP-middleware:
     build:
       context: https://github.com/is3labengrd/cep-middleware.git#develop
@@ -96,15 +91,13 @@ services:
       --spring.jpa.hibernate.ddl-auto="create"
       --spring.datasource.username="root"
       --spring.datasource.password="root"
-      --engines[0].engineId="perseo"
-      --engines[0].engineType="Perseo"
-      --engines[0].hostUrl="http://perseo-fe:9090"
     networks:
       fiwareNetwork:
         aliases:
           - CEP-middleware
 
 networks:
+
   fiwareNetwork:
     driver: bridge
     ipam:
