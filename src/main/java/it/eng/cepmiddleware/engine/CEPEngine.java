@@ -13,5 +13,6 @@ public interface CEPEngine {
 	public ResponseEntity<?> deleteRule(String ruleId);
 	public ResponseEntity<?> deleteAllRules();
 	public ResponseEntity<?> getSupportedEventTypes();
+	public void deactivateAllRules();
 
 }

@@ -87,7 +87,6 @@ public class Perseo implements CEPEngine {
 
 	@Override
 	public ResponseEntity<?> getRules() {
-		repository.count();
 		return new ResponseEntity<>(repository.getRulesByOwner(this.engineId), HttpStatus.OK);
 	}
 
@@ -173,6 +172,18 @@ public class Perseo implements CEPEngine {
 		return new ResponseEntity(
 			Perseo.supportedEventTypes,
 			HttpStatus.OK
+		);
+	}
+
+	@Override
+	public void deactivateAllRules() {
+		Collection<PerseoRule> rules = (Collection)this.getRules().getBody();
+		rules.stream().forEach(
+			(rule) -> {
+				this.deleteRule(rule.getRuleId());
+				rule.setActive(false);
+				this.createRule(rule);
+			}
 		);
 	}
 

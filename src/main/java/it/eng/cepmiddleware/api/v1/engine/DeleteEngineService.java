@@ -40,6 +40,10 @@ public class DeleteEngineService implements Service {
 
 	private ResponseEntity<?> deleteEngineWithoutDeletingRules(String engineId) {
 		try {
+			engineFactory
+				.getCEPEngine(engineId)
+				.deactivateAllRules()
+			;
 			engineRepository.deleteById(engineId);
 		} catch (Exception e) {
 			return new ResponseEntity<>(
