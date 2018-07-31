@@ -1,4 +1,4 @@
-package it.eng.cepmiddleware.api.v1.engine.rules;
+package it.eng.cepmiddleware.api.v1.engine_rules;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,8 +8,8 @@ import it.eng.cepmiddleware.Service;
 import it.eng.cepmiddleware.engine.CEPEngineFactory;
 
 @org.springframework.stereotype.Service
-public class DeleteRuleService implements Service {
-	
+public class GetRulesService implements Service {
+
 	@Autowired CEPEngineFactory engineFactory;
 
 	ResponseEntity<String> paramError = new ResponseEntity<String>(
@@ -19,16 +19,15 @@ public class DeleteRuleService implements Service {
 
 	@Override
 	public ResponseEntity<?> execute(Object... parameters) {
-		if (parameters[0] instanceof String && parameters[1] instanceof String) {
+		if (parameters[0] instanceof String) {
 			String engineId = (String) parameters[0];
-			String ruleId = (String) parameters[1];
-			return deleteRuleService(engineId, ruleId);
+			return getRules(engineId);
 		}
 		return paramError;
 	}
 
-	private ResponseEntity<?> deleteRuleService(String engineId, String ruleId) {
-		return engineFactory.getCEPEngine(engineId).deleteRule(ruleId);
+	private ResponseEntity<?> getRules(String engineId) {
+		return engineFactory.getCEPEngine(engineId).getRules();
 	}
 
 }

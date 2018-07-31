@@ -1,4 +1,4 @@
-package it.eng.cepmiddleware.api.v1.engine;
+package it.eng.cepmiddleware.api.v1.engines;
 
 import java.util.Map;
 

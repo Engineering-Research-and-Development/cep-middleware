@@ -1,4 +1,4 @@
-package it.eng.cepmiddleware.api.v1.engine;
+package it.eng.cepmiddleware.api.v1.engines;
 
 import io.swagger.annotations.*;
 import it.eng.cepmiddleware.engine.EngineInfoToken;
