@@ -10,6 +10,8 @@ import it.eng.cepmiddleware.engine.CEPEngine;
 import it.eng.cepmiddleware.responses.CepInclusiveResponseBody;
 import it.eng.cepmiddleware.responses.PlainResponseBody;
 import it.eng.cepmiddleware.rule.PerseoRuleRepository;
+import it.eng.cepmiddleware.rule.ArchivedPerseoRule;
+import it.eng.cepmiddleware.rule.ArchivedPerseoRuleRepository;
 import it.eng.cepmiddleware.rule.PerseoRule;
 
 public class Perseo implements CEPEngine {
@@ -18,7 +20,8 @@ public class Perseo implements CEPEngine {
 	private String engineId;
 	private PerseoWebService service;
 	private PerseoRuleConverter ruleConverter;
-	@Autowired private PerseoRuleRepository repository;
+	@Autowired private PerseoRuleRepository perseoRuleRepository;
+	@Autowired private ArchivedPerseoRuleRepository archivedPerseoRuleRepository;
 
 	public Perseo(String engineId, String hostUrl) {
 		this.engineId = engineId;
@@ -36,7 +39,7 @@ public class Perseo implements CEPEngine {
 		PerseoRuleValidity ruleValidity = service.checkRuleValidity(rule);
 		if (ruleValidity.isValid()) {
 			if (rule.isActive()) {
-				repository.save(rule);
+				perseoRuleRepository.save(rule);
 				ResponseEntity ruleCreation = service.createRule(rule);
 				if (ruleCreation.getStatusCode().is2xxSuccessful()) {
 					return ResponseEntity.<PlainResponseBody>ok(
@@ -44,7 +47,7 @@ public class Perseo implements CEPEngine {
 					);
 				} else {
 					rule.setActive(false);
-					repository.save(rule);
+					perseoRuleRepository.save(rule);
 					return ResponseEntity.status(HttpStatus.CREATED)
 						.<CepInclusiveResponseBody>body(
 							new CepInclusiveResponseBody(
@@ -56,7 +59,7 @@ public class Perseo implements CEPEngine {
 				}
 			}
 			else {
-				repository.save(rule);
+				perseoRuleRepository.save(rule);
 				return ResponseEntity.<PlainResponseBody>ok(
 					new PlainResponseBody("Rule successfully created")
 				);
@@ -75,7 +78,7 @@ public class Perseo implements CEPEngine {
 
 	@Override
 	public ResponseEntity<?> getRule(String ruleId) {
-		PerseoRule rule = repository.getRuleById(ruleId);
+		PerseoRule rule = perseoRuleRepository.getRuleById(ruleId);
 		if (rule == null) {
 			return ResponseEntity.notFound().build();
 		}
@@ -87,12 +90,12 @@ public class Perseo implements CEPEngine {
 
 	@Override
 	public ResponseEntity<?> getRules() {
-		return new ResponseEntity<>(repository.getRulesByOwner(this.engineId), HttpStatus.OK);
+		return new ResponseEntity<>(perseoRuleRepository.getRulesByOwner(this.engineId), HttpStatus.OK);
 	}
 
 	@Override
 	public ResponseEntity<?> deleteRule(String ruleId) {
-		PerseoRule rule = repository.getRuleById(ruleId);
+		PerseoRule rule = perseoRuleRepository.getRuleById(ruleId);
 		if (rule == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 				.<PlainResponseBody>body(
@@ -105,7 +108,7 @@ public class Perseo implements CEPEngine {
 		if (rule.isActive()) {
 			service.deleteRule(rule.getName());
 		}
-		repository.delete(rule);
+		perseoRuleRepository.delete(rule);
 		return ResponseEntity.<PlainResponseBody>ok(
 			new PlainResponseBody("Rule successfully deleted")
 		);
@@ -114,7 +117,7 @@ public class Perseo implements CEPEngine {
 	@Override
 	public ResponseEntity<?> updateRule(String ruleId, Map<String, Object> ruleMap) {
 		PerseoRule newRule = ruleConverter.convert(ruleMap);
-		PerseoRule oldRule = repository.getRuleById(ruleId);
+		PerseoRule oldRule = perseoRuleRepository.getRuleById(ruleId);
 		if (oldRule == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 				.<PlainResponseBody>body(
@@ -160,7 +163,7 @@ public class Perseo implements CEPEngine {
 
 	@Override
 	public ResponseEntity<?> deleteAllRules() {
-		Collection<String> ruleIds = repository.getAllRuleIdsOfOwner(this.engineId);
+		Collection<String> ruleIds = perseoRuleRepository.getAllRuleIdsOfOwner(this.engineId);
 		ruleIds.stream().forEach(
 			(ruleId) -> this.deleteRule(ruleId)
 		);
@@ -168,22 +171,28 @@ public class Perseo implements CEPEngine {
 	}
 
 	@Override
+	public ResponseEntity<?> deleteAllRules(boolean archiveRules) {
+		if (false == archiveRules) {
+			return deleteAllRules();
+		} else {
+			perseoRuleRepository.getRulesByOwner(this.engineId).forEach(
+				(perseoRule) -> {
+					archivedPerseoRuleRepository.save(new ArchivedPerseoRule(perseoRule));
+					Collection<String> ruleIds = perseoRuleRepository.getAllRuleIdsOfOwner(this.engineId);
+					ruleIds.stream().forEach(
+						(ruleId) -> this.deleteRule(ruleId)
+					);
+				}
+			);
+			return ResponseEntity.ok().build();
+		}
+	}
+
+	@Override
 	public ResponseEntity<?> getSupportedEventTypes() {
 		return new ResponseEntity(
 			Perseo.supportedEventTypes,
 			HttpStatus.OK
-		);
-	}
-
-	@Override
-	public void deactivateAllRules() {
-		Collection<PerseoRule> rules = (Collection)this.getRules().getBody();
-		rules.stream().forEach(
-			(rule) -> {
-				this.deleteRule(rule.getRuleId());
-				rule.setActive(false);
-				this.createRule(rule);
-			}
 		);
 	}
 

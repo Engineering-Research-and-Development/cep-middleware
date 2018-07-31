@@ -1,26 +1,21 @@
 package it.eng.cepmiddleware.rule;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import it.eng.cepmiddleware.HashidsComponent;
 
-@Entity(name = "Rule")
-public class Rule {
+@Entity(name = "ArchivedRule")
+public class ArchivedRule {
 
 	private HashidsComponent hashids;
 
 	private Long id;
 	private String ruleId;
-	@JsonIgnore private String owner;
-	private boolean active;
-	
-	public Rule() {
+
+	public ArchivedRule() {
 		this.hashids = new HashidsComponent();
 	}
 
@@ -42,7 +37,7 @@ public class Rule {
 	public String getRuleId() {
 		return this.ruleId;
 	}
-	
+
 	public void setRuleId(String ruleId) {
 		this.ruleId = ruleId;
 		try {
@@ -52,30 +47,12 @@ public class Rule {
 		}
 	}
 
-	@Column(nullable = false)
-	public String getOwner() {
-		return owner;
-	}
-
-	public void setOwner(String owner) {
-		this.owner = owner;
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-
 	@Override
 	public String toString() {
 		return
-			"Rule [hashids=" + hashids +
+			"ArchivedRule [hashids=" + hashids +
 			", id=" + id +
-			", ruleId=" + ruleId +
-			", owner=" + owner + "]"
+			", ruleId=" + ruleId + "]"
 		;
 	}
 

@@ -59,6 +59,8 @@ public class ErrorCEPEngine implements CEPEngine {
 	}
 
 	@Override
-	public void deactivateAllRules() {}
+	public ResponseEntity<?> deleteAllRules(boolean archiveRules) {
+		return errorResponse;
+	}
 
 }

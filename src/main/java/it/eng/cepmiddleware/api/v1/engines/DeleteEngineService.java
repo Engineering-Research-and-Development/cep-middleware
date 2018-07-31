@@ -8,13 +8,11 @@ import it.eng.cepmiddleware.Service;
 import it.eng.cepmiddleware.engine.CEPEngineFactory;
 import it.eng.cepmiddleware.engine.EngineInfoTokenRepository;
 import it.eng.cepmiddleware.responses.PlainResponseBody;
-import it.eng.cepmiddleware.rule.RuleRepository;
 
 @org.springframework.stereotype.Service
 public class DeleteEngineService implements Service {
 
 	@Autowired private EngineInfoTokenRepository engineRepository;
-	@Autowired private RuleRepository ruleRepository;
 	@Autowired CEPEngineFactory engineFactory;
 	ResponseEntity<String> paramError = new ResponseEntity<String>(
 		"Correct parameters not provided",
@@ -33,16 +31,16 @@ public class DeleteEngineService implements Service {
 
 	private ResponseEntity<?> deleteEngine(String engineId, Boolean cascade) {
 		if (false == cascade) {
-			return deleteEngineWithoutDeletingRules(engineId);
+			return deleteEngineAndArchiveRules(engineId);
 		}
 		else return deleteEngineAndItsRules(engineId);
 	}
 
-	private ResponseEntity<?> deleteEngineWithoutDeletingRules(String engineId) {
+	private ResponseEntity<?> deleteEngineAndArchiveRules(String engineId) {
 		try {
-			engineFactory
+			ResponseEntity allRuleDeletion = engineFactory
 				.getCEPEngine(engineId)
-				.deactivateAllRules()
+				.deleteAllRules(true)
 			;
 			engineRepository.deleteById(engineId);
 		} catch (Exception e) {
@@ -60,8 +58,9 @@ public class DeleteEngineService implements Service {
 	private ResponseEntity<?> deleteEngineAndItsRules(String engineId) {
 		ResponseEntity allRuleDeletion = engineFactory
 			.getCEPEngine(engineId)
-			.deleteAllRules()
+			.deleteAllRules(false)
 		;
+		engineRepository.deleteById(engineId);
 		if (!allRuleDeletion.getStatusCode().is2xxSuccessful()) {
 			return new ResponseEntity<>(
 				new PlainResponseBody("Something went wrong..."),
