@@ -17,6 +17,9 @@
     },
     {
       "name": "engineRules"
+    },
+    {
+      "name": "archivedRules"
     }
   ],
   "schemes": [
@@ -104,6 +107,13 @@
             "required": true,
             "in": "path",
             "type": "string"
+          },
+          {
+            "name": "cascade",
+            "required": false,
+            "in": "query",
+            "type": "boolean",
+            "description": "If cascade is set to true, selected engine will be deleted physically along with its rules, else, engine will be physically deleted and its rules archived"
           }
         ],
         "responses": {
@@ -296,6 +306,90 @@
           }
         }
       }
+    },
+    "/archived-rules": {
+      "get": {
+        "summary": "Returns archived rules",
+        "tags": [
+          "archivedRules"
+        ],
+        "parameters": [
+          {
+            "name": "type",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "description": "Get all rules of specified type"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "404": {
+            "description": "Given type is not supported"
+          }
+        }
+      }
+    },
+    "/archived-rules/{ruleId}": {
+      "get": {
+        "summary": "Returns archived rule",
+        "tags": [
+          "archivedRules"
+        ],
+        "parameters": [
+          {
+            "name": "ruleId",
+            "required": true,
+            "in": "path",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "404": {
+            "description": "Archived rule doesn't exist"
+          }
+        }
+      }
+    },
+    "/archived-rules/{ruleId}/reassignment": {
+      "post": {
+        "summary": "Assigns the archived rule to an existing engine",
+        "tags": [
+          "archivedRules"
+        ],
+        "parameters": [
+          {
+            "name": "ruleId",
+            "required": true,
+            "in": "path",
+            "type": "string"
+          },
+          {
+            "name": "reassignment",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Reassignment"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "404": {
+            "description": "Archived rule doesn't exist"
+          },
+          "400": {
+            "description": "Can't assign to specified engine because the engine doesnt exist or there is a type mismatch"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -318,6 +412,19 @@
         "hostUrl": {
           "type": "string",
           "example": "http://www.wryyyyy.com"
+        }
+      }
+    },
+    "Reassignment": {
+      "type": "object",
+      "properties": {
+        "newOwner": {
+          "type": "string",
+          "example": "perseo2"
+        },
+        "active": {
+          "type": "boolean",
+          "example": "true"
         }
       }
     }
