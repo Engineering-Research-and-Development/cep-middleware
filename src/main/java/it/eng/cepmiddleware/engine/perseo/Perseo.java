@@ -31,7 +31,15 @@ public class Perseo implements CEPEngine {
 
 	@Override
 	public ResponseEntity<?> createRule(Map<String, Object> ruleMap) {
-		PerseoRule rule = ruleConverter.convert(ruleMap);
+		PerseoRule rule;
+		try {
+			rule = ruleConverter.convert(ruleMap);
+		} catch (Exception e) {
+			return new ResponseEntity(
+				e.getMessage(),
+				HttpStatus.BAD_REQUEST
+			);
+		}
 		return this.createRule(rule);
 	}
 	
@@ -116,7 +124,15 @@ public class Perseo implements CEPEngine {
 
 	@Override
 	public ResponseEntity<?> updateRule(String ruleId, Map<String, Object> ruleMap) {
-		PerseoRule newRule = ruleConverter.convert(ruleMap);
+		PerseoRule newRule;
+		try {
+			newRule = ruleConverter.convert(ruleMap);
+		} catch (Exception e) {
+			return new ResponseEntity(
+				e.getMessage(),
+				HttpStatus.BAD_REQUEST
+			);
+		}
 		PerseoRule oldRule = perseoRuleRepository.getRuleById(ruleId);
 		if (oldRule == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)

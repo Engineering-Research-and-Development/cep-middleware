@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.eng.cepmiddleware.HashidsComponent;
 
 @Entity(name = "Rule")
-public class Rule {
+public abstract class Rule {
 
 	private HashidsComponent hashids;
 

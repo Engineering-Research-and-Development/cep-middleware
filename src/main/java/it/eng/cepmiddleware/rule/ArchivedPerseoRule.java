@@ -72,4 +72,14 @@ public class ArchivedPerseoRule extends ArchivedRule {
 		this.description = description;
 	}
 
+	@Override
+	public PerseoRule extract() {
+		PerseoRule result = new PerseoRule();
+		result.setName(name);
+		result.setText(text);
+		result.setAction(action);
+		result.setDescription(description);
+		return result;
+	}
+
 }

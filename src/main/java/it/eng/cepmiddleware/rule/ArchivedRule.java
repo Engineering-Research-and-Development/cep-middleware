@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import it.eng.cepmiddleware.HashidsComponent;
 
 @Entity(name = "ArchivedRule")
-public class ArchivedRule {
+public abstract class ArchivedRule {
 
 	private HashidsComponent hashids;
 
@@ -55,5 +55,7 @@ public class ArchivedRule {
 			", ruleId=" + ruleId + "]"
 		;
 	}
+
+	public abstract Rule extract();
 
 }

@@ -2,7 +2,7 @@ package it.eng.cepmiddleware.responses;
 
 public class PlainResponseBody {
 
-	private String message;
+	protected String message;
 
 	public PlainResponseBody(String message) {
 		this.message = message;

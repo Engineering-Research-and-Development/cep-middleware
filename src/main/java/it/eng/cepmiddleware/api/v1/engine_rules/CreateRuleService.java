@@ -11,7 +11,7 @@ import it.eng.cepmiddleware.engine.CEPEngineFactory;
 @org.springframework.stereotype.Service
 public class CreateRuleService implements Service {
 
-	@Autowired CEPEngineFactory engineFactory;
+	@Autowired private CEPEngineFactory engineFactory;
 
 	@Override
 	public ResponseEntity<?> execute(Object... parameters) {

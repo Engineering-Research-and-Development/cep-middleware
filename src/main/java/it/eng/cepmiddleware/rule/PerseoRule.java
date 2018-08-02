@@ -1,5 +1,6 @@
 package it.eng.cepmiddleware.rule;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.Column;

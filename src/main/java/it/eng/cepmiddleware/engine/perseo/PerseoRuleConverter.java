@@ -2,6 +2,8 @@ package it.eng.cepmiddleware.engine.perseo;
 
 import java.util.Map;
 
+import com.fasterxml.jackson.databind.util.RawValue;
+
 import it.eng.cepmiddleware.Converter;
 import it.eng.cepmiddleware.rule.PerseoRule;
 
@@ -19,7 +21,11 @@ public class PerseoRuleConverter implements Converter<PerseoRule, Map<String, Ob
 		rule.setOwner(ownerEngineName);
 		rule.setText((String)source.get("text"));
 		rule.setDescription((String)source.get("description"));
-		rule.setAction((Map)source.get("action"));
+		try {
+			rule.setAction((Map)source.get("action"));
+		} catch (Exception e) {
+			rule.setAction((String)((RawValue)source.get("action")).rawValue());
+		}
 		rule.setName((String)source.get("name"));
 		rule.setActive(Boolean.parseBoolean(source.getOrDefault("active", "false").toString()));
 		return rule;
