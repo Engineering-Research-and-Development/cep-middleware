@@ -4,6 +4,7 @@ services:
 
   mongo:
     image: mongo:3.2
+    container_name: mongo
     ports:
       - "27017:27017"
     command: --nojournal
@@ -16,6 +17,7 @@ services:
 
   orion:
     image: fiware/orion
+    container_name: orion
     ports:
       - "1026:1026"
     command:
@@ -31,6 +33,7 @@ services:
 
   perseo-core:
     image: telefonicaiot/perseo-core
+    container_name: perseo-core
     ports:
       - "8080:8080"
     depends_on:
@@ -44,6 +47,7 @@ services:
 
   perseo-fe:
     image: telefonicaiot/perseo-fe
+    container_name: perseo-fe
     ports:
       - "9090:9090"
     depends_on:
@@ -61,8 +65,9 @@ services:
           - perseo-fe
 
   PostgreSQL:
-    restart: always
     image: sameersbn/postgresql:9.6-2
+    container_name: postgres
+    restart: always
     ports:
       - "5432:5432"
     environment:
@@ -79,6 +84,7 @@ services:
     build:
       context: https://github.com/is3labengrd/cep-middleware.git#develop
     image: drobniac/cep-middleware
+    container_name: cep-middleware
     ports:
       - "8091:8090"
     depends_on:
@@ -98,6 +104,7 @@ services:
 
   mysql:
     image: mysql/mysql-server:5.7.21
+    container_name: mysql
     ports:
       - "3306:3306"
     networks:
@@ -109,16 +116,39 @@ services:
       - MYSQL_ROOT_HOST=%
 
   fiware-idm:
-    image: fiware/idm
+    image: waste4think/fiware-idm
+    container_name: idm
     ports:
-      - "3000:3000"
-      - "443:443"
+      - "3000:8000"
+      - "443:5000"
     networks:
       fiwareNetwork:
         aliases:
           - fiware-idm
     environment:
       - DATABASE_HOST=mysql
+
+  fiware-pep:
+    image: waste4think/pep_proxy:release-6.2
+    container_name: pep
+    ports:
+      - 9191:80
+    volumes:
+      - ./config.js:/opt/fiware-pep-proxy/config.js
+    networks:
+      fiwareNetwork:
+        aliases:
+          - fiware-pep
+
+  authzforce:
+    image: fiware/authzforce-ce-server:release-8.0.1
+    container_name: authzforce
+    ports:
+      - 9292:8080
+    networks:
+      fiwareNetwork:
+        aliases:
+          - authzforce
 
 networks:
 
