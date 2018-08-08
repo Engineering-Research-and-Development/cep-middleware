@@ -1,4 +1,4 @@
-package it.eng.cepmiddleware.api.v1.engine_rules;
+package it.eng.cepmiddleware.api.v1.engines.rules;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,9 +8,10 @@ import it.eng.cepmiddleware.Service;
 import it.eng.cepmiddleware.engine.CEPEngineFactory;
 
 @org.springframework.stereotype.Service
-public class GetRuleService implements Service {
-	
+public class GetRulesService implements Service {
+
 	@Autowired CEPEngineFactory engineFactory;
+
 	ResponseEntity<String> paramError = new ResponseEntity<String>(
 		"Correct parameters not provided",
 		HttpStatus.BAD_REQUEST
@@ -18,16 +19,15 @@ public class GetRuleService implements Service {
 
 	@Override
 	public ResponseEntity<?> execute(Object... parameters) {
-		if (parameters[0] instanceof String && parameters[1] instanceof String) {
+		if (parameters[0] instanceof String) {
 			String engineId = (String) parameters[0];
-			String ruleId = (String) parameters[1];
-			return getRuleService(engineId, ruleId);
+			return getRules(engineId);
 		}
 		return paramError;
 	}
 
-	private ResponseEntity<?> getRuleService(String engineId, String ruleId) {
-		return engineFactory.getCEPEngine(engineId).getRule(ruleId);
+	private ResponseEntity<?> getRules(String engineId) {
+		return engineFactory.getCEPEngine(engineId).getRules();
 	}
 
 }

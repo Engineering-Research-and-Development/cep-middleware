@@ -1,4 +1,4 @@
-package it.eng.cepmiddleware.api.v1.engine_rules;
+package it.eng.cepmiddleware.api.v1.engines.rules;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
