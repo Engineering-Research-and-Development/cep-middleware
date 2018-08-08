@@ -4,30 +4,39 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+@Controller
 public class ExposedEngineRulesController implements ExposedEngineRulesApi {
+
+	@Autowired GetExposedEngineRuleService getRuleService;
+	@Autowired GetExposedEngineRulesService getRulesService;
+	@Autowired CreateExposedEngineRuleService createRuleService;
+	@Autowired DeleteExposedEngineRuleService deleteRuleService;
+	@Autowired UpdateExposedEngineRuleService updateRuleService;
 
 	@Override
 	public ResponseEntity<?> getRule(@PathVariable("ruleId") String ruleId) {
-		return null;
+		return getRuleService.execute(ruleId);
 	}
 
 	@Override
 	public ResponseEntity<?> getRules() {
-		return null;
+		return getRulesService.execute();
 	}
 
 	@Override
 	public ResponseEntity<?> createRule(@Valid @RequestBody Map<String, Object> rule) {
-		return null;
+		return createRuleService.execute(rule);
 	}
 
 	@Override
 	public ResponseEntity<?> deleteRule(@PathVariable("ruleId") String ruleId) {
-		return null;
+		return deleteRuleService.execute(ruleId);
 	}
 
 	@Override
@@ -35,7 +44,7 @@ public class ExposedEngineRulesController implements ExposedEngineRulesApi {
 		@PathVariable("ruleId") String ruleId,
 		@Valid Map<String, Object> rule
 	) {
-		return null;
+		return updateRuleService.execute(ruleId, rule);
 	}
 
 }
