@@ -14,8 +14,10 @@ public class IdmPoweredSecurity extends WebSecurityConfigurerAdapter {
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
 		http.addFilterAt(new IdmAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-		http.authorizeRequests()
-			.antMatchers("/engines/**").hasRole("USER")
+		http
+			.csrf().disable()
+			.authorizeRequests()
+			.antMatchers("/exposed-engine/**").hasRole("USER")
 			.anyRequest().hasRole("ADMIN")
 		.and()
 			.sessionManagement()
