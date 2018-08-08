@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 import it.eng.cepmiddleware.ObjectToMapConverter;
 import it.eng.cepmiddleware.Service;
-import it.eng.cepmiddleware.engine.CEPEngineFactory;
+import it.eng.cepmiddleware.engine.CEPEngineProvider;
 import it.eng.cepmiddleware.responses.CepInclusiveResponseBody;
 import it.eng.cepmiddleware.responses.PlainResponseBody;
 import it.eng.cepmiddleware.rule.ArchivedRule;
@@ -17,7 +17,7 @@ import it.eng.cepmiddleware.rule.Rule;
 public class ReassignArchivedRuleService implements Service {
 
 	@Autowired private ArchivedRuleRepository archivedRuleRepository;
-	@Autowired private CEPEngineFactory engineFactory;
+	@Autowired private CEPEngineProvider engineFactory;
 
 	@Override
 	public ResponseEntity<?> execute(Object... parameters) {

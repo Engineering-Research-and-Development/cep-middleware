@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import it.eng.cepmiddleware.Service;
-import it.eng.cepmiddleware.engine.CEPEngineFactory;
+import it.eng.cepmiddleware.engine.CEPEngineProvider;
 
 @org.springframework.stereotype.Service
 public class GetEngineSupportedEventTypesService implements Service {
 
-	@Autowired private CEPEngineFactory engineFactory;
+	@Autowired private CEPEngineProvider engineFactory;
 
 	@Override
 	public ResponseEntity<?> execute(Object... parameters) {

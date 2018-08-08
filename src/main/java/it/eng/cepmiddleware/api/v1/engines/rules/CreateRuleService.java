@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import it.eng.cepmiddleware.Service;
-import it.eng.cepmiddleware.engine.CEPEngineFactory;
+import it.eng.cepmiddleware.engine.CEPEngineProvider;
 
 @org.springframework.stereotype.Service
 public class CreateRuleService implements Service {
 
-	@Autowired private CEPEngineFactory engineFactory;
+	@Autowired private CEPEngineProvider engineProvider;
 
 	@Override
 	public ResponseEntity<?> execute(Object... parameters) {
@@ -24,7 +24,7 @@ public class CreateRuleService implements Service {
 	}
 
 	private ResponseEntity<?> createRule(String engineId, Map<String, Object> ruleMap) {
-		return engineFactory.getCEPEngine(engineId).createRule(ruleMap);
+		return engineProvider.getCEPEngine(engineId).createRule(ruleMap);
 	}
 
 }

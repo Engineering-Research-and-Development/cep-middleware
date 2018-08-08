@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Scope;
 import it.eng.cepmiddleware.engine.perseo.Perseo;
 
 @Configuration
-public class DefaultEngineFactory implements CEPEngineFactory {
+public class DefaultEngineProvider implements CEPEngineProvider {
 
 	@Autowired private EngineInfoTokenRepository repository;
 	ErrorCEPEngine errorEngine = new ErrorCEPEngine();

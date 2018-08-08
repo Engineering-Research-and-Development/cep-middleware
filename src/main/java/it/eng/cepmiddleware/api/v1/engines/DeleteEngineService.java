@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import it.eng.cepmiddleware.Service;
-import it.eng.cepmiddleware.engine.CEPEngineFactory;
+import it.eng.cepmiddleware.engine.CEPEngineProvider;
 import it.eng.cepmiddleware.engine.EngineInfoTokenRepository;
 import it.eng.cepmiddleware.responses.PlainResponseBody;
 
@@ -13,7 +13,7 @@ import it.eng.cepmiddleware.responses.PlainResponseBody;
 public class DeleteEngineService implements Service {
 
 	@Autowired private EngineInfoTokenRepository engineRepository;
-	@Autowired CEPEngineFactory engineFactory;
+	@Autowired CEPEngineProvider engineFactory;
 	ResponseEntity<String> paramError = new ResponseEntity<String>(
 		"Correct parameters not provided",
 		HttpStatus.BAD_REQUEST

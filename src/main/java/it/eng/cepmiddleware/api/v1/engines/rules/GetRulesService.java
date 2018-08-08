@@ -5,12 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import it.eng.cepmiddleware.Service;
-import it.eng.cepmiddleware.engine.CEPEngineFactory;
+import it.eng.cepmiddleware.engine.CEPEngineProvider;
 
 @org.springframework.stereotype.Service
 public class GetRulesService implements Service {
 
-	@Autowired CEPEngineFactory engineFactory;
+	@Autowired CEPEngineProvider engineProvider;
 
 	ResponseEntity<String> paramError = new ResponseEntity<String>(
 		"Correct parameters not provided",
@@ -27,7 +27,7 @@ public class GetRulesService implements Service {
 	}
 
 	private ResponseEntity<?> getRules(String engineId) {
-		return engineFactory.getCEPEngine(engineId).getRules();
+		return engineProvider.getCEPEngine(engineId).getRules();
 	}
 
 }
