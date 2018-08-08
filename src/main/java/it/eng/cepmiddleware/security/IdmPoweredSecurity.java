@@ -17,7 +17,7 @@ public class IdmPoweredSecurity extends WebSecurityConfigurerAdapter {
 		http
 			.csrf().disable()
 			.authorizeRequests()
-			.antMatchers("/exposed-engine/**").hasRole("USER")
+			.antMatchers("/exposed-engine/**").hasAnyRole("ADMIN", "USER")
 			.anyRequest().hasRole("ADMIN")
 		.and()
 			.sessionManagement()
