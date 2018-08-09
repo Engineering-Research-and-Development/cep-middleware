@@ -97,6 +97,7 @@ services:
       --spring.jpa.hibernate.ddl-auto="create"
       --spring.datasource.username="root"
       --spring.datasource.password="root"
+      --idm.hostUrl="http://idm:8000"
     networks:
       fiwareNetwork:
         aliases:
