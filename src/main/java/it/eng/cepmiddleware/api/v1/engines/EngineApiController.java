@@ -20,6 +20,7 @@ public class EngineApiController implements EngineApi {
 	@Autowired private AddEngineService addEngineService;
 	@Autowired private UpdateEngineService updateEngineService;
 	@Autowired private GetEngineSupportedEventTypesService getEngineSupportedEventTypesService;
+	@Autowired private SetEngineExposureService setEngineExposureService;
 
 	public ResponseEntity<?> getEngine(@PathVariable("engineId") String engineId) {
         return getEngineService.execute(engineId);
@@ -56,6 +57,13 @@ public class EngineApiController implements EngineApi {
 		@PathVariable("engineId") String engineId
 	) {
 		return getEngineSupportedEventTypesService.execute(engineId);
+	}
+
+	@Override
+	public ResponseEntity<?> setEngineExposure(
+		@PathVariable("engineId") String engineId
+	) {
+		return setEngineExposureService.execute(engineId);
 	}
 
 }
