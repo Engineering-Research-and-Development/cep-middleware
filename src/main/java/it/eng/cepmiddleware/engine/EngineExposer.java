@@ -6,13 +6,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class EngineExposer {
 
-	@Autowired private CEPEngineProvider engineFactory;
+	@Autowired private CEPEngineProvider engineProvider;
 	@Autowired private EngineInfoTokenRepository engineInfoTokenRepository;
 	private EngineInfoToken exposedEngineInfo;
 	private CEPEngine exposedEngine = new ErrorCEPEngine();
 
 	public boolean setEngineToExpose(String engineId) {
-		CEPEngine engine = engineFactory.getCEPEngine(engineId);
+		CEPEngine engine = engineProvider.getCEPEngine(engineId);
 		if (engine instanceof ErrorCEPEngine) {
 			return false;
 		}
