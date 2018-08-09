@@ -70,4 +70,12 @@ public interface EngineApi {
 		@PathVariable("engineId") String engineId
 	);
 
+	@ApiOperation(value = "Attempts exposing of the given engine")
+	@ApiResponses(value = {
+	    @ApiResponse(code = 200, message = "Successful operation"),
+	    @ApiResponse(code = 404, message = "Requested CEP engine does not exist")
+	})
+	@RequestMapping(value = "/engines/{engineId}/exposure", method = RequestMethod.POST)
+	ResponseEntity<?> setEngineExposure(@PathVariable("engineId") String engineId);
+
 }
