@@ -19,6 +19,8 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
+import it.eng.cepmiddleware.config.CEPMiddlewareConfiguration;
+
 public class IdmAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
 	IdmAuthenticationFilter() {
@@ -37,12 +39,13 @@ public class IdmAuthenticationFilter extends AbstractAuthenticationProcessingFil
 		String principal;
 		String XAuthToken = request.getHeader("x-auth-token");
 		ArrayList<IdmGrantedAuthority> roles = new ArrayList<>();
+		String idmHostUrl = CEPMiddlewareConfiguration.getIdmHostUrl();
 		if (XAuthToken == null) {
 			throw new AuthenticationException("Please provide the x-auth-token header"){};
 		}
 		try {
 			HttpResponse<JsonNode> userInfoResponse = Unirest
-				.get("http://localhost:3000/user?access_token=" + XAuthToken)
+				.get(idmHostUrl +"/user?access_token=" + XAuthToken)
 				.asJson();
 			if (userInfoResponse.getStatus()/100 != 2) {
 				throw new AuthenticationException("x-auth-token is invalid, or expired"){};

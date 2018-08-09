@@ -1,5 +1,8 @@
 package it.eng.cepmiddleware.config;
 
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -8,6 +11,26 @@ import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 public class CEPMiddlewareConfiguration {
+
+	@Value("${idm.hostUrl}") private String privateidmHostUrl;
+	private static String idmHostUrl;
+
+	@PostConstruct
+	public void init(){
+		CEPMiddlewareConfiguration.idmHostUrl = privateidmHostUrl;
+	}
+
+	public static String getIdmHostUrl() {
+		return CEPMiddlewareConfiguration.idmHostUrl;
+	}
+
+	public String getPrivateidmHostUrl() {
+	    return privateidmHostUrl;
+	}
+
+	public void setPrivateidmHostUrl(String idmHostUrl) {
+	    this.privateidmHostUrl = idmHostUrl;
+	}
 
 	@Bean
 	public CorsFilter corsFilter() {
